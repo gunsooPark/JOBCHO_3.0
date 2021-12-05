@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jobcho.mapper.TeamMapper">
+	
+	
+	<!-- 건수가함 -->
+	<select id="selectTeam" parameterType="HashMap" resultType="org.jobcho.domain.TeamVO">
+		select * from team 
+				where team_name = #{team_name} and team_info = #{team_info}
+	</select>
+	
+	<!-- 팀 생성 -->	
+	<insert id="insertTeam" parameterType="org.jobcho.domain.TeamVO">
+		<![CDATA[ 
+			insert into team(team_num, team_name, team_info, user_num) 
+				values(
+					team_num.nextval, #{team_name}, #{team_info}, #{user_num}
+				)
+			]]>
+	</insert>
+	
+	<!-- 팀 리스트 조회 --> <!-- /*+ index_AES(team team_num)*/ -->
+	<select id="getListTeam" parameterType="int" resultType="org.jobcho.domain.TeamVO">
+		<![CDATA[
+			select
+			* from team where user_num = #{user_num} and islive=1 order by team_num asc
+		]]>
+	</select>
+	
+	<!-- 팀 조회 -->
+	<select id="getTeam" parameterType = "int" resultType="org.jobcho.domain.TeamVO">
+		<![CDATA[select * from team where team_num = #{team_num} ]]>
+	</select>
+	
+	<!-- 팀 업데이트 -->
+	<update id="updateTeam" parameterType="org.jobcho.domain.TeamVO">
+		update team set team_name = #{team_name}, team_info = #{team_info}
+		where team_num = #{team_num}
+	</update>
+	
+	<!-- 팀 삭제 -->
+	<update id="deleteTeam" parameterType="int">
+		update team set islive = 0 where team_num = #{team_num}
+	</update>
+	
+	<!-- 팀 리스트 조회 --> <!-- /*+ index_AES(team team_num)*/ -->
+	<select id="getListTeamByMemberJoin" parameterType="int" resultType="org.jobcho.domain.TeamVO">
+		<![CDATA[
+			select t.TEAM_NUM, t.TEAM_NAME, t.TEAM_INFO, t.USER_NUM, t.ISLIVE, t.TEAM_DATE from team t, member m
+			where t.TEAM_NUM = m.TEAM_NUM
+			and m.user_num = #{user_num}
+			and t.islive=1 order by t.team_num asc
+		]]>
+	</select>
+
+	
+	
+	
+	</mapper>
