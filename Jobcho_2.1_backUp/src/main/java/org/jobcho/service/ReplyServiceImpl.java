@@ -66,7 +66,7 @@ public class ReplyServiceImpl implements ReplyService{
 		ReplyVO reply = mapper.getReply(reply_num);
 		
 		postMapper.updateReplyCnt(reply.getPost_num(), -1);
-		mapper.deleteReply(reply_num);
+		mapper.deleteReply(reply_num);     
 	}
 
 	

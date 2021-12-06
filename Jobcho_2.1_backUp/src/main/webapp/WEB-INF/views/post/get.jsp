@@ -161,7 +161,7 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
-<script type="text/javascript" src="/resources/js/reply.js?version=20211206"></script>
+<script type="text/javascript" src="/resources/board/reply.js?version=20211205"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -206,7 +206,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 
 
 //==========댓글 리스트 호출==========
-	getListReply(); 
+	getListReply();
 
 	function getListReply(){
 	
@@ -235,7 +235,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 		
 	}//end getListReply
 
-
+ 
 
 
 //댓글 모달 닫기 버튼
@@ -256,6 +256,7 @@ $("#addReplyBtn").on("click", function(e){
 	replyRegisterBtn.show();
 	
 	replyModal.modal("show");
+	getListReply();
 });
 
 
@@ -265,7 +266,7 @@ replyRegisterBtn.on("click", function(e){
 	console.log("댓글 등록");
 	var reply = {
 			reply_contents: modalInputReply.val(),
-			member_num: 1,
+			member_num: ${member_num},
 			post_num: ${post.post_num}
 	};
 	
@@ -312,25 +313,33 @@ replyRegisterBtn.on("click", function(e){
 			alert("댓글이 수정되었습니다.");
 			replyModal.modal("hide");
 			getListReply(); //댓글 수정 후 댓글목록 갱신
+			console.log("댓글 수정~");
 		});
 	});
 
 	
 	//댓글 삭제 
    	replyRemoveBtn.on("click", function (e){
-   	  
+   		
+   		if(!confirm("정말로 삭제하시겠습니까?")){
+   			alert("취소되었습니다.")
+   			replyModal.modal("hide");
+   		}
+   		
    	  var reply_num = replyModal.data("reply_num");
    	  
-   	  replyService.deleteReply(reply_num, function(result){
-   	        
+   	  replyService.deleteReply(reply_num, function(result){//reply.js 호출
+   		  
    	    alert("댓글이 삭제되었습니다.");
    	   	replyModal.modal("hide");
-   		getListReply(); //댓글 삭제 후 댓글목록 갱신
+   	   	
+   	 	getListReply(); //댓글 삭제 후 댓글목록 갱신
+   	 	
+   	 	console.log("댓글 삭제~");
    	  });
-   	  
-   	});
-
-
+   	getListReply(); 
+ });
+   	
 
 
 

@@ -141,8 +141,8 @@
 			
 								<!---------------form을 이용한 데이터 유지-------------->
 								<form id='listForm' action="/post/list" method='get'>
-										<%-- <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-										<input type='hidden' name='amount' value='${pageMaker.cri.amount}'> --%>
+										<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+										<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 										<input type='hidden' name='board_num' value='${board_num}'>
 										<input type='hidden' name='team_num' value='${team_num}'>
 										<input type='hidden' name='member_num' value='${member_num }'>
@@ -222,9 +222,12 @@ $(document).ready(function(){
 	$(".paginate_button a").on("click", function(e){
 		
 		e.preventDefault();
+		
 		console.log("페이지 이벤트: " +${board_num});
 		
-		actionForm.submit();
+		listForm.find("input[name='pageNum']").val($(this).attr("href")); //href의 num값을 form에 넣는다.
+		
+		listForm.submit();
 	}); //end pageinate 
 	
 
