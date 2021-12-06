@@ -484,10 +484,10 @@
 
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
-	<div class="body-content" id="body-pd-left">
+	<!-- <div class="body-content" id="body-pd-left">
 
 		<div class="job-team-body"></div>
-	</div>
+	</div> -->
 	<!-- 컨텐츠 끝-->
 	<!-- 컨텐츠 끝-->
 

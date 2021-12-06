@@ -69,8 +69,8 @@
         <form role="form" action="/post/register" method="post">
         			
         	<input type='hidden' name='board_num' value='<c:out value="${board_num}"/>'>
-			
-						
+			<input type='hidden' name='team_num' value='<c:out value="${team_num}"/>'>
+			<input type='hidden' name='member_num' value='<c:out value="${member_num}"/>'>
         		
           <div class="form-group">
             <label>제목</label> <input class="form-control" name='post_title'>
@@ -87,8 +87,6 @@
           <button type="submit" class="btn btn-primary">등록</button>
           <button id='reset' type="reset" class="btn btn-default">취소</button>
         </form>
-        ${board_num}
-
       </div>
       <!--  end panel-body -->
 

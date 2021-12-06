@@ -79,16 +79,19 @@ public class PostController {
 	
 	//게시글 생성 2.DB저장, 리스트로 이동
 	@PostMapping("/register")
-	public String register(PostVO post, RedirectAttributes rttr) {
+	public String register(PostVO post, RedirectAttributes rttr, @RequestParam("team_num") int team_num) {
 		
 		log.info("게시글 등록: " + post.getPost_title());
 		
 		post.setBoard_num(post.getBoard_num());
-		post.setMember_num(1);
+		post.setMember_num(post.getMember_num());
+		
 		System.out.println("게시글 등록: " + post.getBoard_num());
 		
 		rttr.addFlashAttribute("result", service.insertPost(post));
 		rttr.addAttribute("board_num", post.getBoard_num());
+		rttr.addAttribute("member_num", post.getMember_num());
+		rttr.addAttribute("team_num", team_num);
 		
 		return "redirect:/post/list";
 	}
