@@ -9,8 +9,8 @@
 	<!-- 게시판 목록 가져오기 -->
 	<select id="getListBoard" parameterType="int" resultType="org.jobcho.domain.BoardVO">
 		<![CDATA[ 
-			select * from board
-			where team_num = #{team_num}
+			select  /*+INDEX_ASC(board SYS_C007522) */ * from board
+			where team_num = #{team_num} 
 			and islive = 1
 		]]>
 	</select>
@@ -19,29 +19,28 @@
 	<!-- 게시판 생성 -->
 	<insert id="insertBoard" parameterType="org.jobcho.domain.BoardVO"> 
 		<![CDATA[ 
-			insert into board (
-					board_num, board_name, board_info, team_num, member_num, islive, board_date
-				) 
+			insert into board
 				values(
 					board_num.nextval, #{board_name}, #{board_info}, #{team_num}, #{member_num}, default, default
 				)
 		]]>
 	</insert>
 	
-	
-	<!-- 게시판 수정 -->
+
 	<update id="updateBoard" parameterType="org.jobcho.domain.BoardVO">
 		update board set board_name= #{board_name }, board_info= #{board_info }
 		where board_num= #{board_num }
 	</update>
 	
 	
-	<!-- 게시판 삭제 (isLive 수정) -->
-	<delete id="deleteBoard" parameterType="int">
-		update board set islive = 0
-		where board_num = #{board_num}
-	</delete> 
+	<select id="deleteBoard" parameterType="int">
+		DELETE FROM board WHERE board_num = #{board_num}
+	</select> 
 	
+	
+	<select id="getBoard" resultType="org.jobcho.domain.BoardVO">
+		select * from board where board_num = #{board_num}
+		</select>
 	
 	
 </mapper>

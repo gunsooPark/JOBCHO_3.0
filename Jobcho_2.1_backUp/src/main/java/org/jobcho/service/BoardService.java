@@ -1,8 +1,10 @@
 package org.jobcho.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.jobcho.domain.BoardVO;
+import org.jobcho.domain.PostVO;
 
 
 public interface BoardService {
