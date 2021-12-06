@@ -146,6 +146,7 @@
 										<input type='hidden' name='board_num' value='${board_num}'>
 										<input type='hidden' name='team_num' value='${team_num}'>
 										<input type='hidden' name='member_num' value='${member_num }'>
+										
 								</form>
 			
 		</div>
@@ -209,7 +210,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		
 		//post_num을 form태그에 담아서 전달
-	
+		listForm.append("<input type='hidden' name='post_num' value='"+$(this).attr("href")+"'>");
 		listForm.attr("action", "/post/get");
 		listForm.submit();
 		

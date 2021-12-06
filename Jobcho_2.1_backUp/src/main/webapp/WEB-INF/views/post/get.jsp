@@ -144,6 +144,8 @@
  				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
   				<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
   				<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'>
+  				<input type='hidden' name='team_num' value='<c:out value="${team_num}"/>'>
+  				<input type='hidden' name='member_num' value='<c:out value="${member_num}"/>'>
   				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
   				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'> 
 			</form>

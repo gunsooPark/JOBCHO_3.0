@@ -23,13 +23,7 @@
 				
 				<!-- form을 이용해서 데이터 유지 + 수정 정보 전달 -->
 				<form role="form" action="/post/update" method="post">
-
-						<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
-						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-						<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'> 
-						<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
-
+				
 					<div class="form-group">
 						<label>글 번호</label> <input class="form-control" name='post_num'
 							value='<c:out value="${post.post_num }"/>' readonly="readonly">
@@ -56,6 +50,14 @@
 							value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${post.post_date}" />'
 							readonly="readonly">
 					</div>
+					
+					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'> 
+						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+						<input type='hidden' name='board_num' value='<c:out value="${post.board_num}"/>'> 
+						<input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+						<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
+						<input type='hidden' name='team_num' value='<c:out value="${team_num}"/>'>
+  						<input type='hidden' name='member_num' value='<c:out value="${member_num}"/>'>
 					
 
 					<!-- 전송버튼 -->
@@ -106,6 +108,9 @@ $(document).ready(function() {
 			formObj.append(pageNum);
 			formObj.append(amountTag);
 			formObj.append("<input type='hidden' name='board_num' value='"+${post.board_num}+"'>");
+			formObj.append("<input type='hidden' name='team_num' value='"+${team_num}+"'>");
+			formObj.append("<input type='hidden' name='member_num' value='"+${member_num}+"'>");
+
 			/* formObj.append("<input type='hidden' name='type' value='"+${cri.type}+"'>");
 			formObj.append("<input type='hidden' name='keyword' value='"+${cri.keyword}+"'>"); */
 		}

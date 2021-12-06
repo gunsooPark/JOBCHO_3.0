@@ -57,12 +57,13 @@ public class PostController {
 	//게시글 상세조회
 	@GetMapping({"/get", "/update"})
 	public void getPost(@RequestParam("post_num") int post_num,
+									@RequestParam("team_num") int team_num,
+									@RequestParam("member_num") int member_num,
 								    @ModelAttribute("cri") Criteria cri, Model model) { //상세화면에서 목록으로 갈때 페이지처리
-
-		System.out.println("상세조회 호출!!: " + post_num);
 		
 		model.addAttribute("post", service.getPost(post_num));
-		
+		model.addAttribute("team_num", team_num);
+		model.addAttribute("member_num", team_num);		
 	}
 	
 	
@@ -86,8 +87,6 @@ public class PostController {
 		post.setBoard_num(post.getBoard_num());
 		post.setMember_num(post.getMember_num());
 		
-		System.out.println("게시글 등록: " + post.getBoard_num());
-		
 		rttr.addFlashAttribute("result", service.insertPost(post));
 		rttr.addAttribute("board_num", post.getBoard_num());
 		rttr.addAttribute("member_num", post.getMember_num());
@@ -99,8 +98,9 @@ public class PostController {
 	
 	//게시글 수정
 	@PostMapping("/update")
-	public String updatePost(PostVO post, RedirectAttributes rttr,
-											 @ModelAttribute("cri") Criteria cri) {
+	public String updatePost(PostVO post, RedirectAttributes rttr, @ModelAttribute("cri") Criteria cri,
+												@RequestParam("team_num") int team_num, 
+												@RequestParam("member_num") int member_num) {
 		
 		log.info("게시글 수정: " + post.getPost_num());
 		
@@ -113,6 +113,8 @@ public class PostController {
 		rttr.addAttribute("board_num", post.getBoard_num());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
+		rttr.addAttribute("member_num", post.getMember_num());
+		rttr.addAttribute("team_num", team_num);
 		
 		return "redirect:/post/list";
 	}
@@ -121,12 +123,12 @@ public class PostController {
 	
 	//게시글 삭제
 	@PostMapping("/delete")
-	public String deletePost(@RequestParam("post_num") int post_num,
+	public String deletePost(@RequestParam("post_num") int post_num,@RequestParam("team_num") int team_num, 
+											@RequestParam("member_num") int member_num,
 											@RequestParam("board_num") int board_num,
 											@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
 		service.deletePost(post_num);
-		System.out.println("컨트롤러 삭제완료");
 		
 		log.info("삭제 완료! " + post_num);
 		rttr.addAttribute("pageNum", cri.getPageNum());
@@ -134,6 +136,8 @@ public class PostController {
 		rttr.addAttribute("board_num", board_num);
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
+		rttr.addAttribute("member_num", member_num);
+		rttr.addAttribute("team_num", team_num);
 		
 		return "redirect:/post/list";
 	}
