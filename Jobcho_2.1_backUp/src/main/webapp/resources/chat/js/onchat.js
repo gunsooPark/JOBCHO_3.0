@@ -88,7 +88,7 @@ $(document).ready(function(){
 			
 			
 		$(".job-team-body").append(str);
-	    $(document).find(".job-chat").scrollTop($(document).find(".job-chat")[0].scrollHeight);
+//	    $(document).find(".job-chat").scrollTop($(document).find(".job-chat")[0].scrollHeight);
 // console.log(document.getElementById("mydiv"));
 	    dragElement(document.getElementById("room"+chatRoom_num));
 	    console.log($(document).find("#chatRoom_num"))
@@ -168,7 +168,7 @@ $(document).ready(function(){
 	
 	// 채팅방 선택하면 실행
 	$(document).on("click",".onChatting" ,function(e){
-		var team_num = 1;
+		
 		chatRoom_num = $(this).data("value");
 		chatRoom_name = $(this).data("name");
 		if($(document).find("#room"+chatRoom_num).length){
@@ -187,7 +187,7 @@ $(document).ready(function(){
         });// $.ajax
 		
 		if(!webSocketMap[chatRoom_num]){
-			webSocketMap[chatRoom_num] = new WebSocket("ws://localhost:8081/chatsocket/"+chatRoom_num)
+			webSocketMap[chatRoom_num] = new WebSocket("ws://localhost:8082/chatsocket/"+chatRoom_num)
 		}
 		
 		webSocketMap[chatRoom_num].onopen = function(message){

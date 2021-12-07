@@ -418,10 +418,10 @@
 
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
-	<!-- <div class="body-content" id="body-pd-left">
+	<div class="body-content" id="body-pd-left">
 
 		<div class="job-team-body"></div>
-	</div> -->
+	</div>
 	<!-- 컨텐츠 끝-->
 	<!-- 컨텐츠 끝-->
 
@@ -442,7 +442,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="text" id="inviteUserSearchbar" class="form-control"
-							placeholder="이름 또는 이메일 입력">
+							placeholder="이름 또는 이메일 입력" autocomplete='off'>
 						<div class="modal-scroll">
 							<ul id="invite-list-group" class="list-group">
 								<li class="list-group-item">
