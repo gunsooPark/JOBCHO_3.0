@@ -75,7 +75,7 @@
 	
 	<select id="getChatMember" parameterType="int" resultType="org.jobcho.domain.ChatMemberVO">
 		select * from chatmember
-		where chatMember_num=#{chatMember_num}
+		where member_num=#{member_num}
 		and islive=1
 	</select>
 	

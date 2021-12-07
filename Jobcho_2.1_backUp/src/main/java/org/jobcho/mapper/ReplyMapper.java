@@ -7,8 +7,13 @@ import org.jobcho.domain.ReplyVO;
 public interface ReplyMapper {
 
 	int insertReply(ReplyVO reply);
+	
 	List<ReplyVO> getListReply(int post_num);
-	public ReplyVO getReply(int reply_num);
+	
+	ReplyVO getReply(int reply_num);
+	
 	int updateReply(ReplyVO reply);
+	
 	void deleteReply(int reply_num);
+	
 }
