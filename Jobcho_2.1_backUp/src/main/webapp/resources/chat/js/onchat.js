@@ -20,9 +20,9 @@ $(document).ready(function(){
 	var webSocketMap={};
 	var chatMember_numMap={};
 	var chatRoomList = null;
-	//채팅방 초대를 위한 팀 멤버리스트 호출
+	// 채팅방 초대를 위한 팀 멤버리스트 호출
 	function getInviteChatMemberList(){
-		//멤버리스트 호출
+		// 멤버리스트 호출
 		$.ajax({
             url:'/team/'+team_num+'/member/',
             type:'Get',
@@ -31,40 +31,67 @@ $(document).ready(function(){
             	console.log(result);
             	searchTeamMemberList=result;
             }
-        });//$.ajax
+        });// $.ajax
 	}
 	
-	//채팅 보여주기
+	// 채팅 보여주기
 	function showChatting(result){
 		var str=`<div class="dragablediv" id="room`+chatRoom_num+`">
-			<div class="dragabledivheader" id="room`+chatRoom_num+`header"><h3>`+chatRoom_name+`</h3></div>
+			<div class="dragabledivheader" id="room`+chatRoom_num+`header"><h3>`+chatRoom_name+`
+			<ion-icon name="person-add-outline"></ion-icon>
+			<ion-icon name="close-outline" class="chat-off"></ion-icon></h3>
+			</div>
 		<div class="job-chat-body">
 			
 	        <div class="job-chat"> 
 	            <hr>`
 		result.forEach(function(item){
+			var regex = new RegExp("(.*?)\.(PNG|png|JPG|JPEG|jpg|jpeg|jpe|JPE|BMP|bmp|GIF|gif|)$");
 			if(item.chatMember.member_num == member_num){
-				str +=`<p class="send">`+item.chat_contents+`</p>`
+				
+				if(item.upload_name!=null){
+					
+					if(regex.test(item.upload_name)){
+						str +="<p class='send'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
+						"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+					}
+					str +="<p class='send'><img class='chat-thumnail' src='/display?filename="+"downloadingfile_87287.png"+"'>" +
+							"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+				}else{
+					str +=`<p class="send">`+item.chat_contents+`</p>`
+				}
 			}else{
-				str +=`<p class="receive">`+item.chat_contents+`</p>`
+				if(item.upload_name){
+					if(regex.test(item.upload_name)){
+						str +="<p class='receive'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
+						"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+					}
+					str +="<p class='receive'><img class='chat-thumnail' src='/display?filename="+"downloadingfile_87287.png"+"'>" +
+							"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+				}else{
+					str +=`<p class="receive">`+item.chat_contents+`</p>`
+				}
 			}
 		});
 	        str +=`</div>
+	        
+	        <input type='file' name="uploadFile" multiple>
+	        
 	        <textarea id="commentParentText" 
 	        class="commentParentText form-control col-lg-12"style="width: 100%" rows="5" 
 	        name="comment_contents"></textarea>
-	        <input id="sendMessage" type="submit" value="댓글남기기" class="btn btn-default btn-lg">
+	        <input id="sendMessage" type="submit" value="댓글남기기" class="btn btn-default btn-lg sendMessage">
 		</div></div>`
 			
 			
 		$(".job-team-body").append(str);
 	    $(document).find(".job-chat").scrollTop($(document).find(".job-chat")[0].scrollHeight);
-//	    console.log(document.getElementById("mydiv"));
+// console.log(document.getElementById("mydiv"));
 	    dragElement(document.getElementById("room"+chatRoom_num));
 	    console.log($(document).find("#chatRoom_num"))
 	}
 	
-	//채팅방 목록 왼쪽 사이드바에 출력
+	// 채팅방 목록 왼쪽 사이드바에 출력
 	function showChatRoomList(){
 		
 		$.ajax({
@@ -72,9 +99,13 @@ $(document).ready(function(){
             type:'Get',
             dataType:'json',
             success:function(result){
+            	console.log(result);
             	var str = "";
             	chatRoomList.forEach(function(room){
+            		console.log(room)
             		result.forEach(function(item){
+            			console.log(item)
+            			console.log("item")
             			if(room.chatRoom_num == item.chatRoom_num){
             				str +=`<a href="#" class="nav__link-left onChatting" onclick="onChatting(event)" data-name="`+room.chatRoom_name+`" data-value="`+item.chatRoom_num+`"> <ion-icon
     						name="chatbubbles-outline" class="nav__icon-left"></ion-icon> <span
@@ -87,12 +118,12 @@ $(document).ready(function(){
         			$("#chatRoomList").html(str);
         		});		
             }
-        });//$.ajax
+        });// $.ajax
 		
 		
 	}
 	
-	//채팅방 초대 모달에서 멤버 리스트 출력
+	// 채팅방 초대 모달에서 멤버 리스트 출력
 	function showInviteChatRoomMemberList(result){
 		var str="";
 		result.forEach(function(item){
@@ -107,14 +138,14 @@ $(document).ready(function(){
 		});	
 	}
 	
-	//Socket onmessage 
+	// Socket onmessage
 	function socketOnmessage(message){
 		str =`<p class="receive">`+message.data.replace(/^[0-9]+\+/i,"")+`</p>`
 		$(document).find("#room"+message.data.split("+",1)[0]).find(".job-chat").append(str);
-//		$(document).find("#room"+message.data.split("+",1)[0]).find(".job-chat").scrollTop((document).find("#room"+message.data.split("+",1)[0]).find(".job-chat")[0].scrollHeight);
+// $(document).find("#room"+message.data.split("+",1)[0]).find(".job-chat").scrollTop((document).find("#room"+message.data.split("+",1)[0]).find(".job-chat")[0].scrollHeight);
 	}
 	
-	//채팅멤버번호 가져오는함수
+	// 채팅멤버번호 가져오는함수
 	function getChatMemberNum(findChatRoom_num){
 
 		if(!chatMember_numMap[findChatRoom_num]){
@@ -125,7 +156,7 @@ $(document).ready(function(){
 		        success:function(result){
 		        	findChatMemberNum(result,findChatRoom_num)
 		        }
-		    });//$.ajax
+		    });// $.ajax
 		}
 	}
 	
@@ -139,7 +170,7 @@ $(document).ready(function(){
 	}
 	
 	
-	//채팅방 선택하면 실행
+	// 채팅방 선택하면 실행
 	$(document).on("click",".onChatting" ,function(e){
 		var team_num = 1;
 		chatRoom_num = $(this).data("value");
@@ -157,7 +188,7 @@ $(document).ready(function(){
 
             	showChatting(result);
             }
-        });//$.ajax
+        });// $.ajax
 		
 		if(!webSocketMap[chatRoom_num]){
 			webSocketMap[chatRoom_num] = new WebSocket("ws://localhost:8081/chatsocket/"+chatRoom_num)
@@ -176,9 +207,11 @@ $(document).ready(function(){
 		}
 		
 		webSocketMap[chatRoom_num].onmessage = socketOnmessage
-	})
+		
+		webSocketMap[chatRoom_num].binaryType="arraybuffer";
+	});
 	
-	//채팅방 생성되고 채팅방에 초대
+	// 채팅방 생성되고 채팅방에 초대
 	function inviteChatMemberAction(){
 		inviteChatMemberList.forEach(function(member_num,index){
 			$.ajax({
@@ -197,7 +230,7 @@ $(document).ready(function(){
 		})
 	}
 	
-	//채팅방 리스트 ajax요청
+	// 채팅방 리스트 ajax요청
 	$.ajax({
 		
         url:'/team/'+team_num+'/chatroom/',
@@ -207,9 +240,9 @@ $(document).ready(function(){
         	showChatRoomList(result);
         	chatRoomList = result;
         }
-    });//$.ajax
+    });// $.ajax
 	
-	//채팅방 생성 모달
+	// 채팅방 생성 모달
 	$("#createChatRoom").on("click", function(){
 		$("#insertChatRoomModal").modal("show");
 		inviteChatMemberList=[]
@@ -218,7 +251,7 @@ $(document).ready(function(){
 		
 	})
 
-	//채팅방 생성 모달의 검색바에서 검색어와 일치하는 팀멤버 검색
+	// 채팅방 생성 모달의 검색바에서 검색어와 일치하는 팀멤버 검색
     $('#inviteChatMemberSearchbar').keyup(function(){
     	console.log(searchTeamMemberList);
 		var keyword = $(this).val()
@@ -279,6 +312,7 @@ $(document).ready(function(){
 		$("#invite-chat-list").html(str);
 	})
 	
+	// 채팅방 생성
 	$("#createRoomAction").on('click',function(){
 		$.ajax({
 	        url:'/team/'+team_num+'/chatroom/new',
@@ -294,40 +328,87 @@ $(document).ready(function(){
 	        	chatRoom_num = result.chatRoom_num;
 	        	inviteChatMemberAction()
 	        }
-    	});//$.ajax
+    	});// $.ajax
 		
 	})
 	
-	//채팅 전송
-	$(document).on("click", "#sendMessage",function(e){
-		console.log($(this).parent().children('.job-chat'))
-		var message = $(this).val()
-		$(this).val("")
-		str =`<p class="send">`+message+`</p>`
-		$(this).parent().children('.job-chat').append(str);
-		$(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat')[0].scrollHeight);
-		var thisChatRoom_num = $(this).parent().parent().attr('id').substr(4)
+	// 채팅 전송
+	$(document).on("click", ".sendMessage",function(e){
+		if(!$(this).parent().find("input[name='uploadFile']")[0].files.length){
+			console.log($(this).parent().children('.job-chat'))
+			var message = $(this).parent().parent().find(".commentParentText").val()
+
+			str =`<p class="send">`+message+`</p>`
+			$(this).parent().children('.job-chat').append(str);
+			$(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat')[0].scrollHeight);
+			var thisChatRoom_num = $(this).parent().parent().attr('id').substr(4)
+			
+			$.ajax({
+		        url:'/team/'+team_num+'/chatroom/'+chatRoom_num+'/chat/new',
+		        type:'Post',
+		        contentType:'application/json',
+		        data:JSON.stringify({
+		            "chatMember_num": chatMember_numMap[thisChatRoom_num],
+		            "chat_contents": message,
+		        }),
+		        dataType:'json',
+		        success:function(result){
+		        	console.log("creat chat succss");
+		        }
+	    	});// $.ajax
+			webSocketMap[thisChatRoom_num].send(thisChatRoom_num+"+"+message)
+		}else{
+			var file = $(this).parent().find("input[name='uploadFile']")[0].files;
+			$(this).parent().find("input[name='uploadFile']").clone();
+			
+			  console.log( file)
+			  var formData = new FormData();
+			  for(var i = 0; i<file.length; i++){
+				  formData.append("uploadFile", file[i])
+			  }
+			  console.log('/team/'+team_num+'/chatroom/uploadfile')
+			  var thisChatRoom_num = $(this).parent().parent().attr('id').substr(4)
+			  $.ajax({
+			        url:'/team/'+team_num+'/chatroom/uploadfile?chatMember_num='+chatMember_numMap[thisChatRoom_num],
+			        type:'Post',
+			        processData:false,
+			        contentType:false,
+			        data:formData,
+			        success:function(result){
+			        	console.log(result)
+			        	console.log("upload succss");
+			        	showUploadFile(result);
+			        	showUploadFileSendSocket(result,thisChatRoom_num);
+			        }
+		  		});// $.ajax
+			  var reader = new FileReader();
+			  var rawData = new ArrayBuffer();
+			  
+// reader.loadend = function(){
+//				  
+// }
+//			  
+// reader.onload = function (e) {
+// rawData = e.target.result;
+// webSocketMap[thisChatRoom_num].send(rawData);
+// console.log(rawData)
+// alert("file send")
+//	                
+// }
+// reader.readAsArrayBuffer(file[0]);
+			  
+		};
 		
-		$.ajax({
-	        url:'/team/'+team_num+'/chatroom/'+chatRoom_num+'/chat/new',
-	        type:'Post',
-	        contentType:'application/json',
-	        data:JSON.stringify({
-	            "chatMember_num": chatMember_numMap[thisChatRoom_num],
-	            "chat_contents": message,
-	        }),
-	        dataType:'json',
-	        success:function(result){
-	        	console.log("creat chat succss");
-	        }
-    	});//$.ajax
-		webSocketMap[thisChatRoom_num].send(thisChatRoom_num+"+"+message)
 	})
 	
 	$(document).on("keydown", ".commentParentText",function(e){
+		
 		if(e.keyCode !=13){
 			return
 		}
+		if($(this).parent().find("input[name='uploadFile']")[0].files.length){
+			return
+		};
 		var message = $(this).val()
 		$(this).val("")
 		str =`<p class="send">`+message+`</p>`
@@ -348,53 +429,79 @@ $(document).ready(function(){
 	        success:function(result){
 	        	console.log("creat chat succss"+thisChatRoom_num);
 	        }
-    	});//$.ajax
+    	});// $.ajax
 		webSocketMap[thisChatRoom_num].send(thisChatRoom_num+"+"+message)
 	})
 	
 	function dragElement(elmnt) {
 		
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "header")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-//    elmnt.onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown;
-  }
-
-  function dragMouseDown(e) {
-	console.log("dragMouseDown")
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-	  console.log("elementDrag")
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-	  console.log("closeDragElement")
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
+	  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	  if (document.getElementById(elmnt.id + "header")) {
+	    // if present, the header is where you move the DIV from:
+	    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+	// elmnt.onmousedown = dragMouseDown;
+	  } else {
+	    // otherwise, move the DIV from anywhere inside the DIV:
+	    elmnt.onmousedown = dragMouseDown;
+	  }
+	
+	  function dragMouseDown(e) {
+		console.log("dragMouseDown")
+	    e = e || window.event;
+	    e.preventDefault();
+	    // get the mouse cursor position at startup:
+	    pos3 = e.clientX;
+	    pos4 = e.clientY;
+	    document.onmouseup = closeDragElement;
+	    // call a function whenever the cursor moves:
+	    document.onmousemove = elementDrag;
+	  }
+	
+	  function elementDrag(e) {
+		  console.log("elementDrag")
+	    e = e || window.event;
+	    e.preventDefault();
+	    // calculate the new cursor position:
+	    pos1 = pos3 - e.clientX;
+	    pos2 = pos4 - e.clientY;
+	    pos3 = e.clientX;
+	    pos4 = e.clientY;
+	    // set the element's new position:
+	    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+	    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+	  }
+	
+	  function closeDragElement() {
+		  console.log("closeDragElement")
+	    // stop moving when mouse button is released:
+	    document.onmouseup = null;
+	    document.onmousemove = null;
+	  }
+	  
+	  $(document).on("click",".chat-off", function(){
+		  $(this).parent().parent().parent().remove();
+		  
+	  })
+	  
+	}
+	function showUploadFile(result){
+		  var str= "<p class='send'><img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+		  $(document).find(".job-chat").append(str)
+		  $(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat').scrollHeight);
+	}
+	
+	function showUploadFileSendSocket(result,thisChatRoom_num){
+		  var str= "<img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+		  webSocketMap[thisChatRoom_num].send(thisChatRoom_num+"+"+str)
+	}
+	
+//	$(document).on("click",".chat-thumnail",function(){
+//		console.log($(this).parent().html());
+//		var str=`<div class="big-img" id="room`+chatRoom_num+`">
+//			`+$(this).parent().html()+`
+//		</div>`
+//        	$(".job-team-body").append(str);
+//	})
+	
+	
 });

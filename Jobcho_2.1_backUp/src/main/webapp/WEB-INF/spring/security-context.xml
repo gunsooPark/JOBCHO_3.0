@@ -34,6 +34,12 @@
 		<security:intercept-url pattern="/team/choose" access="hasRole('ROLE_MEMBER')"/>
 		<!-- 팀선택후 다음화면 -->
 		<security:intercept-url pattern="/team/choose" access="hasRole('ROLE_MEMBER')"/>
+		
+		<!-- 게시판쪽 -->
+		<security:intercept-url pattern="/post/list" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/post/get" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/post/update" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/post/register" access="hasRole('ROLE_MEMBER')"/>
 	
 	
 		<!-- 로그인 -->
