@@ -290,7 +290,7 @@ replyRegisterBtn.on("click", function(e){
 		replyService.getReply(reply_num, function(reply){ //reply.js 호출
 			
 			modalInputReply.val(reply.reply_contents);
-			modalInputReplyer.val(reply.member_num);
+			modalInputReplyer.val(reply.reply_writer);
 			modalInputReplyDate.val(replyService.replyTime(reply.reply_date)).attr("readonly", "readonly");
 			replyModal.data("reply_num", reply.reply_num);
 			
