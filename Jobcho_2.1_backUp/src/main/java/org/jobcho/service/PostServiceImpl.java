@@ -1,8 +1,8 @@
+
 package org.jobcho.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jobcho.domain.Criteria;
 import org.jobcho.domain.PostVO;
@@ -26,11 +26,12 @@ public class PostServiceImpl implements PostService {
 	
 	@Override
 	public int insertPost(PostVO post) {
-		log.info("서비스 게시글 생성: " + post.getPost_title());
+		log.info("서비스 게시글 생성");
 		
 		return mapper.insertPost(post);
 	}
 
+	
 	@Override
 	public List<PostVO> getListPost(HashMap<String, Object> map) {
 		log.info("서비스 게시글 리스트: " + map);
@@ -39,35 +40,35 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	@Override
-	public PostVO getList(int post_num) {
-		log.info("서비스 게시글 상세조회: " + post_num);
+	public PostVO getPost(int post_num) {
+		log.info("서비스 게시글 상세조회");
 		
 		return mapper.getPost(post_num);
 	}
 
 	@Override
 	public int updateBoard(PostVO post) {
-		log.info("서비스 게시글 수정: " + post.getPost_num());
+		log.info("서비스 게시글 수정");
 		
 		return mapper.updatePost(post);
 	}
 
 	@Override
 	public void deletePost(int post_num) {
-		log.info("서비스 게시글 삭제: " + post_num);
+		log.info("서비스 게시글 삭제");
+		System.out.println("서비스 삭제");
 		mapper.deletePost(post_num);
 	}
 
-	
+
 	@Override
-	public int getTotalCount(Criteria cri) {
-		log.info("전체 게시글 수");
+	public int getTotalCount(int board_num) {
+		log.info("전체 글 수 불러오기");
 		
-		return mapper.getTotalCount(cri);
+		return mapper.getTotalCount(board_num);
 	}
 
 	
-
 	
 
 }

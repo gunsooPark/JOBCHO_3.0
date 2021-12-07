@@ -1,7 +1,9 @@
 package org.jobcho.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @ServerEndpoint("/chatsocket/{chatroom_num}")
 public class ChatSocketController {
+	
+	private BufferedOutputStream bos;
 	
 	// 접속 된 클라이언트 WebSocket session 관리 Map
 	private static Map<Integer,List<Session>> sessionMap = Collections.synchronizedMap(new HashMap());
@@ -66,6 +70,22 @@ public class ChatSocketController {
 			}
 		});
 	}
+	
+	// 바이너리 데이터가 오게되면 호출된다.
+//    @OnMessage
+//    public void processUpload(ByteBuffer msg, boolean last, Session session) {
+//        
+//        while(msg.hasRemaining()){
+//            try {
+//                bos.write(msg.get());
+//                System.out.println(bos);
+//            } catch (IOException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+	
 
 	// WebSocket과 브라우저가 접속이 끊기면 요청되는 함수
 	@OnClose
