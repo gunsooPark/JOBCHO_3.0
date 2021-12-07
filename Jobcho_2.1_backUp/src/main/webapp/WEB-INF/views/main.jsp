@@ -643,11 +643,9 @@
 						오늘의 할일<input id="todo_title" type="text" class="form-control">
 						내용<input id="todo_description" type="text" class="form-control">
 						마감날짜<input id="todo_endDate" type="date" class="form-control">
-						member_num<input id="member_num" type="text" class="form-control"
-							value="${param.member_num}"> team_num<input id="team_num"
-							type="text" class="form-control" value="${param.team_num}">
-						<input id="insertTeamAction" type="button" class="btn btn-success"
-							onclick="insertTodoListAction();" value="오늘의 할일 생성">
+						<input id="member_num" type="hidden" class="form-control" value="${param.member_num}"> 
+						<input id="team_num" type="hidden" class="form-control" value="${param.team_num}">
+						<input id="insertTeamAction" type="button" class="btn btn-success" onclick="insertTodoListAction();" value="오늘의 할일 생성">
 
 					</div>
 				</div>
@@ -663,13 +661,12 @@
 					</div>
 					<div class="modal-body">
 
-						<input id="updateTodoNum" type="hidden"> 오늘의 할일<input
-							id="updateTodoTitle" type="text" class="form-control"> 내용<input
-							id="updateTodoDescription" type="text" class="form-control">
+						<input id="updateTodoNum" type="hidden"> 
+						오늘의 할일<input id="updateTodoTitle" type="text" class="form-control"> 
+						내용<input id="updateTodoDescription" type="text" class="form-control">
 						마감날짜<input id="updateTodoEnd" type="date" class="form-control">
-						<input id="updateTodoAction" type="button" class="btn btn-success"
-							value="수정"> <input id="deleteTodoAction" type="button"
-							class="btn btn-success" value="삭제">
+						<input id="updateTodoAction" type="button" class="btn btn-success" value="수정"> 
+						<input id="deleteTodoAction" type="button" class="btn btn-success" value="삭제">
 					</div>
 				</div>
 			</div>
@@ -769,8 +766,8 @@
         	var team_num=${param.team_num};
         	
         	//로그인한 유저 넘버
-        	var user_num=$("#authUserNum").val();
-        	user_num=3;
+        	var user_num=$("#userNum").val();
+        	
         	//컨텐츠바디에 현재팀의 멤버리스트 출력
         	function showMemberList(result){
         		str=""
