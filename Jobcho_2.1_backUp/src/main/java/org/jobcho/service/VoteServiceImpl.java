@@ -31,4 +31,10 @@ public class VoteServiceImpl implements VoteService {
 		return mapper.endVote(vote_num);
 	}
 
+	@Override
+	public VoteVO getVote(int vote_num) {
+		
+		return mapper.getVote(vote_num);
+	}
+
 }

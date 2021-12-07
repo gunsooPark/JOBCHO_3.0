@@ -6,10 +6,14 @@
 
 <select id ="getVoteResult" parameterType="int" resultType="org.jobcho.domain.VoteResultVO">
 
-	select count(vote_result1) vote_result1, count(vote_result2) vote_result2, count(vote_result3) vote_result3, 
-	count(vote_result4) vote_result4, count(vote_result5) vote_result5 
+	select 
+count(decode(vote_result1,1,1)) vote_result1, 
+count(decode(vote_result2,2,1)) vote_result2, 
+count(decode(vote_result3,3,1)) vote_result3, 
+count(decode(vote_result4,4,1)) vote_result4, 
+count(decode(vote_result5,5,1)) vote_result5 
 	from vote_result
-	where vote_num = #{vote_num}   
+	where vote_num = #{vote_num} 
 
 </select>
 
