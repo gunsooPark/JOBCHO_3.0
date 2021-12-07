@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jobcho.mapper.VoteResultMapper">
+
+<select id ="getVoteResult" parameterType="int" resultType="org.jobcho.domain.VoteResultVO">
+
+	select count(vote_result1) vote_result1, count(vote_result2) vote_result2, count(vote_result3) vote_result3, 
+	count(vote_result4) vote_result4, count(vote_result5) vote_result5 
+	from vote_result
+	where vote_num = #{vote_num}   
+
+</select>
+
+<select id = "getVoteResultMember" parameterType = "int" resultType = "org.jobcho.domain.VoteResultVO">
+	select * from vote_result where vote_num = #{vote_num}
+</select>
+
+<insert id="insertVoteResult" parameterType="org.jobcho.domain.VoteResultVO">
+	insert into vote_result(vote_num, vote_result1, vote_result2, vote_result3, vote_result4, vote_result5, member_num, islive)
+	values(#{vote_num}, #{vote_result1}, #{vote_result2}, #{vote_result3}, #{vote_result4}, #{vote_result5}, #{member_num}, default)
+</insert>
+
+</mapper>

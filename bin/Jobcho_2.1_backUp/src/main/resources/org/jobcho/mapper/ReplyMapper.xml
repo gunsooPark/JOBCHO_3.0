@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.jobcho.mapper.ReplyMapper">
+	<cache />
+	
+	
+	<!-- 댓글 목록 -->
+	<select id="getListReply" parameterType="int" resultType="org.jobcho.domain.ReplyVO">
+		<![CDATA[ 
+			select * from reply
+			where post_num = #{post_num}
+			and islive = 1
+		]]>
+	</select>
+	
+	
+	<!-- 댓글 생성 -->
+	<insert id="insertReply" parameterType="org.jobcho.domain.ReplyVO"> 
+		<![CDATA[ 
+			insert into reply(reply_num, reply_contents, member_num, post_num, islive, reply_date ) 
+				values(
+					reply_num.nextval, #{reply_contents}, #{member_num}, #{post_num}, default, default
+				)
+		]]>
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="org.jobcho.domain.ReplyVO">
+		update reply set reply_contents= #{reply_contents}
+		where reply_num= #{reply_num}
+	</update>
+	
+	
+	<!-- 댓글 삭제 -->
+	<select id="deleteReply" parameterType="int">
+		update reply set islive = 0
+		where reply_num = #{reply_num} 
+	</select> 
+	
+	
+	<!-- 댓글 조회 -->
+	<select id="getReply" resultType="org.jobcho.domain.ReplyVO">
+		select * from reply where reply_num = #{reply_num}
+		</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

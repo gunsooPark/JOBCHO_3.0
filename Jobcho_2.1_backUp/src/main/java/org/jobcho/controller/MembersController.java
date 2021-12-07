@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.log4j.Log4j;
@@ -110,6 +111,16 @@ public class MembersController {
 		return ResponseEntity.status(HttpStatus.OK).body(searchList);
 	}
 	
-	
+	@GetMapping("/withoutchatmember")
+	public ResponseEntity<List<MemberVO>> getListWithOutChatMember(@PathVariable("team_num") int team_num,
+			@RequestParam int chatroom_num){
+		Map<String, Integer> map = new HashMap<>();
+		map.put("team_num", team_num);
+		map.put("chatroom_num", chatroom_num);
+		List<MemberVO> list = service.getListWithOutChatMember(map);
+		
+		
+		return ResponseEntity.status(HttpStatus.OK).body(list);
+	}
 	
 }

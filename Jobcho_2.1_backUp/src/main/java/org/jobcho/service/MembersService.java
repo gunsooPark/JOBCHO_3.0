@@ -16,4 +16,5 @@ public interface MembersService {
 	int deleteMember( int member_num);
 	List<UsersVO> getListWithoutMembers(int team_num);
 	int insertMember2(MemberVO member);
+	List<MemberVO> getListWithOutChatMember(Map<String, Integer> map);
 }

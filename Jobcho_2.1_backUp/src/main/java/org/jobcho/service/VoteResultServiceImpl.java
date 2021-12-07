@@ -13,14 +13,14 @@ public class VoteResultServiceImpl implements VoteResultService {
 	@Autowired
 	private VoteResultMapper mapper;
 	
-	//ÅõÇ¥ ÇÏ±â
+	//ï¿½ï¿½Ç¥ ï¿½Ï±ï¿½
 	@Override
 	public int insertVoteResult(VoteResultVO voteResult) {
 	
 		return mapper.insertVoteResult(voteResult);
 	}
 
-	//ÅõÇ¥ °á°ú º¸±â(ÅõÇ¥ÇÑ ¼ýÀÚ)
+	//ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 	@Override
 	public VoteResultVO getVoteResult(int vote_num) {
 		
@@ -28,9 +28,39 @@ public class VoteResultServiceImpl implements VoteResultService {
 	}
 
 	@Override
-	public List<VoteResultVO> getVoteResultMember(int vote_num) {
+	public List<Integer> getVoteResultMember(int vote_num) {
 		
 		return mapper.getVoteResultMember(vote_num);
+	}
+
+	@Override
+	public List<VoteResultVO> getContent1ResultMember(VoteResultVO voteResult) {
+		
+		return mapper.getContent1ResultMember(voteResult);
+	}
+
+	@Override
+	public List<VoteResultVO> getContent2ResultMember(VoteResultVO voteResult) {
+		
+		return mapper.getContent2ResultMember(voteResult);
+	}
+
+	@Override
+	public List<VoteResultVO> getContent3ResultMember(VoteResultVO voteResult) {
+		
+		return mapper.getContent3ResultMember(voteResult);
+	}
+
+	@Override
+	public List<VoteResultVO> getContent4ResultMember(VoteResultVO voteResult) {
+		
+		return mapper.getContent4ResultMember(voteResult);
+	}
+
+	@Override
+	public List<VoteResultVO> getContent5ResultMember(VoteResultVO voteResult) {
+		
+		return mapper.getContent5ResultMember(voteResult);
 	}
 
 }
