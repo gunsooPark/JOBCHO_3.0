@@ -7,9 +7,9 @@
 	<!-- 게시글 생성 -->
 	<insert id="insertPost" parameterType="org.jobcho.domain.PostVO">
 			insert into post(
-				post_num, post_title, post_contents, board_num, member_num, post_date, islive
+				post_num, post_title, post_contents, board_num, member_num, post_date, islive, writer
 			)
-			values(post_num.nextval, #{post_title}, #{post_contents}, #{board_num}, #{member_num}, default, default)
+			values(post_num.nextval, #{post_title}, #{post_contents}, #{board_num}, #{member_num}, default, default, #{writer})
 	</insert>
 	
 	
@@ -19,7 +19,7 @@
 				select *
 				from(
 					select /*+INDEX_DESC(post SYS_C007525) */
-						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive, replycnt
+						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive, replycnt,writer
 					from post
 					where
 		]]>	
@@ -49,11 +49,8 @@
 				where rn > (#{cri.pageNum} -1) * #{cri.amount}
 				and board_num = #{board_num}
 				and islive = 1
-				
-				
 		]]>	
 	</select>
-	
 	
 	<!-- 게시글 상세조회 -->
 	<select id="getPost" parameterType="int" resultType="org.jobcho.domain.PostVO">

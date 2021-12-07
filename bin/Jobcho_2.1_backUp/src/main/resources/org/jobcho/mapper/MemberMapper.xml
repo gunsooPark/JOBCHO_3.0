@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jobcho.mapper.MemberMapper">
+
+	<resultMap type="org.jobcho.domain.MemberVO" id="MemberUser">
+		<result property="member_num" column="member_num"/>
+		<result property="member_position" column="member_position"/>
+		<result property="team_num" column="team_num"/>
+		<result property="user_num" column="user_num"/>
+		<result property="isLive" column="islive"/>
+		<association property="user" javaType="org.jobcho.domain.UsersVO">
+			<id property="user_num" column="user_num"/>
+			<result property="user_name" column="user_name"/>
+			<result property="user_phoneNum" column="user_phoneNum"/>
+			<result property="user_email" column="user_email"/>
+			<result property="user_pw" column="user_pw"/>
+			<result property="user_birth" column="user_birth"/>
+			<result property="user_pwHint" column="user_pwHint"/>
+		</association>
+		
+		<association property="team" javaType="org.jobcho.domain.TeamVO">
+			<result property="user_num" column="t_user_num"/>
+		</association>
+	</resultMap>
+
+	<insert id="insertMembers" parameterType="org.jobcho.domain.MemberVO">
+		insert into member(
+			member_num, member_position, team_num, user_num,islive,member_date
+		)
+		values(
+			member_num.nextval, #{member_position,jdbcType=VARCHAR}, #{team_num}, #{user_num},default,default
+		)
+	</insert>
+	
+	<!-- 건수가함 -->
+	<insert id="insertMember2" parameterType="org.jobcho.domain.MemberVO">
+		insert into member (member_num, team_num, user_num)
+         values(member_num.nextval, #{team_num}, #{user_num})
+	</insert>
+
+	
+	<select id="listTeamMembers" parameterType="int" resultMap="MemberUser">
+		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,team.user_num as t_user_num
+		from member, users, team
+		where member.user_num=users.user_num 
+		and member.team_num=team.team_num
+		and member.team_num=#{team_num}
+		and member.islive=1
+	</select>
+	
+	<update id="updateMemberInfo" parameterType="org.jobcho.domain.MemberVO">
+		update member set member_position=#{member_position} ,
+		<if test='#{isLive} !=null'>
+			islive = #{isLive}
+		</if>
+		
+		where member_num=#{member_num}
+	</update>
+	
+	<update id="deleteMemberInfo" parameterType="int">
+		update member set islive=0 where member_num=#{member_num}
+	</update>
+	<select id="checkMember" parameterType="org.jobcho.domain.MemberVO" resultType="org.jobcho.domain.MemberVO">
+		select * from member where user_num=#{user_num} and team_num=#{team_num} and islive=1
+	</select>
+	
+
+	<update id = "deleteAllMember" parameterType = "int">
+		update member set islive=0 where team_num = #{team_num}
+	</update>
+
+	<select id = "memberTeamNumber" parameterType = "int">
+		select team_num from member where user_num = #{user_num} and islive=1
+	</select>
+
+	<select id = "getMemberByUserNum" parameterType="HashMap" resultType = "org.jobcho.domain.MemberVO">
+		select * from member where user_num = #{user_num} and team_num = #{team_num}
+	</select>
+	
+	<select id = "getMember" resultType = "org.jobcho.domain.MemberVO">
+		select * from member where member_num= #{member_num}
+	</select>
+	
+	<select id="getUsersWithoutMembersList" resultType="org.jobcho.domain.UsersVO">
+		select * from USERS where not user_num in (select user_num from member where team_num=#{team_num} and islive=1)
+	</select>
+	
+
+</mapper>

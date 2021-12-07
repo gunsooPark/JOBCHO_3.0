@@ -2,13 +2,14 @@
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
 
 
 <div class="row" style="margin-top: 80px">
   <div class="col-sm-7" style="margin-left: 450px">
-    <h2 class="page-header">게시판 이름</h2>
+    <h2 class="page-header"> ${board.board_name }</h2>
   </div>
   <!-- /.col-lg-12 -->
 </div>
@@ -18,7 +19,7 @@
   <div class="col-sm-7" style="margin-left: 450px">
     <div class="panel panel-default">
 
-      <div class="panel-heading">Board Read Page</div>
+      <div class="panel-heading"> ${board.board_info }</div>
       <!-- /.panel-heading -->
       <div class="panel-body">
 
@@ -40,7 +41,7 @@
 
         <div class="form-group">
           <label>작성자</label> <input class="form-control" name='writer'
-            value='<c:out value="${post.board_num }"/>' readonly="readonly">
+            value= "${post.writer} " readonly="readonly">
         </div>
 		
 <button data-oper='modify' class="btn btn-info">수정</button>
@@ -116,11 +117,11 @@
             <div class="modal-body">
               <div class="form-group">
                 <label>댓글 내용</label> 
-                <input class="form-control" name='reply_contents' value='reply'>
+                <input class="form-control" name='reply_contents' value=''>
               </div>      
               <div class="form-group">
                 <label>작성자</label> 
-                <input class="form-control" name='replyer' value='replyer'>
+                <input class="form-control" type="text"  name='reply_writer' value=<sec:authentication property="principal.users.user_name"/> readonly="readonly">
               </div>
               <div class="form-group">
                 <label>Reply Date</label> 
@@ -197,7 +198,7 @@ var replyUL =$(".chat");
 
 var replyModal = $("#replyModal");
 var modalInputReply = replyModal.find("input[name='reply_contents']");
-var modalInputReplyer = replyModal.find("input[name='replyer']");
+var modalInputReplyer = replyModal.find("input[name='reply_writer']");
 var modalInputReplyDate = replyModal.find("input[name='replyDate']");
 
 var replyModBtn = $("#replyModBtn"); //수정버튼
@@ -224,7 +225,7 @@ var replyRegisterBtn = $("#replyRegisterBtn");//등록버튼
 	
 			for (var i = 0, len = list.length || 0; i < len; i++) {
 		           str +="<li class='left clearfix' data-reply_num='"+list[i].reply_num+"'>";
-		           str +="  <div><div class='header'><strong class='primary-font'>"+list[i].reply_contents+"</strong>"; 
+		           str +="  <div><div class='header'><strong class='primary-font'>"+list[i].reply_writer+"</strong>"; 
 		           str +="    <small class='pull-right text-muted'>"+replyService.replyTime(list[i].reply_date)+"</small></div>";
 		           str +="    <p>"+list[i].reply_contents+"</p></div></li>";
 		         }
@@ -249,7 +250,7 @@ $("#replyCloseBtn").on("click", function(e){
 $("#addReplyBtn").on("click", function(e){
 	
 	console.log("댓글 생성 모달창");
-	replyModal.find("input").val("");
+	
 	modalInputReplyDate.closest("div").hide();
 	replyModal.find("button[id !='replyCloseBtn']").hide();
 	
@@ -267,7 +268,8 @@ replyRegisterBtn.on("click", function(e){
 	var reply = {
 			reply_contents: modalInputReply.val(),
 			member_num: ${member_num},
-			post_num: ${post.post_num}
+			post_num: ${post.post_num},
+			reply_writer : modalInputReplyer.val()
 	};
 	
 	replyService.insertReply(reply, function(result){ //reply.js 호출
@@ -288,7 +290,7 @@ replyRegisterBtn.on("click", function(e){
 		replyService.getReply(reply_num, function(reply){ //reply.js 호출
 			
 			modalInputReply.val(reply.reply_contents);
-			modalInputReplyer.val(reply.member_num);
+			modalInputReplyer.val(reply.reply_writer);
 			modalInputReplyDate.val(replyService.replyTime(reply.reply_date)).attr("readonly", "readonly");
 			replyModal.data("reply_num", reply.reply_num);
 			

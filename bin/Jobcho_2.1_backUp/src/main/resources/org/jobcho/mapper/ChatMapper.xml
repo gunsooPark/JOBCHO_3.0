@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jobcho.mapper.ChatMapper">
+	<resultMap type="org.jobcho.domain.ChatVO" id="ChatAndMember">
+		<result property="chat_num" column="chat_num"/>
+		<result property="chatMember_num" column="chatmember_num"/>
+		<result property="chat_contents" column="chat_contents"/>
+		<result property="islive" column="islive"/>
+		<result property="chat_date" column="chat_date"/>
+		<association property="chatMember" javaType="org.jobcho.domain.ChatMemberVO">
+			<id property="chatMember_num" column="chatmember_num"/>
+			<result property="chatRoom_num" column="chatroom_num"/>
+			<result property="member_num" column="member_num"/>
+			<result property="islive" column="islive"/>
+			<result property="chatMember_date" column="chatmember_date"/>
+		</association>
+	</resultMap>
+	
+	
+	<!-- ChatRoom -->
+	<!-- ChatRoom -->
+	<!-- ChatRoom -->
+	<insert id="insertChatRoom" parameterType="org.jobcho.domain.ChatRoomVO">
+		<selectKey keyProperty="chatRoom_num" order="BEFORE" resultType="int">
+			select chatroom_num.nextval from dual
+		</selectKey>
+		
+		insert into chatroom(
+			chatroom_num , chatroom_name , team_num, chatroom_date, islive
+		)
+		values(
+			#{chatRoom_num}, #{chatRoom_name}, #{team_num}, default,default
+		)
+	</insert>
+	
+	<select id="getListChatRoom" parameterType="int" resultType="org.jobcho.domain.ChatRoomVO">
+		select * from chatroom
+		where team_num=#{team_num}
+		and islive=1
+	</select>
+	
+	<select id="getChatRoom" parameterType="int" resultType="org.jobcho.domain.ChatRoomVO">
+		select * from chatroom
+		where chatRoom_num=#{chatRoom_num}
+		and islive=1
+	</select>
+	
+	<update id = "updateChatRoom" parameterType = "org.jobcho.domain.ChatRoomVO">
+		update chatroom set chatroom_name=#{chatRoom_name} where chatRoom_num = #{chatRoom_num}
+	</update>
+	
+	<update id = "deleteChatRoom" parameterType = "int">
+		update chatroom set islive=0 where chatRoom_num = #{chatRoom_num}
+	</update>
+	
+	<!-- ChatMember -->
+	<!-- ChatMember -->
+	<!-- ChatMember -->
+	<insert id="insertChatMember" parameterType="org.jobcho.domain.ChatMemberVO">
+		insert into chatmember(
+			chatmember_num , chatroom_num  , member_num ,chatmember_date, islive
+		)
+		values(
+			chatmember_num.nextval, #{chatRoom_num}, #{member_num}, default,default
+		)
+	</insert>
+	
+	<select id="getListChatMember" parameterType="int" resultType="org.jobcho.domain.ChatMemberVO">
+		select * from chatmember
+		where chatroom_num=#{chatroom_num}
+		and islive=1
+	</select>
+	
+	<select id="getChatMember" parameterType="int" resultType="org.jobcho.domain.ChatMemberVO">
+		select * from chatmember
+		where chatMember_num=#{chatMember_num}
+		and islive=1
+	</select>
+	
+	<update id = "deleteChatMember" parameterType = "int">
+		update chatmember set islive=0 where chatMember_num = #{chatMember_num}
+	</update>
+	
+	<!-- Chat -->
+	<!-- Chat -->
+	<!-- Chat -->
+	<insert id="insertChat" parameterType="org.jobcho.domain.ChatVO">
+		insert into chat(
+			chat_num  , chatmember_num  , chat_contents , chat_date,islive
+		)
+		values(
+			chat_num.nextval, #{chatMember_num}, #{chat_contents}, default,default
+		)
+	</insert>
+	
+	<select id="getListChat" parameterType="int" resultMap="ChatAndMember">
+		select chat_num, chat.chatmember_num, chat.CHAT_CONTENTS, chat.islive, chat.CHAT_DATE,
+		chatmember.chatmember_num, chatmember.chatroom_num, chatmember.member_num, chatmember.islive, chatmember.chatmember_date   
+		from chat, chatmember
+		where chat.chatmember_num = chatmember.chatmember_num
+		and chatmember.chatRoom_num=#{chatRoom_num}
+		and chat.islive=1
+	</select>
+	
+	<update id = "deleteChat" parameterType = "int">
+		update chat set islive=0 where chat_num = #{chat_num}
+	</update>
+
+</mapper>

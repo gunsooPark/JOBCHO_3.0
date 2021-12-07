@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.jobcho.mapper.TodoMapper">
+	<cache />
+	
+	
+	<!--새로운 할일 생성 -->
+	<insert id="insertTodo" parameterType="org.jobcho.domain.TodoVO">
+		insert into todoList (todo_num, todo_title, todo_description , todo_endDate, member_num) 
+			values (
+				todoList_num.nextval, #{todo_title}, #{todo_description}, #{todo_endDate}, #{member_num}
+			)
+	</insert>
+
+	<!-- 할일 정보 반환 -->
+	<select id="getTodo" parameterType="int" resultType="org.jobcho.domain.TodoVO">
+		select * from TodoList where todo_num = #{todo_num}
+	</select>
+	
+	<!-- 할일 리스트 반환 -->
+	<select id="selectTodoList" resultType="org.jobcho.domain.TodoVO">
+		<![CDATA[
+		select 
+		* from TodoList where islive = 1 ORDER BY todo_num ASC
+		]]>
+	</select>
+	
+	<!-- 할일 리스트 반환 2 -->
+	 <select id="selectTodoList2" resultType="org.jobcho.domain.TodoVO" parameterType="HashMap">
+		select todo.todo_num, todo.member_num, todo.todo_title, todo.todo_description, todo.todo_startDate, todo.todo_endDate, todo.islive
+        	from todolist todo, member m, team t
+  				where todo.member_num = m.member_num  
+  							and  m.team_num = t.team_num  
+  								and todo.islive = 1
+     								 and m.member_num = #{member_num} and t.team_num = #{team_num} 
+     								 	order by todo.todo_num asc
+	</select> 
+	
+	<!-- 할일 수정 -->
+	<update id="updateTodo" parameterType="org.jobcho.domain.TodoVO">
+		update todoList set 
+			todo_title = #{todo_title},
+			todo_description = #{todo_description},
+			todo_endDate = #{todo_endDate}
+		where todo_num = #{todo_num}
+	</update>
+	 
+	 
+	<!--  할일 삭제 -> update로 islive를 0으로 수정  -->
+	 <update id="deleteTodo" parameterType="int" >
+	 	update todoList set islive = 0 where todo_num = #{todo_num}
+	 </update>
+	 
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

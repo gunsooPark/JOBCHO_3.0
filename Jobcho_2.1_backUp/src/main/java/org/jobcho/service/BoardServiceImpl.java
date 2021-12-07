@@ -58,4 +58,12 @@ public class BoardServiceImpl implements BoardService {
 		mapper.deleteBoard(board_num);
 	}
 
+
+	@Override
+	public BoardVO getBoard(int board_num) {
+		log.info("board 서비스!!"+ board_num );
+		
+		return mapper.getBoard(board_num);
+	}
+
 }
