@@ -2,13 +2,14 @@
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
 
 
 <div class="row" style="margin-top: 80px">
   <div class="col-sm-7" style="margin-left: 450px">
-    <h2 class="page-header">게시판 이름</h2>
+    <h2 class="page-header"> ${board.board_name }</h2>
   </div>
   <!-- /.col-lg-12 -->
 </div>
@@ -18,7 +19,7 @@
   <div class="col-sm-7" style="margin-left: 450px">
     <div class="panel panel-default">
 
-      <div class="panel-heading">Board Read Page</div>
+      <div class="panel-heading"> ${board.board_info }</div>
       <!-- /.panel-heading -->
       <div class="panel-body">
 
@@ -40,7 +41,7 @@
 
         <div class="form-group">
           <label>작성자</label> <input class="form-control" name='writer'
-            value='<c:out value="${post.board_num }"/>' readonly="readonly">
+            value= "${post.writer} " readonly="readonly">
         </div>
 		
 <button data-oper='modify' class="btn btn-info">수정</button>

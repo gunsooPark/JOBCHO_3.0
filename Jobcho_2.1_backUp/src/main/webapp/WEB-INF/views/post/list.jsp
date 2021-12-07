@@ -2,13 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
 
 
 <div class="row" style="margin-top: 80px">
 	<div class="col-sm-7" style="margin-left: 450px">
-		<h1 class="page-header">게시판 이름</h1>
+		<h1 class="page-header">
+			${board.board_name }
+		</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -18,7 +21,7 @@
 	<div class="col-sm-7" style="margin-left: 450px">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				게시판 정보
+				${board.board_info }
 				
 				<button id='regBtn' type="button" class="btn btn-primary btn-xs pull-right">글쓰기</button>
 			</div>
@@ -46,7 +49,7 @@
 								</a>
 							</td>
 
-							<td><c:out value="${postList.board_num}"/></td>
+							<td><c:out value="${postList.writer}"/></td><!-- 작성자 -->
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${postList.post_date}"/></td>
 						</tr>
@@ -68,7 +71,7 @@
 									<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
 								<option value="W"
 									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-								<option value="TC"
+								<%-- <option value="TC"
 									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목
 									+ 내용</option>
 								<option value="TW"
@@ -76,12 +79,14 @@
 									+ 작성자</option>
 								<option value="TWC"
 									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목
-									+ 내용 + 작성자</option>
+									+ 내용 + 작성자</option> --%>
 							</select> 
-							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' /> 
-							<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
-							<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
-							<input type='hidden' name='board_num' value='<c:out value="${board_num}"/>' />
+									<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' /> 
+									<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
+									<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
+									<input type='hidden' name='board_num' value='<c:out value="${board_num}"/>' />
+									<input type='hidden' name='team_num' value='${team_num}'>
+									<input type='hidden' name='member_num' value='${member_num }'>
 							<button class='btn btn-default'>검색</button>
 						</form>
 					</div>
@@ -146,6 +151,7 @@
 										<input type='hidden' name='board_num' value='${board_num}'>
 										<input type='hidden' name='team_num' value='${team_num}'>
 										<input type='hidden' name='member_num' value='${member_num }'>
+										
 										
 								</form>
 			
@@ -230,38 +236,46 @@ $(document).ready(function(){
 		listForm.submit();
 	}); //end pageinate 
 	
-
-	//=======검색 버튼 이벤트 처리
-	/* var searchForm = $("#searchForm");
-	
-	$("#searchForm button").on("click", function(e){
-		
-		alert("키워드를 입력하세요");
-		
-		//검색종류 선택안하고 검색버튼 클릭 시
-		if(!searchForm.find("option:selected").val()){  
-			alert("검색 종류를 선택하세요");
-			return false;
-		}
-		
-		//키워드 입력안하고 검색버튼 클릭 시
-		if(!searchForm.find("input[name='keyword']").val()){
-			alert("키워드를 입력하세요");
-			return false;
-		}
-		
-		//검색결과는 항상 1페이지부터
-		searchForm.find("input[name='pageNum']").val("1")); 
-		e.preventDefault();
-		
-		searchForm.submit();	
-	}); */
-	
-	
 	
 }); //end d.ready
 	
+</script>
+
+
+
+
+<script>
+$(document).ready(function(){
+
+//=======검색 버튼 이벤트 처리======
+var searchForm = $("#searchForm");
+
+$("#searchForm button").on("click", function(e){
 	
+	alert("검색 클릭");
+	
+	//검색종류 선택안하고 검색버튼 클릭 시
+	if(!searchForm.find("option:selected").val()){  
+		alert("검색 종류를 선택하세요");
+		console.log("검색 종류");
+		return false;
+	}
+	
+	//키워드 입력안하고 검색버튼 클릭 시
+	if(!searchForm.find("input[name='keyword']").val()){
+		alert("키워드를 입력하세요");
+		console.log("키워드 입력");
+		return false;
+	}
+	
+	//검색결과는 항상 1페이지부터
+	searchForm.find("input[name='pageNum']").val("1")); 
+	e.preventDefault();
+	
+	searchForm.submit();	
+});
+
+}); //end d.ready
 
 </script>
 

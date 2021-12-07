@@ -3,9 +3,11 @@ package org.jobcho.controller;
 
 import java.util.HashMap;
 
+import org.jobcho.domain.BoardVO;
 import org.jobcho.domain.Criteria;
 import org.jobcho.domain.PageInfo;
 import org.jobcho.domain.PostVO;
+import org.jobcho.service.BoardService;
 import org.jobcho.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,14 +32,18 @@ public class PostController {
 	@Autowired
 	private PostService service;
 	
+	@Autowired
+	private BoardService boardService;
+	
 	
 	//게시글 전체 리스트 + 페이지 처리
 	@GetMapping("/list")
 	public void getListPost(Criteria cri, Model model, @RequestParam("board_num") int board_num,
-											@RequestParam("team_num") int team_num,
+											@RequestParam("team_num") int team_num, 
 											@RequestParam("member_num") int member_num){	
 	
 		int total = service.getTotalCount(board_num);
+		BoardVO board = boardService.getBoard(board_num);
 		
 		log.info("게시글 리스트");
 		log.info("전체 글 수: " + total);
@@ -51,19 +57,24 @@ public class PostController {
 		model.addAttribute("board_num", board_num);
 		model.addAttribute("team_num", team_num);
 		model.addAttribute("member_num", member_num);
+		model.addAttribute("board", board);
+		
+	
 	}
 	
 	
 	//게시글 상세조회
 	@GetMapping({"/get", "/update"})
-	public void getPost(@RequestParam("post_num") int post_num,
+	public void getPost(@RequestParam("post_num") int post_num, @RequestParam("board_num") int board_num,
 									@RequestParam("team_num") int team_num,
 									@RequestParam("member_num") int member_num,
 								    @ModelAttribute("cri") Criteria cri, Model model) { //상세화면에서 목록으로 갈때 페이지처리
-		
+		BoardVO board = boardService.getBoard(board_num);
 		model.addAttribute("post", service.getPost(post_num));
 		model.addAttribute("team_num", team_num);
 		model.addAttribute("member_num", team_num);		
+		model.addAttribute("board", board);
+		
 	}
 	
 	
@@ -72,7 +83,8 @@ public class PostController {
 	public void register(@RequestParam("board_num") int board_num, 
 									@RequestParam("team_num") int team_num,
 									@RequestParam("member_num") int member_num, Model model) {
-		
+		BoardVO board = boardService.getBoard(board_num);
+		model.addAttribute("board", board);
 		model.addAttribute("board_num", board_num);
 		model.addAttribute("team_num", team_num);
 		model.addAttribute("member_num", member_num);
@@ -108,6 +120,8 @@ public class PostController {
 			rttr.addFlashAttribute("result", " success");
 		}
 		
+		BoardVO board =  boardService.getBoard(post.getBoard_num());
+		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("board_num", post.getBoard_num());
@@ -115,6 +129,7 @@ public class PostController {
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("member_num", post.getMember_num());
 		rttr.addAttribute("team_num", team_num);
+		rttr.addAttribute("board", board);
 		
 		return "redirect:/post/list";
 	}
