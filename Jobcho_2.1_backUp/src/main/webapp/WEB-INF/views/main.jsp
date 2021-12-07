@@ -721,7 +721,13 @@
 		
 		
 
-	</div>
+	</div> <!-- 전체모달 div마지막 -->
+		
+		
+		
+		
+
+
 	
 	<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 	<script src="/resources/main/css/sidebar-right.js"></script>
