@@ -91,64 +91,23 @@
 					</div>
 				</div>
 				<!--프로필 끝-->
-
+				
+				<!-- =====게시판===== -->
 				<div>
-					<!-- 풀무리 스크롤-->
-					<!-- 풀무리 스크롤-->
-					<h3>
-						토픽 <a href="#" class="collapse__sublink-left"><ion-icon
-								name="add-outline"></ion-icon></a>
-					</h3>
-					<div class="nav__list-left nav__scroll-left">
-						<a href="#" class="nav__link-left active-left"> <ion-icon
-								name="home-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Dashboard</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="chatbubbles-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Messenger</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="pie-chart-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Analytics</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
-						</a> <a href="#" class="nav__link-left"> <ion-icon
-								name="settings-outline" class="nav__icon-left"></ion-icon> <span
-							class="nav__name-left">Settings</span>
+					
+					<h3>토픽 
+						<a href="#" class="collapse__sublink-left" id="createBoard" data-target="#boardModal" data-toggle="modal">
+							<ion-icon name="add-outline"></ion-icon>
 						</a>
-					</div>
-					<!-- 풀무리 스크롤 끝-->
-					<!-- 풀무리 스크롤 끝-->
+					</h3>
+					<!-- 게시판 -->
+					<div class="nav__list-left nav__scroll-left" id="board">
+				
+						
+					</div>	
+					<!-- =====게시판 끝===== -->
+
+
 
 					<!-- 풀커뮤니티 스크롤-->
 					<!-- 풀커뮤니티 스크롤-->
@@ -525,10 +484,10 @@
 
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
-	<div class="body-content" id="body-pd-left">
+	<!-- <div class="body-content" id="body-pd-left">
 
 		<div class="job-team-body"></div>
-	</div>
+	</div> -->
 	<!-- 컨텐츠 끝-->
 	<!-- 컨텐츠 끝-->
 
@@ -706,6 +665,45 @@
 			</div>
 		</div>
 		<!-- 채팅방 추가 모달 끝-->
+		
+		<!-- 게시판 생성 모달창 -->
+      <div class="modal" id="boardModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">게시판 등록</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+               		<label>게시판 이름</label> 
+                	<input class="form-control" name='board_name' value=''>
+              </div>      
+              <div class="form-group">
+                	<label>게시판 정보</label> 
+                	<input class="form-control" name='board_info' value=''>
+              </div>
+            </div>
+            
+			<div class="modal-footer">
+        		<button id='modalRegisterBtn' type="button" class="btn btn-primary">등록</button>
+        		<button id='modalCloseBtn' type="button" class="btn btn-default">취소</button>
+       		</div>
+	</div>
+  </div>
+</div><!--  게시판 생성모달 끝-->
+		
+		<!-- 게시판 board_num 계속 유지시키기 -->
+    	<form id='actionForm' action="/post/list" method='get'>
+				<input type='hidden' name='board_num' value='${pageMaker.cri.pageNum}'>
+				<input type='hidden' name='team_num' value='${param.team_num}'>
+				<input type='hidden' name='member_num' value='${param.member_num }'>
+		</form>
+		
+		
+		
 
 	</div>
 	
@@ -715,6 +713,7 @@
 	<script src="/resources/members/js/todoList.js"></script>
 	<script src="/resources/chat/js/onchat.js"></script>
 	<script src="/resources/chat/js/dragable.js"></script>
+	<script src="/resources/board/board.js?version=20211206"></script>
 	
 	<!-- 외부js에 변수 전달 -->
 	<input type="hidden" id="userName"
@@ -727,8 +726,9 @@
 
 	<input type="hidden" id="memberNum" value=${param.member_num }>
 
-	<script type="text/javascript">
-	
+
+
+<script type="text/javascript">
 	
 	//security ajax를 사용하면 403에러가 발생하기 때문에 아래와 같은 코드를 작성해야됨 
 	var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -766,7 +766,7 @@
         	var searchUserList = null;
         	
         	//현재 팀 넘버
-        	var team_num=${param.team_num};
+        	var team_num=${param.team_num}; 
         	
         	//로그인한 유저 넘버
         	var user_num=$("#authUserNum").val();
@@ -1014,14 +1014,113 @@
                             alert("탈퇴되었습니다") 
                         }
                     });//$.ajax
-            	}
-            	
-            	
-            	
+            	}	
             });
-            
         });//끝
     </script>
+    
+    
+    
+  <!-- 게시판 스크립트 부분 -->
+ <script>
+$(document).ready(function(){	
+	var member_num = ${param.member_num };
+	var team_num =$("#teamNum").val();
+	var boardUL = $("#board"); //게시판 리스트 들어가는 부분
+	
+	console.log(team_num);
+	
+	//========게시판 목록 호출=======
+	showList(); 
+	
+	function showList(){
+		
+		listBoard.getListBoard({team_num:team_num}, function(board){ //board.js 메서드 호출
+			
+			console.log("게시판 목록 callback: " +team_num );
+			var str ="";
+			
+			for(var i = 0; i < board.length; i++){
+                str +="<a href='"+board[i].board_num+"' class='nav__link-left'>"; //board_num 전달
+                str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
+				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>"; //게시판이름 출력
+				str +="</a>"; 
+				
+			}
+			boardUL.html(str); //html 추가
+		});
+	}
+
+
+//==========Modal==========
+
+	//모달창에 입력한 데이터 값 저장
+    var boardModal = $("#boardModal");
+    var modalInputBoardName = boardModal.find("input[name='board_name']");
+    var modalInputBoardInfo = boardModal.find("input[name='board_info']");
+    /* var modalInputReplyDate = boardModal.find("input[name='member_name']"); */
+    
+    var modalRegisterBtn = $("#modalRegisterBtn");
+    var modalModBtn = $("#modalModBtn");
+ 
+	//모달창 닫기 버튼
+    $("#modalCloseBtn").on("click", function(e){
+    	
+    	boardModal.modal('hide');
+    });
+
+	//게시판 생성 버튼 + 클릭시 모달창을 보여준다.
+	 $("#createBoard").on("click", function(e){
+		
+		console.log("게시판 생성 모달창")
+		e.preventDefault(); // a태그 기본이벤트 삭제
+		
+		boardModal.find("input").val("");
+	     /* modalInputReplyDate.closest("div").hide(); */
+	      boardModal.find("button[id !='modalCloseBtn']").hide(); //Close버튼이 아니면 숨기기
+	      
+	     modalRegisterBtn.show();
+	     /* modalInputReplyDate.show();*/
+	      
+		$("#createBoard").modal("show");
+		
+		}); // end createBoard 
+	
+	 
+		//=========게시판 생성============
+		modalRegisterBtn.on("click", function(e){
+			
+			var board = {
+					board_name: modalInputBoardName.val(),
+					board_info: modalInputBoardInfo.val(),
+					member_num: member_num
+			};
+			console.log("게시판 생성!: "+team_num );
+			
+			listBoard.insertBoard(board,{team_num:team_num},  function(result){
+				alert("게시판이 생성되었습니다.");
+	
+				boardModal.modal("hide");
+				
+				showList();
+			});
+		});
+	
+	
+		//======게시판 이름 클릭시 게시글로 이동======
+		var actionForm = $("#actionForm");
+		
+		$("#board").on("click", "a", function(e){
+			
+			console.log("게시글로 이동")
+			e.preventDefault();
+			
+			actionForm.find("input[name='board_num']").val($(this).attr("href"));
+			actionForm.submit();
+		});
+}); //end document.ready1
+</script>
+    
 
 
 
