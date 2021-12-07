@@ -1,0 +1,52 @@
+@use postcss-nested;
+
+:root {
+  --send-bg: #0B93F6;
+  --send-color: white;
+  --receive-bg: #E5E5EA;
+  --receive-text: black;
+}
+
+.job-chat p {
+  max-width: 500px;
+  width:300;
+  min-width: 255px;
+  
+  margin-bottom: 12px;
+  line-height: 24px;
+  
+	padding: 10px 20px;
+  border-radius: 25px;
+}
+
+
+.body-content{
+	padding-left: 50px;
+	
+}
+
+.job-chat{
+	height: 45rem;
+	overflow: auto;
+}
+
+.job-chat .send{
+	margin-left: 70%;
+}
+
+.send {
+	color: var(--send-color); 
+	background: var(--send-bg);
+	align-self: flex-end;
+	
+	
+}
+
+.receive {
+	background: var(--receive-bg);
+	color: black;
+  align-self: flex-start;
+		
+	
+}
+

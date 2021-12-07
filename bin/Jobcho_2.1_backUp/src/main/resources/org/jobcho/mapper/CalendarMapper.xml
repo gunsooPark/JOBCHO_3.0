@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.jobcho.mapper.CalendarMapper">
+	<cache />
+
+	
+	
+	<!-- 댓글 목록 -->
+	<select id="getListCalendar" resultType="org.jobcho.domain.CalendarVO">
+		<![CDATA[ 
+			select cal_num, cal_title,
+			cal_writer, cal_contents,
+			TO_char(starts, 'YYYY-MM-DD HH24:MI:SS') starts,
+			TO_char(ends, 'YYYY-MM-DD HH24:MI:SS') ends,
+			allday,
+			islive
+			from calendar
+			where islive = 1
+		]]>
+	</select>
+	
+	<!-- TO_char(starts,"YYYY-MM-DD HH24:MI:SS")  -->
+	<!-- 댓글 생성 -->
+	<insert id="insertCalendar" parameterType="org.jobcho.domain.CalendarVO"> 
+		<![CDATA[ 
+			insert into calendar(
+			cal_num, 
+			cal_title,
+			cal_contents, 
+			starts,
+			ends, 
+			allday, 
+			islive) 
+				values(
+					cal_num.nextval, #{cal_title}, #{cal_contents}, #{starts}, #{ends}, #{allday}, 1
+				)
+		]]>
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateCalendar" parameterType="org.jobcho.domain.CalendarVO">
+		update calendar set cal_contents= #{cal_contents}
+		where cal_num= #{cal_num}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<select id="deleteCalendar" parameterType="int">
+		update calendar set islive = 0
+		where cal_num = #{cal_num}
+	</select> 
+	
+	<!-- 댓글 조회 -->
+	<select id="readCalendar" resultType="org.jobcho.domain.CalendarVO">
+		select * from calendar where cal_num = #{cal_num}
+		</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

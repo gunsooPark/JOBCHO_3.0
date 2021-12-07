@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jobcho.mapper.PostMapper">
+
+	<!-- 게시글 생성 -->
+	<insert id="insertPost" parameterType="org.jobcho.domain.PostVO">
+			insert into post(
+				post_num, post_title, post_contents, board_num, member_num, post_date, islive
+			)
+			values(post_num.nextval, #{post_title}, #{post_contents}, #{board_num}, #{member_num}, default, default)
+	</insert>
+	
+	
+	<!-- 게시글 리스트 + 페이지 처리 -->
+	<select id="getListPost" parameterType="hashMap" resultType="org.jobcho.domain.PostVO">
+		<![CDATA[ 
+				select *
+				from(
+					select /*+INDEX_DESC(post SYS_C007525) */
+						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive, replycnt
+					from post
+					where
+		]]>	
+				<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+					<foreach item='type' collection="#{cri.typeArr}">
+					<trim prefix="OR">
+					<choose>
+						<when test="type == #{cri.type}">
+							post_title like '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							post_contents like '%'||#{cri.keyword}||'%'
+						</when>
+						 <when test="type == 'W'.toString()">
+							post_contents like '%'||#{cri.keyword}||'%'
+						</when>
+					</choose>
+					</trim>
+					</foreach>
+				</trim>
+				
+		<![CDATA[
+				rownum <= #{cri.pageNum} * #{cri.amount}
+				and board_num = #{board_num}
+				and islive = 1 		 
+				)
+				where rn > (#{cri.pageNum} -1) * #{cri.amount}
+				and board_num = #{board_num}
+				and islive = 1
+				
+				
+		]]>	
+	</select>
+	
+	
+	<!-- 게시글 상세조회 -->
+	<select id="getPost" parameterType="int" resultType="org.jobcho.domain.PostVO">
+		<![CDATA[ 
+				select * from post
+				where post_num = #{post_num}
+			]]>
+	</select>
+	
+	
+	<!-- 게시글 수정 -->
+	<update id="updatePost" parameterType="org.jobcho.domain.PostVO">
+		update post set post_title = #{post_title}, post_contents = #{post_contents}
+		where post_num= #{post_num } 
+	</update>
+	
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deletePost">
+		update post set islive = 0
+		where post_num = #{post_num}
+	</delete>
+	
+	
+	<!-- 전체 글 수 -->
+	<select id="getTotalCount" parameterType="int" resultType="int">
+		select count(*) from post 
+		where board_num = #{board_num}
+		and islive = 1
+	</select>
+	
+	
+	<!--  댓글 수 업데이트 -->
+	<update id="updateReplyCnt">
+		update post set replycnt = replycnt + #{amount}
+		where post_num = #{post_num}
+	</update>
+	
+	
+
+</mapper>
