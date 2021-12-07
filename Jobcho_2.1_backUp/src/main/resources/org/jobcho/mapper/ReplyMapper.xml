@@ -21,9 +21,9 @@
 	<!-- 댓글 생성 -->
 	<insert id="insertReply" parameterType="org.jobcho.domain.ReplyVO"> 
 		<![CDATA[ 
-			insert into reply(reply_num, reply_contents, member_num, post_num, islive, reply_date ) 
+			insert into reply(reply_num, reply_contents, member_num, post_num, islive, reply_date, reply_writer ) 
 				values(
-					reply_num.nextval, #{reply_contents}, #{member_num}, #{post_num}, default, default
+					reply_num.nextval, #{reply_contents}, #{member_num}, #{post_num}, default, default, #{reply_writer}
 				)
 		]]>
 	</insert>

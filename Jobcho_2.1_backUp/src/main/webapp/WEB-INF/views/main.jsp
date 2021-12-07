@@ -515,8 +515,6 @@
 									<div class="thumnail-profile"></div> Lorem
 									<button class="badge">초대</button>
 								</li>
-
-
 							</ul>
 						</div>
 					</div>
@@ -1032,6 +1030,8 @@ $(document).ready(function(){
 	
 	//========게시판 목록 호출=======
 	showList(); 
+	
+	
 	
 	function showList(){
 		
