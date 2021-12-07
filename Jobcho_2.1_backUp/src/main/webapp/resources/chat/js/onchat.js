@@ -99,9 +99,13 @@ $(document).ready(function(){
             type:'Get',
             dataType:'json',
             success:function(result){
+            	console.log(result);
             	var str = "";
             	chatRoomList.forEach(function(room){
+            		console.log(room)
             		result.forEach(function(item){
+            			console.log(item)
+            			console.log("item")
             			if(room.chatRoom_num == item.chatRoom_num){
             				str +=`<a href="#" class="nav__link-left onChatting" onclick="onChatting(event)" data-name="`+room.chatRoom_name+`" data-value="`+item.chatRoom_num+`"> <ion-icon
     						name="chatbubbles-outline" class="nav__icon-left"></ion-icon> <span
