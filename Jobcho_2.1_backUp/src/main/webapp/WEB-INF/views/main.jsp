@@ -362,14 +362,14 @@
 	<!--오른쪽 사이드서치바2 끝-->
 	<!--오른쪽 사이드서치바2 끝-->
 
-	<!--오른쪽 사이드서치바3-->
+<!--오른쪽 사이드서치바3-->
 	<!--오른쪽 사이드서치바3-->
 	<!--오른쪽 사이드서치바3-->
 	<div class="search-navbar-right navbar-font-search" id="navbar-search3">
 		<nav class="nav-search">
-			<div class="nav-search-title">할일</div>
+			<div class="nav-search-title">투표</div>
 			<div class="nav-search-content">
-				<div id="createToDo">➕할일생성</div>
+				<div id="createVote">➕투표생성</div>
 				<ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
@@ -391,6 +391,7 @@
 
 				</ul>
 				<div class="nav-search-result-scroll">
+				<div class="job-vote-wrap" style="cursor:pointer">
 					<div class="nav-search-result active-right">
 						<div class="result-container">
 							<div class="result-image"
@@ -405,74 +406,6 @@
 						</div>
 					</div>
 					<hr>
-					<div class="nav-search-result active-right">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result ">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result ">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result ">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result active-right">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -480,6 +413,7 @@
 	</div>
 	<!--오른쪽 사이드서치바3 끝-->
 	<!--오른쪽 사이드서치바3 끝-->
+
 
 
 	<!-- 컨텐츠 시작-->
@@ -694,6 +628,90 @@
 	</div>
   </div>
 </div><!--  게시판 생성모달 끝-->
+
+		<!-- 투표 생성 모달 -->
+	<div class = "modal" id ="insertVoteModal" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 생성
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						
+						투표 제목<input id="vote_name" type="text" class="form-control"> 
+						투표 내용1<input id="vote_content1" type="text" class="form-control">
+						투표 내용2<input id="vote_content2" type="text" class="form-control">
+						투표 내용3<input id="vote_content3" type="text" class="form-control">
+						투표 내용4<input id="vote_content4" type="text" class="form-control">
+						투표 내용5<input id="vote_content5" type="text" class="form-control">
+						<input id="member_num" type="hidden" class="form-control" value="${param.member_num}">
+						<input id="team_num" type="hidden" class="form-control" value="${param.team_num}">
+ 						<input id="insertVoteAction" type="button" class="btn btn-success" value="투표 생성">
+						
+					</div>
+				</div>
+			</div>
+	</div>	
+	<!-- 투표 생성 모달 끝 -->
+	
+	<!-- 투표창 확인 모달 -->
+	<div class = "modal" id ="voting" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 확인
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-wrap" style="cursor:pointer">	
+						
+						
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>	
+	<!-- 투표창 확인 모달 끝 -->
+	
+	<!-- 투표결과 확인 모달 -->
+	<div class = "modal" id ="voteResult" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 결과
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-view-wrap" style="cursor:pointer">	
+						
+						
+					</div>
+				</div>
+			</div>
+	</div>	
+	</div>
+	<!-- 투표결과 확인 모달 끝 -->
+	
+		<!-- 투표결과 멤버확인 모달 -->
+	<div class = "modal" id ="voteResultMember" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 결과
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
+						
+						
+					</div>
+				</div>
+			</div>
+	</div>	
+	</div>
+	<!-- 투표결과 멤버확인 모달 끝 -->
+	
 		
 		<!-- 게시판 board_num 계속 유지시키기 -->
     	<form id='actionForm' action="/post/list" method='get'>
@@ -714,6 +732,7 @@
 	<script src="/resources/chat/js/onchat.js"></script>
 	<script src="/resources/chat/js/dragable.js"></script>
 	<script src="/resources/board/board.js?version=20211206"></script>
+	<script src="/resources/members/js/vote.js"></script>
 	
 	<!-- 외부js에 변수 전달 -->
 	<input type="hidden" id="userName"

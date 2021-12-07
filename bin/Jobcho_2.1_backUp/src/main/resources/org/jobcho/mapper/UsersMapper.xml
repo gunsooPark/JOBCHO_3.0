@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="org.jobcho.mapper.UsersMapper">
+	<cache />
+	
+
+	<!-- 회원가입 -->
+	<insert id="insertUsers" parameterType="org.jobcho.domain.UsersVO">
+		insert into users (user_num, user_name, user_phoneNum, user_email, user_pw, user_birth, user_pwHint)  
+				values(
+					user_num.nextval, #{user_name}, #{user_phoneNum}, #{user_email}, #{user_pw}, #{user_birth}, #{user_pwHint}
+				)
+	</insert>
+
+	<!-- 회원가입할 때 권한부여 -->
+	<insert id="insertAuth" parameterType="String">
+		insert into users_auth 
+					values (#{user_email}, 'ROLE_MEMBER')
+	</insert>
+
+
+	<!-- 비밀번호 찾기 이메일 입력해서 -->
+	<select id="findUsers" resultType="org.jobcho.domain.UsersVO" parameterType="String">
+		select * from users
+				where user_email = #{user_email}
+	</select>
+
+	<!-- 비밀번호 재설정 -->
+	<update id="updatePw" parameterType="org.jobcho.domain.UsersVO">
+		update users set
+			user_pw = #{user_pw}
+				where user_num = #{user_num}
+	</update>
+	
+	<!-- 로그인 -->
+	<select id="loginUsers" parameterType="org.jobcho.domain.UsersVO" resultType="org.jobcho.domain.UsersVO">
+		select * from users
+			where user_email = #{user_email} and user_pw = #{user_pw}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="updateUsers" parameterType="org.jobcho.domain.UsersVO">
+		update Users set
+			user_name = #{user_name},
+			user_phoneNum = #{user_phoneNum},
+			user_email = #{user_email},
+			user_pw = #{user_pw},
+			user_birth = #{user_birth},
+			user_pwHint = #{user_pwHint}
+				where user_num = #{user_num}
+	</update>
+	
+	<!-- 비밀번호 빼고 수정 -->
+	<update id="updateUsers2" parameterType="org.jobcho.domain.UsersVO">
+		update Users set
+			user_name = #{user_name},
+			user_phoneNum = #{user_phoneNum},
+			user_email = #{user_email},
+			user_birth = #{user_birth},
+			user_pwHint = #{user_pwHint}
+				where user_num = #{user_num}
+	</update>
+	
+	<!-- 한명 조회 -->
+	<select id="selectUsers" resultType="org.jobcho.domain.UsersVO" parameterType="int">
+		select * from users where user_num = #{user_num}
+	</select>
+	
+	
+	<resultMap type="org.jobcho.domain.UsersVO" id="memberMap">
+		<id property="user_email" column="user_email"/>
+		<result property="user_num" column="user_num"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_phoneNum" column="user_phoneNum"/>
+		<result property="user_email" column="user_email"/>
+		<result property="user_pw" column="user_pw"/>
+		<result property="user_birth" column="user_birth"/>
+		<result property="user_pwHint" column="user_pwHint"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap> 
+	
+	<resultMap type="org.jobcho.domain.AuthVO" id="authMap">
+		<result property="user_email" column="user_email"/>
+		<result property="auth" column="auth"/>
+	</resultMap> 
+	
+	
+	<select id="read" resultMap="memberMap">
+		select 
+		user1.user_email, user_num, user_name, user_phoneNum, user_pw, user_birth, user_pwHint, auth
+		from
+		users user1 LEFT OUTER JOIN users_auth auth on user1.user_email = auth.user_email
+		where user1.user_email = #{user_email}
+	</select> 
+	
+
+	<!-- 아이디 중복체크 -->
+	<select id="idCheck" resultType="int">
+		select count(*) from users where user_email = #{user_email}
+	</select>
+	
+	<!-- 비밀번호찾기 -> 이메일 -->
+	<select id="emailFindPw" parameterType="HashMap" resultType="org.jobcho.domain.UsersVO" >
+		select * from users
+    		where user_name = #{user_name} and user_email = #{user_email}
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
