@@ -15,11 +15,14 @@ $(document).ready(function(){
 	var chatRoom_name=null;
 	var chatMember_num = 0;
 	var searchTeamMemberList = null;
+	var searchTeamMemberWithOutList = null;
 	var inviteChatMemberList = [];
+	var inviteChatMemberList2 = [];
 	var webSocket = null;
 	var webSocketMap={};
 	var chatMember_numMap={};
 	var chatRoomList = null;
+	var thisChatRoom_num2=0;
 	// 채팅방 초대를 위한 팀 멤버리스트 호출
 	function getInviteChatMemberList(){
 		// 멤버리스트 호출
@@ -38,7 +41,7 @@ $(document).ready(function(){
 	function showChatting(result){
 		var str=`<div class="dragablediv" id="room`+chatRoom_num+`">
 			<div class="dragabledivheader" id="room`+chatRoom_num+`header"><h3>`+chatRoom_name+`
-			<ion-icon name="person-add-outline"></ion-icon>
+			<ion-icon name="person-add-outline" class="addChatMember" ></ion-icon>
 			<ion-icon name="close-outline" class="chat-off"></ion-icon></h3>
 			</div>
 		<div class="job-chat-body">
@@ -52,24 +55,24 @@ $(document).ready(function(){
 				if(item.upload_name!=null){
 					
 					if(regex.test(item.upload_name)){
-						str +="<p class='send'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
-						"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
-					}
-					str +="<p class='send'><img class='chat-thumnail' src='/display?filename="+"downloadingfile_87287.png"+"'>" +
-							"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+						str +="<p id="+item.chat_num+" class='send'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
+						"<a href='/team/0/chatroom/download?fileName="+item.upload_name+"'><ion-icon name='download'></ion-icon></a><ion-icon class='chatdelete' name='close-outline' class='chat-off'></ion-icon></p>"
+					}else{
+					str +="<p id="+item.chat_num+" class='send'><img class='chat-thumnail' src='/display?filename="+"downloadingfile_87287.png"+"'>" +
+							"<a href='/team/0/chatroom/download?fileName="+item.upload_name+"'><ion-icon name='download'></ion-icon></a><ion-icon class='chatdelete' name='close-outline' class='chat-off'></ion-icon></p>"}
 				}else{
-					str +=`<p class="send">`+item.chat_contents+`</p>`
+					str +=`<p id=`+item.chat_num+` class="send">`+item.chat_contents+`<ion-icon class="chatdelete" name="close-outline" class="chat-off"></ion-icon></h3></p>`
 				}
 			}else{
 				if(item.upload_name){
 					if(regex.test(item.upload_name)){
-						str +="<p class='receive'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
-						"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
-					}
-					str +="<p class='receive'><img class='chat-thumnail' src='/display?filename="+"downloadingfile_87287.png"+"'>" +
-							"<a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+						str +="<p id="+item.chat_num+" class='receive'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
+						"<a href='/team/0/chatroom/download?fileName="+item.upload_name+"'><ion-icon name='download'></ion-icon></a></p>"
+					}else{
+					str +="<p id="+item.chat_num+" class='receive'><img class='chat-thumnail' src='/display?filename="+"downloadingfile_87287.png"+"'>" +
+							"<a href='/team/0/chatroom/download?fileName="+item.upload_name+"'><ion-icon name='download'></ion-icon></a></p>"}
 				}else{
-					str +=`<p class="receive">`+item.chat_contents+`</p>`
+					str +=`<p id=`+item.chat_num+` class="receive">`+item.chat_contents+`</h3></p>`
 				}
 			}
 		});
@@ -93,19 +96,14 @@ $(document).ready(function(){
 	
 	// 채팅방 목록 왼쪽 사이드바에 출력
 	function showChatRoomList(){
-		
 		$.ajax({
             url:'/team/'+team_num+'/chatroom/1/chatmember/'+member_num,
             type:'Get',
             dataType:'json',
             success:function(result){
-            	console.log(result);
             	var str = "";
             	chatRoomList.forEach(function(room){
-            		console.log(room)
             		result.forEach(function(item){
-            			console.log(item)
-            			console.log("item")
             			if(room.chatRoom_num == item.chatRoom_num){
             				str +=`<a href="#" class="nav__link-left onChatting" onclick="onChatting(event)" data-name="`+room.chatRoom_name+`" data-value="`+item.chatRoom_num+`"> <ion-icon
     						name="chatbubbles-outline" class="nav__icon-left"></ion-icon> <span
@@ -118,9 +116,7 @@ $(document).ready(function(){
         			$("#chatRoomList").html(str);
         		});		
             }
-        });// $.ajax
-		
-		
+        });// $.ajax	
 	}
 	
 	// 채팅방 초대 모달에서 멤버 리스트 출력
@@ -208,7 +204,7 @@ $(document).ready(function(){
 		
 		webSocketMap[chatRoom_num].onmessage = socketOnmessage
 		
-		webSocketMap[chatRoom_num].binaryType="arraybuffer";
+//		webSocketMap[chatRoom_num].binaryType="arraybuffer";
 	});
 	
 	// 채팅방 생성되고 채팅방에 초대
@@ -244,6 +240,9 @@ $(document).ready(function(){
 	
 	// 채팅방 생성 모달
 	$("#createChatRoom").on("click", function(){
+		$("#invite-chat-list").html("");
+		console.log("fuuuck")
+		$("#invite-wait-list").html("");
 		$("#insertChatRoomModal").modal("show");
 		inviteChatMemberList=[]
 		inviteChatMemberList.push(member_num);
@@ -260,7 +259,8 @@ $(document).ready(function(){
 			if(((keyword==member.user.user_email.substr(0,keyword.length))
 					||(keyword==member.user.user_name.substr(0,keyword.length)))
 					&& keyword.length!=0
-					&& member.isLive==1){
+					&& member.isLive==1
+					&& member_num!=member.member_num){
 				str +=`<li class="list-group-item">
 	                <div class="thumnail-profile"></div>
 	                `+member.user.user_name+"__"+member.user.user_email+`<button id="inviteChatMember" class="badge " value="`+member.member_num+`">초대</button>
@@ -485,13 +485,13 @@ $(document).ready(function(){
 	  
 	}
 	function showUploadFile(result){
-		  var str= "<p class='send'><img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+		  var str= "<p class='send'><img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+result+"'><ion-icon name='download'></ion-icon></a><ion-icon class='chatdelete' name='close-outline' class='chat-off'></ion-icon></p>"
 		  $(document).find(".job-chat").append(str)
 		  $(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat').scrollHeight);
 	}
 	
 	function showUploadFileSendSocket(result,thisChatRoom_num){
-		  var str= "<img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+item.upload_name+"'><button name='button'>download</button></a></p>"
+		  var str= "<img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+result+"'><ion-icon name='download'></ion-icon></a></p>"
 		  webSocketMap[thisChatRoom_num].send(thisChatRoom_num+"+"+str)
 	}
 	
@@ -502,6 +502,116 @@ $(document).ready(function(){
 //		</div>`
 //        	$(".job-team-body").append(str);
 //	})
+	
+	$(document).on("mousedown",".chatdelete",function(){
+		console.log($(this).parent().parent().parent().parent().attr('id').substr(4))
+		
+		var thisChatRoom_num = $(this).parent().parent().parent().parent().attr('id').substr(4)
+		var chat_num = $(this).parent().attr("id");
+		if(confirm("채팅을 삭제하시겠습니까?")){
+			$.ajax({
+		        url:'/team/'+team_num+'/chatroom/'+thisChatRoom_num+'/chat/'+chat_num,
+		        type:'delete',
+		        dataType:'json',
+		        success:function(result){
+		        	console.log(result);
+		        }
+	    	});// $.ajax
+		}
+		
+	})
+	
+	//채팅방 초대 모달
+	function memberInvite(result){
+		console.log("aa")
+		$.ajax({
+		        url:'/team/'+team_num+'/member/withoutchatmember?chatroom_num='+chatroom_num,
+		        type:'delete',
+		        dataType:'json',
+		        success:function(result){
+		        	console.log(result);
+		        }
+	    	});// $.ajax
+	}
+	
+	$(document).on("click",".addChatMember",function(){
+		thisChatRoom_num2 = $(this).parent().parent().parent().attr('id').substr(4)
+		$("#inviteMemberModal").modal("show")
+		
+		$.ajax({
+		        url:'/team/'+team_num+'/member/withoutchatmember?chatroom_num='+thisChatRoom_num2,
+		        type:'get',
+		        dataType:'json',
+		        success:function(result){
+		        	console.log(result);
+		        	searchTeamMemberWithOutList=result;
+		        }
+	    	});// $.ajax
+	})
+	
+	
+	 $('#inviteChatMemberSearchbar2').keyup(function(){
+			var keyword = $(this).val()
+			console.log(keyword)
+			var str=""
+				console.log(searchTeamMemberWithOutList)
+				searchTeamMemberWithOutList.forEach(function(member,index){
+					console.log(member)
+				if(((keyword==member.user.user_email.substr(0,keyword.length))
+						||(keyword==member.user.user_name.substr(0,keyword.length)))
+						&& keyword.length!=0
+						&& member.isLive==1
+						&& member_num!=member.member_num){
+					str +=`<li class="list-group-item">
+		                <div class="thumnail-profile"></div>
+		                `+member.user.user_name+"__"+member.user.user_email+`<button id="inviteChatMember2" class="badge inviteChatMember2" value="`+member.member_num+`">초대</button>
+		            </li>`
+		            
+				};
+			});
+			
+			$("#invite-chat-list2").html(str);
+		});
+	
+	$(document).on('click','.inviteChatMember2',function(e){
+		var invitemember_num = this.value;
+		$(this).parent().remove();
+		var str=""
+			searchTeamMemberWithOutList.forEach(function(member,index){
+			if(member.member_num==invitemember_num){
+				str +=`<li class="list-group-item">
+		            <div class="thumnail-profile"></div>
+		            `+member.user.user_name+"__"+member.user.user_email+`<button id="cancelInviteChatMember" class="badge " value="`+member.member_num+`">취소</button>
+		        </li>`
+		        member.isLive=0;
+				inviteChatMemberList2.push(member.member_num);
+			}
+		});
+		$("#invite-wait-list2").append(str);
+		
+	})
+	
+	//채팅방에 초대
+	$("#createRoomAction2").on('click',function(){
+		inviteChatMemberList2.forEach(function(member_num,index){
+			$.ajax({
+		        url:'/team/'+team_num+'/chatroom/'+thisChatRoom_num2+'/chatmember/new',
+		        type:'Post',
+		        contentType:'application/json',
+		        data:JSON.stringify({
+		        	"chatRoom_num": thisChatRoom_num2,
+		            "member_num": member_num
+		        }),
+		        dataType:'json',
+		        success:function(result){
+		        	console.log("member invite succss");
+		        	alert("멤버 초대 완료")
+		        	$("#inviteMemberModal").modal("hide")
+		        }
+	    	});
+		})
+	})
+	
 	
 	
 });

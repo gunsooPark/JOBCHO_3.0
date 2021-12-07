@@ -663,6 +663,35 @@
 		</div>
 		<!-- 채팅방 추가 모달 끝-->
 		
+		<!-- 채팅멤버 추가 모달 -->
+		<div class="modal" id="inviteMemberModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						채팅방 초대
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<input type="text" id="inviteChatMemberSearchbar2"
+							class="form-control" placeholder="초대할 멤버 이름 또는 이메일 입력">
+						<div class="modal-scroll">
+							<ul id="invite-chat-list2" class="list-group">
+							</ul>
+						</div>
+						<hr>
+						초대멤버
+						<div class="modal-scroll">
+							<ul id="invite-wait-list2" class="list-group">
+							</ul>
+						</div>
+						<input id="createRoomAction2" type="button" class="btn btn-success"
+							value="초대">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 채팅멤버 추가 모달 끝-->
+		
 		<!-- 게시판 생성 모달창 -->
       <div class="modal" id="boardModal" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel" aria-hidden="true">
