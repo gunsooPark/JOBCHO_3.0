@@ -39,16 +39,16 @@
 		insert into member (member_num, team_num, user_num)
          values(member_num.nextval, #{team_num}, #{user_num})
 	</insert>
-
 	
 	<select id="listTeamMembers" parameterType="int" resultMap="MemberUser">
-		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,team.user_num as t_user_num
+		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,member.islive,team.user_num as t_user_num
 		from member, users, team
 		where member.user_num=users.user_num 
 		and member.team_num=team.team_num
 		and member.team_num=#{team_num}
 		and member.islive=1
 	</select>
+	
 	
 	<update id="updateMemberInfo" parameterType="org.jobcho.domain.MemberVO">
 		update member set member_position=#{member_position} ,
@@ -79,7 +79,7 @@
 		select * from member where user_num = #{user_num} and team_num = #{team_num}
 	</select>
 	
-	<select id = "getMember" resultType = "org.jobcho.domain.MemberVO">
+	<select id = "getMember" parameterType = "int" resultType = "org.jobcho.domain.MemberVO">
 		select * from member where member_num= #{member_num}
 	</select>
 	
@@ -87,5 +87,14 @@
 		select * from USERS where not user_num in (select user_num from member where team_num=#{team_num} and islive=1)
 	</select>
 	
+	<select id="getListWithOutChatMember" parameterType="HashMap" resultMap="MemberUser">
+		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,member.islive,team.user_num as t_user_num
+		from member, users, team
+		where member.user_num=users.user_num 
+		and member.team_num=team.team_num
+    	and member.member_num not in (select member_num from chatmember where chatroom_num=#{chatroom_num})
+		and member.team_num=#{team_num}
+		and member.islive=1
+	</select>
 
 </mapper>

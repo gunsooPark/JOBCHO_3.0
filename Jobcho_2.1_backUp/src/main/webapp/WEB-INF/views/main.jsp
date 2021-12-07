@@ -418,10 +418,10 @@
 
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
-	<!-- <div class="body-content" id="body-pd-left">
+	<div class="body-content" id="body-pd-left">
 
 		<div class="job-team-body"></div>
-	</div> -->
+	</div>
 	<!-- 컨텐츠 끝-->
 	<!-- 컨텐츠 끝-->
 
@@ -442,7 +442,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="text" id="inviteUserSearchbar" class="form-control"
-							placeholder="이름 또는 이메일 입력">
+							placeholder="이름 또는 이메일 입력" autocomplete='off'>
 						<div class="modal-scroll">
 							<ul id="invite-list-group" class="list-group">
 								<li class="list-group-item">
@@ -534,11 +534,9 @@
 						오늘의 할일<input id="todo_title" type="text" class="form-control">
 						내용<input id="todo_description" type="text" class="form-control">
 						마감날짜<input id="todo_endDate" type="date" class="form-control">
-						member_num<input id="member_num" type="text" class="form-control"
-							value="${param.member_num}"> team_num<input id="team_num"
-							type="text" class="form-control" value="${param.team_num}">
-						<input id="insertTeamAction" type="button" class="btn btn-success"
-							onclick="insertTodoListAction();" value="오늘의 할일 생성">
+						<input id="member_num" type="hidden" class="form-control" value="${param.member_num}"> 
+						<input id="team_num" type="hidden" class="form-control" value="${param.team_num}">
+						<input id="insertTeamAction" type="button" class="btn btn-success" onclick="insertTodoListAction();" value="오늘의 할일 생성">
 
 					</div>
 				</div>
@@ -554,13 +552,12 @@
 					</div>
 					<div class="modal-body">
 
-						<input id="updateTodoNum" type="hidden"> 오늘의 할일<input
-							id="updateTodoTitle" type="text" class="form-control"> 내용<input
-							id="updateTodoDescription" type="text" class="form-control">
+						<input id="updateTodoNum" type="hidden"> 
+						오늘의 할일<input id="updateTodoTitle" type="text" class="form-control"> 
+						내용<input id="updateTodoDescription" type="text" class="form-control">
 						마감날짜<input id="updateTodoEnd" type="date" class="form-control">
-						<input id="updateTodoAction" type="button" class="btn btn-success"
-							value="수정"> <input id="deleteTodoAction" type="button"
-							class="btn btn-success" value="삭제">
+						<input id="updateTodoAction" type="button" class="btn btn-success" value="수정"> 
+						<input id="deleteTodoAction" type="button" class="btn btn-success" value="삭제">
 					</div>
 				</div>
 			</div>
@@ -597,6 +594,35 @@
 			</div>
 		</div>
 		<!-- 채팅방 추가 모달 끝-->
+		
+		<!-- 채팅멤버 추가 모달 -->
+		<div class="modal" id="inviteMemberModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						채팅방 초대
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<input type="text" id="inviteChatMemberSearchbar2"
+							class="form-control" placeholder="초대할 멤버 이름 또는 이메일 입력">
+						<div class="modal-scroll">
+							<ul id="invite-chat-list2" class="list-group">
+							</ul>
+						</div>
+						<hr>
+						초대멤버
+						<div class="modal-scroll">
+							<ul id="invite-wait-list2" class="list-group">
+							</ul>
+						</div>
+						<input id="createRoomAction2" type="button" class="btn btn-success"
+							value="초대">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 채팅멤버 추가 모달 끝-->
 		
 		<!-- 게시판 생성 모달창 -->
       <div class="modal" id="boardModal" tabindex="-1" role="dialog"
@@ -792,8 +818,8 @@
         	var team_num=${param.team_num}; 
         	
         	//로그인한 유저 넘버
-        	var user_num=$("#authUserNum").val();
-        	user_num=3;
+        	var user_num=$("#userNum").val();
+        	
         	//컨텐츠바디에 현재팀의 멤버리스트 출력
         	function showMemberList(result){
         		str=""
