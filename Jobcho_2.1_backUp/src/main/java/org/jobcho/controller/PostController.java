@@ -111,7 +111,7 @@ public class PostController {
 	//게시글 수정
 	@PostMapping("/update")
 	public String updatePost(PostVO post, RedirectAttributes rttr, @ModelAttribute("cri") Criteria cri,
-												@RequestParam("team_num") int team_num, 
+												@RequestParam("team_num") int team_num, Model model,
 												@RequestParam("member_num") int member_num) {
 		
 		log.info("게시글 수정: " + post.getPost_num());
@@ -121,6 +121,7 @@ public class PostController {
 		}
 		
 		BoardVO board =  boardService.getBoard(post.getBoard_num());
+		System.out.println("게시글 수정 보드넘: " + board);
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
@@ -129,7 +130,7 @@ public class PostController {
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("member_num", post.getMember_num());
 		rttr.addAttribute("team_num", team_num);
-		rttr.addAttribute("board", board);
+		model.addAttribute("board", board);
 		
 		return "redirect:/post/list";
 	}
