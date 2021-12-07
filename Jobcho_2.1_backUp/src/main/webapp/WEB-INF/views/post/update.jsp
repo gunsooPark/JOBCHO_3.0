@@ -93,6 +93,12 @@ $(document).ready(function() {
 		
 		 //삭제버튼 클릭 시
 		if(operation === 'remove'){
+			
+			if(!confirm("정말로 삭제하시겠습니까?")){
+	   			alert("취소되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
+			
 			alert("게시글이 삭제되었습니다.");
 			formObj.attr("action", "/post/delete");
 		}
