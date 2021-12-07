@@ -3,6 +3,7 @@ package org.jobcho.controller;
 
 import java.util.HashMap;
 
+import org.jobcho.domain.BoardVO;
 import org.jobcho.domain.Criteria;
 import org.jobcho.domain.PageInfo;
 import org.jobcho.domain.PostVO;
@@ -38,6 +39,7 @@ public class PostController {
 											@RequestParam("member_num") int member_num){	
 	
 		int total = service.getTotalCount(board_num);
+		
 		
 		log.info("게시글 리스트");
 		log.info("전체 글 수: " + total);
