@@ -15,6 +15,7 @@ public class ChatVO {
 	private String chat_contents;
 	private Date chat_date;
 	private int islive;
+	private String upload_name;
 	
 	private ChatMemberVO chatMember;
 }
