@@ -444,7 +444,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="text" id="inviteUserSearchbar" class="form-control"
-							placeholder="이름 또는 이메일 입력">
+							placeholder="이름 또는 이메일 입력" autocomplete='off'>
 						<div class="modal-scroll">
 							<ul id="invite-list-group" class="list-group">
 								<li class="list-group-item">
