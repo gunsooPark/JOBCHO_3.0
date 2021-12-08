@@ -33,9 +33,10 @@
 	</update>
 	
 	
-	<select id="deleteBoard" parameterType="int">
-		DELETE FROM board WHERE board_num = #{board_num}
-	</select> 
+	<delete id="deleteBoard" parameterType="int">
+		update board set islive = 0
+		where board_num = #{board_num}
+	</delete> 
 	
 	
 	<select id="getBoard" resultType="org.jobcho.domain.BoardVO">

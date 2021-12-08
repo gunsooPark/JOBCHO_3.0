@@ -14,6 +14,14 @@
 </div>
 <!-- /.row -->
 
+<div class="row" >
+  <div class="col-sm-7" style="margin-left: 450px">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">${board.board_info }</div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+
 <style>
 .uploadResult {
 	width: 100%;
@@ -57,14 +65,6 @@
   align-items: center;
 }
 </style>
-
-<div class="row" style="margin-top: 40px">
-  <div class="col-sm-7" style="margin-left: 450px">
-    <div class="panel panel-default">
-
-      <div class="panel-heading">${board.board_info }</div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
 
 
         <form role="form" action="/post/register" method="post">

@@ -59,12 +59,38 @@ var listBoard = (function() {
 	}
 	
 	
+	
+	
+	//게시판 삭제
+	function deleteBoard(param, callback, error) {
+		
+		$.ajax({
+			type : 'delete',
+			url : '/team/' + param.team_num+'/board/' +param.board_num,
+			success : function(deleteResult, status, xhr) {
+				if (callback) {
+					callback(deleteResult);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
+		});
+	}
+	
+	
+	
+	
+	
+	
 
 	return {  //객체로 리턴 (변수에 함수를 넣음)
 		
 		getListBoard : getListBoard,
-		insertBoard : insertBoard
-		
+		insertBoard : insertBoard,
+		deleteBoard : deleteBoard
 	};
 
 })(); //end listBoard

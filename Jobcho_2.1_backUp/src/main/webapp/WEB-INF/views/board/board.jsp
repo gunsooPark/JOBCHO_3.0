@@ -23,8 +23,6 @@
     <link rel="stylesheet" href="/resources/post_and_board/sidebar-left.css">
     <link rel="stylesheet" href="/resources/post_and_board/content.css">
     
-    
-
 
     <header>
         <div class="navbar navbar-default">

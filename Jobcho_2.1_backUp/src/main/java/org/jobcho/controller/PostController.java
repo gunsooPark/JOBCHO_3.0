@@ -42,11 +42,14 @@ public class PostController {
 											@RequestParam("team_num") int team_num, 
 											@RequestParam("member_num") int member_num){	
 	
-		int total = service.getTotalCount(board_num);
-		BoardVO board = boardService.getBoard(board_num);
+		int total = service.getTotalCount(board_num);//게시글 수 구하기
+		BoardVO board = boardService.getBoard(board_num);//게시판 이름,정보 가져오기
 		
 		log.info("게시글 리스트");
 		log.info("전체 글 수: " + total);
+		log.info("검색조건: " + cri.getType());
+		log.info("검색내용: " + cri.getKeyword());
+		
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("board_num", board_num);
