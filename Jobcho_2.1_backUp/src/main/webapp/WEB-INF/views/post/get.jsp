@@ -43,7 +43,7 @@
           <label>작성자</label> <input class="form-control" name='writer'
             value= "${post.writer} " readonly="readonly">
         </div>
-		${user_name }
+		
 		<c:if test="${post.writer eq user_name }">
 			<button data-oper='modify' class="btn btn-info">수정</button>
 		</c:if>
