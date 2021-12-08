@@ -43,7 +43,7 @@
           <label>작성자</label> <input class="form-control" name='writer'
             value= "${post.writer} " readonly="readonly">
         </div>
-	
+		${user_name }
 		<c:if test="${post.writer eq user_name }">
 			<button data-oper='modify' class="btn btn-info">수정</button>
 		</c:if>
@@ -153,6 +153,7 @@
   				<input type='hidden' name='member_num' value='<c:out value="${member_num}"/>'>
   				<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
   				<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'> 
+  				<input type='hidden' name='user_name' value='<sec:authentication property="principal.users.user_name"/>'>
 			</form>
 
 <input type='hidden' id='user_name' value='<sec:authentication property="principal.users.user_name"/>'>
