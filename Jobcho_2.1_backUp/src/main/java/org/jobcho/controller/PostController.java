@@ -1,14 +1,17 @@
 package org.jobcho.controller;
 
 
+import java.security.Principal;
 import java.util.HashMap;
 
 import org.jobcho.domain.BoardVO;
 import org.jobcho.domain.Criteria;
 import org.jobcho.domain.PageInfo;
 import org.jobcho.domain.PostVO;
+import org.jobcho.domain.UsersVO;
 import org.jobcho.service.BoardService;
 import org.jobcho.service.PostService;
+import org.jobcho.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,8 @@ public class PostController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private UsersService usersService;
 	
 	//게시글 전체 리스트 + 페이지 처리
 	@GetMapping("/list")
@@ -71,13 +76,13 @@ public class PostController {
 	public void getPost(@RequestParam("post_num") int post_num, @RequestParam("board_num") int board_num,
 									@RequestParam("team_num") int team_num,
 									@RequestParam("member_num") int member_num,
-								    @ModelAttribute("cri") Criteria cri, Model model) { //상세화면에서 목록으로 갈때 페이지처리
+								    @ModelAttribute("cri") Criteria cri, Model model){ //상세화면에서 목록으로 갈때 페이지처리
+		
 		BoardVO board = boardService.getBoard(board_num);
 		model.addAttribute("post", service.getPost(post_num));
 		model.addAttribute("team_num", team_num);
 		model.addAttribute("member_num", team_num);		
-		model.addAttribute("board", board);
-		
+		model.addAttribute("board", board);	
 	}
 	
 	
@@ -92,6 +97,8 @@ public class PostController {
 		model.addAttribute("team_num", team_num);
 		model.addAttribute("member_num", member_num);
 	}
+	
+	
 	
 	//게시글 생성 2.DB저장, 리스트로 이동
 	@PostMapping("/register")
