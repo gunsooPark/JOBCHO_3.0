@@ -22,6 +22,7 @@ public class VoteVO {
 	private int islive;
 	private int anonymously;
 	private int team_num;
+	private int member_num;
 	
 	private TeamVO team;
 	private MemberVO member;

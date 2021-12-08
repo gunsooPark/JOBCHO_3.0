@@ -31,7 +31,7 @@ public class VoteController {
 	@Autowired
 	private VoteResultService voteResultService;
 	
-	//ÅõÇ¥ »ý¼º
+	//ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
 	@PostMapping("/new")
 	public ResponseEntity<VoteVO> insertVote(@RequestBody VoteVO vote, @PathVariable("team_num") int team_num){
 		vote.setTeam_num(team_num);
@@ -44,7 +44,7 @@ public class VoteController {
 		
 	}
 	
-	//ÅõÇ¥ÇÏ±â
+	//ï¿½ï¿½Ç¥ï¿½Ï±ï¿½
 	@PostMapping("/{vote_num}/insert")
 	public ResponseEntity<VoteResultVO> insertVoteResult(@RequestBody VoteResultVO voteResult, @PathVariable("vote_num") int vote_num){
 		voteResult.setVote_num(vote_num);
@@ -57,26 +57,44 @@ public class VoteController {
 		
 	}
 	
-	//ÅõÇ¥ ¸ñ·Ïº¸±â
+	//ï¿½ï¿½Ç¥ ï¿½ï¿½Ïºï¿½ï¿½ï¿½
 	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<VoteVO>> listVote(@PathVariable("team_num") int team_num){
 		return new ResponseEntity<List<VoteVO>>(service.listVote(team_num), HttpStatus.OK);
 	}
 	
-	//Æ¯Á¤ ÅõÇ¥ °á°ú º¸±â
+	//Æ¯ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@GetMapping(value = "/{vote_num}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<VoteResultVO> getVote(@PathVariable("vote_num") int vote_num){
-				
-		return new ResponseEntity<VoteResultVO>(voteResultService.getVoteResult(vote_num), HttpStatus.OK);
+	public ResponseEntity<VoteVO> getVote(@PathVariable("vote_num") int vote_num){
+		return new ResponseEntity<VoteVO>(service.getVote(vote_num), HttpStatus.OK);
 	}
 	
-	//Æ¯Á¤ ÅõÇ¥ÇÑ ¸â¹ö È®ÀÎ
-	@GetMapping(value = "/{vote_num}/member", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<VoteResultVO>> getVoteResultMember(@PathVariable("vote_num") int vote_num){
-		return new ResponseEntity<List<VoteResultVO>>(voteResultService.getVoteResultMember(vote_num), HttpStatus.OK);
+	//Æ¯ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	@GetMapping(value = "/{vote_num}/result", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<VoteResultVO> getVoteResult(@PathVariable("vote_num") int vote_num){
+				
+		VoteResultVO voteResult = new VoteResultVO();
+		VoteVO vote = new VoteVO();
+		
+		vote = service.getVote(vote_num);
+		voteResult = voteResultService.getVoteResult(vote_num);
+		
+		voteResult.setVote_content1(vote.getVote_content1());
+		voteResult.setVote_content2(vote.getVote_content2());
+		voteResult.setVote_content3(vote.getVote_content3());
+		voteResult.setVote_content4(vote.getVote_content4());
+		voteResult.setVote_content5(vote.getVote_content5());
+		
+		return new ResponseEntity<VoteResultVO>(voteResult, HttpStatus.OK);
+	}
+	
+	//Æ¯ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+	@GetMapping(value = "/{vote_num}/result/member", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<Integer>> getVoteResultMember(@PathVariable("vote_num") int vote_num){
+		return new ResponseEntity<List<Integer>>(voteResultService.getVoteResultMember(vote_num), HttpStatus.OK);
 	}
 
-	//ÅõÇ¥ ¸¶°¨
+	//ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½
 	@DeleteMapping(value = "/{vote_num}/end", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<VoteVO> endVote(@PathVariable("vote_num") int vote_num){
 		
@@ -87,5 +105,60 @@ public class VoteController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
+	
+	//1ë²ˆ íˆ¬í‘œ ê²°ê³¼ ë³´ê¸°(ë©¤ë²„)
+	@GetMapping(value = "/{vote_num}/result/1", produces={MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<VoteResultVO>> getContent1ResultMember(@PathVariable("vote_num") int vote_num){
+		VoteResultVO voteResult = new VoteResultVO();
+		
+		
+		voteResult.setVote_num(vote_num);
+		
+		return new ResponseEntity<List<VoteResultVO>>(voteResultService.getContent1ResultMember(voteResult), HttpStatus.OK);
+	}
+	
+	//2ë²ˆ íˆ¬í‘œ ê²°ê³¼ ë³´ê¸°(ë©¤ë²„)
+		@GetMapping(value = "/{vote_num}/result/2", produces={MediaType.APPLICATION_JSON_UTF8_VALUE})
+		public ResponseEntity<List<VoteResultVO>> getContent2ResultMember(@PathVariable("vote_num") int vote_num){
+			VoteResultVO voteResult = new VoteResultVO();
+			
+			
+			voteResult.setVote_num(vote_num);
+			
+			return new ResponseEntity<List<VoteResultVO>>(voteResultService.getContent2ResultMember(voteResult), HttpStatus.OK);
+		}
+		
+		//3ë²ˆ íˆ¬í‘œ ê²°ê³¼ ë³´ê¸°(ë©¤ë²„)
+		@GetMapping(value = "/{vote_num}/result/3", produces={MediaType.APPLICATION_JSON_UTF8_VALUE})
+		public ResponseEntity<List<VoteResultVO>> getContent3ResultMember(@PathVariable("vote_num") int vote_num){
+			VoteResultVO voteResult = new VoteResultVO();
+			
+			
+			voteResult.setVote_num(vote_num);
+			
+			return new ResponseEntity<List<VoteResultVO>>(voteResultService.getContent3ResultMember(voteResult), HttpStatus.OK);
+		}
+		
+		//4ë²ˆ íˆ¬í‘œ ê²°ê³¼ ë³´ê¸°(ë©¤ë²„)
+		@GetMapping(value = "/{vote_num}/result/4", produces={MediaType.APPLICATION_JSON_UTF8_VALUE})
+		public ResponseEntity<List<VoteResultVO>> getContent4ResultMember(@PathVariable("vote_num") int vote_num){
+			VoteResultVO voteResult = new VoteResultVO();
+			
+			
+			voteResult.setVote_num(vote_num);
+			
+			return new ResponseEntity<List<VoteResultVO>>(voteResultService.getContent4ResultMember(voteResult), HttpStatus.OK);
+		}
+		
+		//5ë²ˆ íˆ¬í‘œ ê²°ê³¼ ë³´ê¸°(ë©¤ë²„)
+		@GetMapping(value = "/{vote_num}/result/5", produces={MediaType.APPLICATION_JSON_UTF8_VALUE})
+		public ResponseEntity<List<VoteResultVO>> getContent5ResultMember(@PathVariable("vote_num") int vote_num){
+			VoteResultVO voteResult = new VoteResultVO();
+			
+			
+			voteResult.setVote_num(vote_num);
+			
+			return new ResponseEntity<List<VoteResultVO>>(voteResultService.getContent5ResultMember(voteResult), HttpStatus.OK);
+		}
 	
 }

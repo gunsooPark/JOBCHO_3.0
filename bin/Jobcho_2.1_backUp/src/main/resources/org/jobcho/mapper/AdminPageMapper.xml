@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jobcho.mapper.AdminPageMapper">
+	<resultMap type="org.jobcho.domain.AccessLogVO" id="AccesslogMap">
+		<result property="log_num" column="log_num"/>
+		<result property="log_date" column="log_date"/>
+		<result property="member_num" column="member_num"/>
+		<association property="member" javaType="org.jobcho.domain.MemberVO">
+			<id property="member_num" column="member_num"/>
+			<result property="member_position" column="member_position"/>
+			<result property="team_num" column="team_num"/>
+			<result property="user_num" column="user_num"/>
+		</association>
+	</resultMap>
+
+	<select id="getAdminPageDau" parameterType="int" resultMap="AccesslogMap">
+		select log_num, log_date, member.member_num, member_position, team_num, user_num 
+		from accesslog, member 
+		where accesslog.MEMBER_NUM =member.MEMBER_NUM 
+		and member.TEAM_NUM = #{team_num}
+		and to_char(accesslog.LOG_DATE,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+	</select>
+	
+	<select id="getAdminPageDauCount" parameterType="int" resultType="int">
+		select count(*) from accesslog, member 
+		where accesslog.MEMBER_NUM =member.MEMBER_NUM 
+		and member.TEAM_NUM = #{team_num}
+		and to_char(accesslog.LOG_DATE,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+		GROUP BY to_char(accesslog.LOG_DATE,'yyyy/MM/dd')
+	</select>
+	
+	<select id="getAdminPageMau" parameterType="int" resultMap="AccesslogMap">
+		select log_num, log_date, member.member_num, member_position, team_num, user_num 
+		from accesslog, member 
+		where accesslog.MEMBER_NUM =member.MEMBER_NUM 
+		and member.TEAM_NUM = #{team_num}
+		and to_char(accesslog.LOG_DATE,'yyyy/MM') = to_char(sysdate,'yyyy/MM')
+	</select>
+	
+	<select id="getAdminPageMauCount" parameterType="int" resultType="int">
+		select count(*) from accesslog, member 
+		where accesslog.MEMBER_NUM =member.MEMBER_NUM 
+		and member.TEAM_NUM = #{team_num}
+		and to_char(accesslog.LOG_DATE,'yyyy/MM') = to_char(sysdate,'yyyy/MM')
+		GROUP BY to_char(accesslog.LOG_DATE,'yyyy/MM')
+	</select>
+	
+	<select id="getAdminPageUsagePeriod" parameterType="HashMap" resultType="org.jobcho.domain.UsageCountVO">
+		select * from
+		<choose>
+			<when test="_parameter==null">
+				(select count(*) AS postCount from post, member 
+					where post.MEMBER_NUM=member.MEMBER_NUM 
+					and member.TEAM_NUM=#{team_num}) ,
+				(select count(*) as replyCount from reply, member
+					where reply.MEMBER_NUM=member.MEMBER_NUM 
+					and member.TEAM_NUM=#{team_num}) ,
+				(select count(*) as todoCount from todolist, member
+					where todolist.MEMBER_NUM=member.MEMBER_NUM 
+					and member.TEAM_NUM=#{team_num})
+			</when>
+			<otherwise>
+				(select count(*) AS postCount from post, member 
+					where post.MEMBER_NUM=member.MEMBER_NUM 
+					and member.TEAM_NUM=#{team_num} 
+					and post_date BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') 
+						AND TO_DATE(#{endDate}, 'YYYY-MM-DD')) ,
+				
+				(select count(*) as replyCount from reply, member
+					where reply.MEMBER_NUM=member.MEMBER_NUM 
+					and member.TEAM_NUM=#{team_num}  
+					and reply_date BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') 
+						AND TO_DATE(#{endDate}, 'YYYY-MM-DD')) ,
+				
+				(select count(*) as todoCount from todolist, member
+					where todolist.MEMBER_NUM=member.MEMBER_NUM 
+					and member.TEAM_NUM=#{team_num}  
+					and todo_startDate BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') 
+						AND TO_DATE(#{endDate}, 'YYYY-MM-DD')) 
+			</otherwise>
+		</choose>
+	</select>
+	 
+	<select id="getAdminPageUsageDay" parameterType="int" resultType="org.jobcho.domain.UsageCountVO">
+		select * from
+		(select count(*) AS postCount from post, member 
+			where post.MEMBER_NUM=member.MEMBER_NUM 
+			and member.TEAM_NUM=#{team_num}
+			and to_char(post.post_DATE,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+			),
+		(select count(*) as replyCount from reply, member
+			where reply.MEMBER_NUM=member.MEMBER_NUM 
+			and member.TEAM_NUM=#{team_num}
+			and to_char(reply.reply_DATE,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+			),
+		(select count(*) as todoCount from todolist, member
+			where todolist.MEMBER_NUM=member.MEMBER_NUM 
+			and member.TEAM_NUM=#{team_num}
+			and to_char(todolist.todo_startdate,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+			)
+	</select>
+	
+	<select id="getAdminPageUsageMonth" parameterType="int" resultType="org.jobcho.domain.UsageCountVO">
+		select * from
+		(select count(*) AS postCount from post, member 
+			where post.MEMBER_NUM=member.MEMBER_NUM 
+			and member.TEAM_NUM=#{team_num}
+			and to_char(post.post_DATE,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+			) ,
+		(select count(*) as replyCount from reply, member
+			where reply.MEMBER_NUM=member.MEMBER_NUM 
+			and member.TEAM_NUM=#{team_num}
+			and to_char(reply.reply_DATE,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+			) ,
+		(select count(*) as todoCount from todolist, member
+			where todolist.MEMBER_NUM=member.MEMBER_NUM 
+			and member.TEAM_NUM=#{team_num}
+			and to_char(todolist.todo_startdate,'yyyy/MM/dd') =to_char(sysdate,'yyyy/MM/dd')
+			)
+	</select>
+	 
+	 
+</mapper>

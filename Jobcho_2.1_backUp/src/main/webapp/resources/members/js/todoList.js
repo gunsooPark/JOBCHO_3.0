@@ -20,7 +20,7 @@ $(document).ready(function(){
 	        	showTodoList(result);
 	        }
 	    });//$.ajax
-	}
+	}//end getTodoList
 	
 	//초기화면 출력
 	getTodoList();
@@ -46,6 +46,48 @@ $(document).ready(function(){
 		})
 		$(".job-todolist-wrap").html(str);
 	}//showTodoList
+	
+	//삭제된 오늘의 할일 리스트 뽑아오는 ajax
+	function getDeleteTodoList(){
+		console.log("getDeleteTodoList 함수 실행");
+		$.ajax({
+	        url:'/team/'+team_num+'/todo/deletelist/'+member_num,
+	        type:'Get',
+	        dataType:'json',
+	        success:function(result){
+	        	console.log(result);
+	        	showDeleteTodoList(result);
+	        }
+	    });//$.ajax
+	}//end getTodoList
+	
+	getDeleteTodoList();
+	
+	function showDeleteTodoList(result){
+		console.log("showDeleteTodoList 함수실행");
+		str="";
+		result.forEach(function(item){
+			console.log(item)
+			str+=`<div class="nav-search-result active-right" data-air="`+item.todo_num+`">
+                    <div class="result-container">
+                        <div class="result-image" style="background-image: url('99D279435B3D788602.jfif');"></div>
+                        <div>
+                             <p  class="team-profile-email">시작날짜 : `+item.todo_startDate+`</p>
+                             <p class="team-profile-email">마감날짜 : `+item.todo_endDate+`</p>
+                            <p class="team-profile-email">제목 : `+item.todo_title+`</p>
+                            <p class="team-profile-email">설명 : `+item.todo_description+`</p>
+                            <button class="" id="">복구</button>
+                            
+                        </div>
+                    </div>
+                </div>
+                <hr>`
+		})
+		$(".job-todoDeletelist-wrap").html(str);
+	}//showTodoList
+	
+	
+	
 	
 	//여러개 불러오는 ajax
 	function showUpdateTodoInfo(todo_num){
@@ -174,6 +216,12 @@ $(document).ready(function(){
 		
 	}//end insertTodoListAction
 	
+	//삭제된 오늘의 할일 모달 띄우기 
+	$(document).on("click","#selectTodoDeleteList", function(){
+		$("#selectTodoDeleteListModal").modal("show");
+		getDeleteTodoList();
+	})
+	
 	
 	//수정모달 띄우기 
 	$(document).on("click",".todoUpdateModalShow", function(){
@@ -181,6 +229,8 @@ $(document).ready(function(){
 		console.log("this : " + $(this).data('air'));
 		showUpdateTodoInfo($(this).data('air'));
 	})
+	
+	
 	
 	//오늘의 할일 수정버튼 눌렀을 때 수정시키는 함수 실행
 	$("#updateTodoAction").on("click", function(){
@@ -198,6 +248,8 @@ $(document).ready(function(){
 		insertTodoListAction();
 		getTodoList();
 	})
+	
+	
 	
 });//end document.ready
 

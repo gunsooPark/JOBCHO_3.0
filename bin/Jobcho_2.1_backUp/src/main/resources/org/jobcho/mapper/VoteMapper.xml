@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jobcho.mapper.VoteMapper">
+
+<insert id = "insertVote" parameterType = "org.jobcho.domain.VoteVO">
+	insert into vote(vote_num, team_num, member_num, vote_name, 
+							vote_content1, vote_content2, vote_content3, vote_content4,
+							vote_content5, vote_date, islive, anonymously)
+							values(
+							vote_num.nextval, #{team_num}, #{member_num}, #{vote_name},
+							#{vote_content1}, #{vote_content2}, #{vote_content3}, #{vote_content4},
+							#{vote_content5}, default, default, default 
+							)
+</insert>
+
+<select id="listVote" parameterType="int" resultType="org.jobcho.domain.VoteVO">
+	select * from vote where team_num = #{team_num}
+</select>
+
+<select id = "getVote" parameterType="int" resultType="org.jobcho.domain.VoteVO">
+	select * from vote where vote_num = #{vote_num}
+</select>
+
+<update id="endVote" parameterType = "int">
+	update vote set islive = 0 where vote_num = #{vote_num}
+</update>
+
+</mapper>

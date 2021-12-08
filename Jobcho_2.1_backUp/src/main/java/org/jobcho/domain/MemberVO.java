@@ -16,6 +16,7 @@ public class MemberVO {
 	private int user_num;
 	private int isLive;
 	private Date member_date;
+	private String profile_name;
 	
 	private UsersVO user;
 	private TeamVO team;

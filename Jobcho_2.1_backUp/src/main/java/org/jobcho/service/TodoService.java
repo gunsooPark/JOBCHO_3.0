@@ -12,4 +12,6 @@ public interface TodoService {
 	public int updateTodo(TodoVO todo);
 	public int deleteTodo(int todo_num);
 	public List<TodoVO> selectTodoList2(Map<String, Integer> map);
+	public List<TodoVO> selectTodoDeleteList(Map<String, Integer> map);
+	public int restoreTodoList(int todo_num);
 }

@@ -74,6 +74,8 @@
 		</div>
 
 	</header>
+    
+    
 
 	<!--왼쪽 사이드바-->
 	<!--왼쪽 사이드바-->
@@ -324,6 +326,7 @@
 			<div class="nav-search-title">할일</div>
 			<div class="nav-search-content">
 				<div id="createToDo" style="cursor:pointer">➕할일생성</div>
+				<div id="selectTodoDeleteList" style="cursor:pointer">완료된 할일보기</div>
 				<ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
@@ -370,14 +373,14 @@
 	<!--오른쪽 사이드서치바2 끝-->
 	<!--오른쪽 사이드서치바2 끝-->
 
-	<!--오른쪽 사이드서치바3-->
+<!--오른쪽 사이드서치바3-->
 	<!--오른쪽 사이드서치바3-->
 	<!--오른쪽 사이드서치바3-->
 	<div class="search-navbar-right navbar-font-search" id="navbar-search3">
 		<nav class="nav-search">
-			<div class="nav-search-title">할일</div>
+			<div class="nav-search-title">투표</div>
 			<div class="nav-search-content">
-				<div id="createToDo">➕할일생성</div>
+				<div id="createVote">➕투표생성</div>
 				<ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
@@ -399,6 +402,7 @@
 
 				</ul>
 				<div class="nav-search-result-scroll">
+				<div class="job-vote-wrap" style="cursor:pointer">
 					<div class="nav-search-result active-right">
 						<div class="result-container">
 							<div class="result-image"
@@ -413,74 +417,6 @@
 						</div>
 					</div>
 					<hr>
-					<div class="nav-search-result active-right">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result ">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result ">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result ">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="nav-search-result active-right">
-						<div class="result-container">
-							<div class="result-image"
-								style="background-image: url('99D279435B3D788602.jfif');"></div>
-							<div>
-								<p class="team-profile-name">최지훈</p>
-								<p class="team-profile-email">2015/21/505</p>
-								<p class="team-profile-email">이건또 어떻게</p>
-								<p class="team-profile-email">공지사항</p>
-
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -490,12 +426,13 @@
 	<!--오른쪽 사이드서치바3 끝-->
 
 
+
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
-	<!-- <div class="body-content" id="body-pd-left">
+	<div class="body-content" id="body-pd-left">
 
 		<div class="job-team-body"></div>
-	</div> -->
+	</div>
 	<!-- 컨텐츠 끝-->
 	<!-- 컨텐츠 끝-->
 
@@ -516,7 +453,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="text" id="inviteUserSearchbar" class="form-control"
-							placeholder="이름 또는 이메일 입력">
+							placeholder="이름 또는 이메일 입력" autocomplete='off'>
 						<div class="modal-scroll">
 							<ul id="invite-list-group" class="list-group">
 								<li class="list-group-item">
@@ -537,6 +474,12 @@
 					<div class="modal-header">
 						직책수정
 						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+					<div id="profile_img">
+						<input type="file" name='uploadFile' id="profile_img_upload">
+						<button id="profile_img_upload_action">프로필 업로드</button>
+						<img src="">
 					</div>
 					<div class="modal-body">
 						<input type="text" class="form-control updatePosition"
@@ -608,11 +551,9 @@
 						오늘의 할일<input id="todo_title" type="text" class="form-control">
 						내용<input id="todo_description" type="text" class="form-control">
 						마감날짜<input id="todo_endDate" type="date" class="form-control">
-						member_num<input id="member_num" type="text" class="form-control"
-							value="${param.member_num}"> team_num<input id="team_num"
-							type="text" class="form-control" value="${param.team_num}">
-						<input id="insertTeamAction" type="button" class="btn btn-success"
-							onclick="insertTodoListAction();" value="오늘의 할일 생성">
+						<input id="member_num" type="hidden" class="form-control" value="${param.member_num}"> 
+						<input id="team_num" type="hidden" class="form-control" value="${param.team_num}">
+						<input id="insertTeamAction" type="button" class="btn btn-success" onclick="insertTodoListAction();" value="오늘의 할일 생성">
 
 					</div>
 				</div>
@@ -628,13 +569,12 @@
 					</div>
 					<div class="modal-body">
 
-						<input id="updateTodoNum" type="hidden"> 오늘의 할일<input
-							id="updateTodoTitle" type="text" class="form-control"> 내용<input
-							id="updateTodoDescription" type="text" class="form-control">
+						<input id="updateTodoNum" type="hidden"> 
+						오늘의 할일<input id="updateTodoTitle" type="text" class="form-control"> 
+						내용<input id="updateTodoDescription" type="text" class="form-control">
 						마감날짜<input id="updateTodoEnd" type="date" class="form-control">
-						<input id="updateTodoAction" type="button" class="btn btn-success"
-							value="수정"> <input id="deleteTodoAction" type="button"
-							class="btn btn-success" value="삭제">
+						<input id="updateTodoAction" type="button" class="btn btn-success" value="수정"> 
+						<input id="deleteTodoAction" type="button" class="btn btn-success" value="삭제">
 					</div>
 				</div>
 			</div>
@@ -672,6 +612,35 @@
 		</div>
 		<!-- 채팅방 추가 모달 끝-->
 		
+		<!-- 채팅멤버 추가 모달 -->
+		<div class="modal" id="inviteMemberModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						채팅방 초대
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<input type="text" id="inviteChatMemberSearchbar2"
+							class="form-control" placeholder="초대할 멤버 이름 또는 이메일 입력">
+						<div class="modal-scroll">
+							<ul id="invite-chat-list2" class="list-group">
+							</ul>
+						</div>
+						<hr>
+						초대멤버
+						<div class="modal-scroll">
+							<ul id="invite-wait-list2" class="list-group">
+							</ul>
+						</div>
+						<input id="createRoomAction2" type="button" class="btn btn-success"
+							value="초대">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 채팅멤버 추가 모달 끝-->
+		
 		<!-- 게시판 생성 모달창 -->
       <div class="modal" id="boardModal" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel" aria-hidden="true">
@@ -701,7 +670,108 @@
   </div>
 </div><!--  게시판 생성모달 끝-->
 
-
+		<!-- 투표 생성 모달 -->
+	<div class = "modal" id ="insertVoteModal" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 생성
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						
+						투표 제목<input id="vote_name" type="text" class="form-control"> 
+						투표 내용1<input id="vote_content1" type="text" class="form-control">
+						투표 내용2<input id="vote_content2" type="text" class="form-control">
+						투표 내용3<input id="vote_content3" type="text" class="form-control">
+						투표 내용4<input id="vote_content4" type="text" class="form-control">
+						투표 내용5<input id="vote_content5" type="text" class="form-control">
+						<input id="member_num" type="hidden" class="form-control" value="${param.member_num}">
+						<input id="team_num" type="hidden" class="form-control" value="${param.team_num}">
+ 						<input id="insertVoteAction" type="button" class="btn btn-success" value="투표 생성">
+						
+					</div>
+				</div>
+			</div>
+	</div>	
+	<!-- 투표 생성 모달 끝 -->
+	
+	<!-- 투표창 확인 모달 -->
+	<div class = "modal" id ="voting" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 확인
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-wrap" style="cursor:pointer">	
+						
+						
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>	
+	<!-- 투표창 확인 모달 끝 -->
+	
+	<!-- 투표결과 확인 모달 -->
+	<div class = "modal" id ="voteResult" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 결과
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-view-wrap" style="cursor:pointer">	
+						
+						
+					</div>
+				</div>
+			</div>
+	</div>	
+	</div>
+	<!-- 투표결과 확인 모달 끝 -->
+	
+		<!-- 투표결과 멤버확인 모달 -->
+	<div class = "modal" id ="voteResultMember" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 결과
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
+						
+						<div class="jo"></div>
+						
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	
+	<!--삭제된 오늘의 할일 모달 -->
+	<div class = "modal" id ="selectTodoDeleteListModal" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						완료된 오늘의 할일
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
+						<div class="job-todoDeletelist-wrap" style="cursor:pointer">
+							
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<!--삭제된 오늘의 할일 모달 끝 -->
+	
 		
 		<!-- 게시판 board_num 계속 유지시키기 -->
     	<form id='actionForm' action="/post/list" method='get'>
@@ -713,7 +783,13 @@
 		
 		
 
-	</div>
+	</div> <!-- 전체모달 div마지막 -->
+		
+		
+		
+		
+
+
 	
 	<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 	<script src="/resources/main/css/sidebar-right.js"></script>
@@ -722,7 +798,8 @@
 	<script src="/resources/chat/js/onchat.js"></script>
 	<script src="/resources/chat/js/dragable.js"></script>
 	<script src="/resources/board/board.js?version=20211206"></script>
-	
+	<script src="/resources/members/js/vote.js"></script>
+	<script src="/resources/members/js/memberProfile.js"></script>
 	<!-- 외부js에 변수 전달 -->
 	<input type="hidden" id="userName"
 		value="<sec:authentication property="principal.users.user_name"/>">
@@ -756,6 +833,7 @@
 		updataMemberNum = this.value
 	});
 	
+	
 	//로그아웃 클릭시 로그아웃 되도록  
 	$(document).on("click","#LogOutAction" ,function(e){
 		e.preventDefault();
@@ -777,8 +855,10 @@
         	var team_num=${param.team_num}; 
         	
         	//로그인한 유저 넘버
-        	var user_num=$("#authUserNum").val();
-        	user_num=3;
+        	var user_num=$("#userNum").val();
+        	
+        	
+        	
         	//컨텐츠바디에 현재팀의 멤버리스트 출력
         	function showMemberList(result){
         		str=""
@@ -790,8 +870,8 @@
         			result.forEach(function(item){
 	                    if(item.user.user_num==user_num){
 	                    	str =`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -804,8 +884,8 @@
                             </div>`+str;
 	                    }else{
 	                    	str +=`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -825,8 +905,8 @@
         			result.forEach(function(item){
         				if(item.user.user_num==user_num){
 	                    	str =`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -838,8 +918,8 @@
                             </div>`+str;
 	                    }else{
 	                    	str +=`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -932,6 +1012,7 @@
             $("#updateMemberAction").on("click", function(e){
             	console.log({"member_position":$(".updatePosition").val()})
             	var position = $(".updatePosition").val()
+
             	$.ajax({
                     url:'/team/'+team_num+'/member/'+updataMemberNum,
                     type:'put',
@@ -948,6 +1029,30 @@
                 });
             	
             	
+            });
+            
+            $("#updateMemberAction").on("click", function(e){
+            	var file = $(this).parent().parent().find("input[name='uploadFile']")[0].files;
+            	console.log($(this).parent().parent().find("input[name='uploadFile']")[0].files)
+    			$(this).parent().find("input[name='uploadFile']").clone();
+    			
+    			  console.log( file)
+    			  var formData = new FormData();
+    			  for(var i = 0; i<file.length; i++){
+    				  formData.append("uploadFile", file[i])
+    			  }
+            	$.ajax({
+			        url:'/team/'+team_num+'/member/'+updataMemberNum+'/uploadprofile',
+			        type:'Post',
+			        processData:false,
+			        contentType:false,
+			        data:formData,
+			        success:function(result){
+			        	console.log(result)
+			        	console.log("upload succss");
+			        	
+			        }
+		  		});// $.ajax
             });
             
             //초대할 유저검색 모달 호출
@@ -1136,7 +1241,12 @@ $(document).ready(function(){
 }); //end document.ready1
 </script>
     
-
+<style>
+#selectTodoDeleteListModal .modal-body{
+height: 400px;
+overflow-y : scroll;
+}
+</style>
 
 
 </body>

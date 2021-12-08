@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 접근 제한 메세지 관리 -->
+	<bean id="customAccessDenied" class="org.jobcho.security.CustomAccessDeniedHandler"></bean>
+	<!-- Success 핸들러 -->
+	<bean id="customLoginSuccess" class="org.jobcho.security.CustomLoginSuccessHandler"></bean>
+	<!-- 패스워드 인코더 -> 암호화 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	
+	<!-- UsersVO객체와 연결 -->
+	<bean id="customUserDetailsService" class="org.jobcho.security.CustomUserDetailsService"></bean>
+
+	
+
+	<security:http>
+	
+		<!-- URL 접근 설정 -->
+		<!-- 회원가입폼 -> 모든사용자 -->
+		<security:intercept-url pattern="/users/register" access="permitAll"/>
+		<!-- 비밀번호 찾기 첫번째 -> 모든사용자 -->
+		<security:intercept-url pattern="/users/findPw_1" access="permitAll"/>
+		<!-- 비밀번호 찾기 두번째 -> 모든사용자 -->
+		<security:intercept-url pattern="/users/findPw_2" access="permitAll"/>
+		<!-- 비밀번호 찾기 세번째 -> 모든사용자 -->
+		<security:intercept-url pattern="/users/findPw_3" access="permitAll"/>
+		<!-- 로그인하고 나서 다음화면 -> 로그인된사람 -->
+		<security:intercept-url pattern="/team/choose" access="hasRole('ROLE_MEMBER')"/>
+		<!-- 팀선택후 다음화면 -->
+		<security:intercept-url pattern="/team/choose" access="hasRole('ROLE_MEMBER')"/>
+		
+		<!-- 게시판쪽 -->
+		<security:intercept-url pattern="/post/list" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/post/get" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/post/update" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/post/register" access="hasRole('ROLE_MEMBER')"/>
+	
+	
+		<!-- 로그인 -->
+		<!-- <security:form-login/> -->
+		<security:form-login login-page="/users/login"  authentication-success-handler-ref="customLoginSuccess"/>
+				
+		<!-- 로그아웃 -->
+		<security:logout logout-url="/customLogout" invalidate-session="true"/>		
+				
+		<!-- 접근제한 -->
+		<security:access-denied-handler  ref="customAccessDenied"/>
+		
+		
+		<!-- postMan으로 할때 주석 풀어야됨 -->
+		 <security:csrf disabled="true"/>
+		
+	</security:http>
+
+
+<!-- 	<security:authentication-manager>
+	
+		<security:authentication-provider>
+		
+			<security:user-service>
+				<security:user name="gunsoo523@gmail.com" password="{noop}member" authorities="ROLE_MEMBER"/>
+			</security:user-service>
+		
+		패스워드 인코더 -> 암호화
+		<security:password-encoder ref="bcryptPasswordEncoder"/>
+		
+		</security:authentication-provider>
+	
+	</security:authentication-manager> -->
+
+	<!-- db연결 -->
+ 	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+		
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		</security:authentication-provider>
+		
+	</security:authentication-manager>
+	
+	
+
+</beans>
+
+
+
+
+
+
+
+
+
