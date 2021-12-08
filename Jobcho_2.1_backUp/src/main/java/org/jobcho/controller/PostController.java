@@ -76,6 +76,7 @@ public class PostController {
 	public void getPost(@RequestParam("post_num") int post_num, @RequestParam("board_num") int board_num,
 									@RequestParam("team_num") int team_num,
 									@RequestParam("member_num") int member_num,
+									@RequestParam("user_name") String user_name,
 								    @ModelAttribute("cri") Criteria cri, Model model){ //상세화면에서 목록으로 갈때 페이지처리
 		
 		BoardVO board = boardService.getBoard(board_num);
@@ -83,6 +84,7 @@ public class PostController {
 		model.addAttribute("team_num", team_num);
 		model.addAttribute("member_num", team_num);		
 		model.addAttribute("board", board);	
+		model.addAttribute("user_name", user_name);	
 	}
 	
 	
