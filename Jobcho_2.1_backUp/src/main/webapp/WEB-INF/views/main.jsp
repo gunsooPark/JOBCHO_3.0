@@ -326,6 +326,7 @@
 			<div class="nav-search-title">할일</div>
 			<div class="nav-search-content">
 				<div id="createToDo" style="cursor:pointer">➕할일생성</div>
+				<div id="selectTodoDeleteList" style="cursor:pointer">완료된 할일보기</div>
 				<ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
@@ -744,13 +745,32 @@
 					<div class="modal-body">
 					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
 						
+						<div class="jo"></div>
 						
 					</div>
 				</div>
 			</div>
-	</div>	
+		</div>	
 	</div>
-	<!-- 투표결과 멤버확인 모달 끝 -->
+	
+	<!--삭제된 오늘의 할일 모달 -->
+	<div class = "modal" id ="selectTodoDeleteListModal" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						완료된 오늘의 할일
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
+						<div class="job-todoDeletelist-wrap" style="cursor:pointer">
+							
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<!--삭제된 오늘의 할일 모달 끝 -->
 	
 		
 		<!-- 게시판 board_num 계속 유지시키기 -->
@@ -813,6 +833,7 @@
 		updataMemberNum = this.value
 	});
 	
+	
 	//로그아웃 클릭시 로그아웃 되도록  
 	$(document).on("click","#LogOutAction" ,function(e){
 		e.preventDefault();
@@ -835,7 +856,7 @@
         	
         	//로그인한 유저 넘버
         	var user_num=$("#userNum").val();
-        	user_num=2;
+        	
         	
         	
         	//컨텐츠바디에 현재팀의 멤버리스트 출력
@@ -1220,7 +1241,12 @@ $(document).ready(function(){
 }); //end document.ready1
 </script>
     
-
+<style>
+#selectTodoDeleteListModal .modal-body{
+height: 400px;
+overflow-y : scroll;
+}
+</style>
 
 
 </body>
