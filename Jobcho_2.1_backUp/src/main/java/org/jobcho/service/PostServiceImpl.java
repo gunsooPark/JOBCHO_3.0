@@ -35,6 +35,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostVO> getListPost(HashMap<String, Object> map) {
 		log.info("서비스 게시글 리스트: " + map);
+		System.out.println("서비스 게시글 리스트: " + map);
 		
 		return mapper.getListPost(map);
 	}

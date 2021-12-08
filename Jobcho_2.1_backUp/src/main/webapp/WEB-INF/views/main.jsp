@@ -9,7 +9,15 @@
 <meta charset='utf-8'>
 <title>Page Title</title>
 
+<script src="https://kit.fontawesome.com/1628dac045.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<style>
+	body{
+		font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
@@ -33,7 +41,6 @@
 	href="/resources/chat/css/chat.css">
 <link rel="stylesheet" type="text/css"
 	href="/resources/chat/css/dragableChat.css">
-
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
@@ -104,7 +111,8 @@
 					</h3>
 					<!-- 게시판 -->
 					<div class="nav__list-left nav__scroll-left" id="board">
-				
+						
+						
 						
 					</div>	
 					<!-- =====게시판 끝===== -->
@@ -1117,8 +1125,6 @@ $(document).ready(function(){
 	//========게시판 목록 호출=======
 	showList(); 
 	
-	
-	
 	function showList(){
 		
 		listBoard.getListBoard({team_num:team_num}, function(board){ //board.js 메서드 호출
@@ -1128,9 +1134,10 @@ $(document).ready(function(){
 			
 			for(var i = 0; i < board.length; i++){
                 str +="<a href='"+board[i].board_num+"' class='nav__link-left'>"; //board_num 전달
-                str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
+                str +="<i class='fas fa-bars'></i>";
 				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>"; //게시판이름 출력
 				str +="</a>"; 
+				
 				
 			}
 			boardUL.html(str); //html 추가
@@ -1139,7 +1146,6 @@ $(document).ready(function(){
 
 
 //==========Modal==========
-
 	//모달창에 입력한 데이터 값 저장
     var boardModal = $("#boardModal");
     var modalInputBoardName = boardModal.find("input[name='board_name']");
@@ -1192,7 +1198,6 @@ $(document).ready(function(){
 			});
 		});
 	
-	
 		//======게시판 이름 클릭시 게시글로 이동======
 		var actionForm = $("#actionForm");
 		
@@ -1204,6 +1209,14 @@ $(document).ready(function(){
 			actionForm.find("input[name='board_num']").val($(this).attr("href"));
 			actionForm.submit();
 		});
+		
+		
+		
+		
+		
+		
+		
+		
 }); //end document.ready1
 </script>
     

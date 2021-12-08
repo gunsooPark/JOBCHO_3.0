@@ -23,24 +23,25 @@
 					from post
 					where
 		]]>	
-				<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-					<foreach item='type' collection="#{cri.typeArr}">
-					<trim prefix="OR">
+			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="cri.typeArr">
+				<trim prefix="OR">
 					<choose>
-						<when test="type == #{cri.type}">
+						<when test="type == 'T'.toString()">
 							post_title like '%'||#{cri.keyword}||'%'
 						</when>
 						<when test="type == 'C'.toString()">
 							post_contents like '%'||#{cri.keyword}||'%'
 						</when>
-						 <when test="type == 'W'.toString()">
-							post_contents like '%'||#{cri.keyword}||'%'
+						<when test="type == 'W'.toString()">
+							writer like '%'||#{cri.keyword}||'%'
 						</when>
 					</choose>
-					</trim>
-					</foreach>
 				</trim>
-				
+			</foreach>
+		</trim>
+			
+		
 		<![CDATA[
 				rownum <= #{cri.pageNum} * #{cri.amount}
 				and board_num = #{board_num}
