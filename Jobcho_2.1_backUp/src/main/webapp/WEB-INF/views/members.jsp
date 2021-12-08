@@ -343,7 +343,7 @@
 					<div class="modal-body">
 						<input id="updataPosition" type="text" class="form-control"
 							placeholder="직책 입력"> <input id="updateMemberAction"
-							type="button" class="btn btn-success" value="수정">
+							type="button" class="btn btn-info" value="수정">
 						<div class="modal-scroll">
 							<ul class="list-group">
 
@@ -386,7 +386,7 @@
 					<div class="modal-body">
 						<input id="updataPosition" type="text" class="form-control"
 							placeholder="직책 입력"> <input id="updateMemberAction"
-							type="button" class="btn btn-success" value="수정">
+							type="button" class="btn btn-info" value="수정">
 						<div class="modal-scroll">
 							<ul class="list-group">
 

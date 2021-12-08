@@ -15,7 +15,7 @@
 </style>
 
 
-<div class="row" style="margin-top: 80px">
+<div class="row">
 	<div class="col-sm-7" style="margin-left: 450px">
 		<h1 class="page-header">
 			${board.board_name }
