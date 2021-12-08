@@ -1,8 +1,10 @@
 package org.jobcho.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.jobcho.domain.MemberVO;
 
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j;
 
@@ -123,4 +126,31 @@ public class MembersController {
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
+	@PostMapping("/{member_num}/uploadprofile")
+	public ResponseEntity<String> uploadProfileImg(MultipartFile[] uploadFile, @PathVariable("member_num") int member_num) {
+		System.out.println("run upload..");
+		System.out.println(uploadFile);
+		String uploadFolder = "C:\\upload";
+		UUID uuid = UUID.randomUUID();
+		String uploadFileName = null;
+		for(MultipartFile multipartFile : uploadFile){
+			uploadFileName = multipartFile.getOriginalFilename();
+			uploadFileName = uuid +"_"+ uploadFileName;
+			File saveFile = new File(uploadFolder, uploadFileName);
+			
+			try{
+				multipartFile.transferTo(saveFile);
+			} catch(Exception e){
+				log.error(e.getMessage());
+			}
+		}
+		System.out.println(uploadFileName);
+		MemberVO member = new MemberVO();
+		member.setProfile_name(uploadFileName);
+		member.setMember_num(member_num);
+		int re = service.updateMemberProfile(member);
+
+		return (re == 1) ? new ResponseEntity<>(uploadFileName, HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
 }

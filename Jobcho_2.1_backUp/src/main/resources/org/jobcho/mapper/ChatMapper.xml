@@ -9,12 +9,22 @@
 		<result property="chat_contents" column="chat_contents"/>
 		<result property="islive" column="islive"/>
 		<result property="chat_date" column="chat_date"/>
+		<result property="upload_name" column="upload_name"/>
 		<association property="chatMember" javaType="org.jobcho.domain.ChatMemberVO">
 			<id property="chatMember_num" column="chatmember_num"/>
 			<result property="chatRoom_num" column="chatroom_num"/>
 			<result property="member_num" column="member_num"/>
 			<result property="islive" column="islive"/>
 			<result property="chatMember_date" column="chatmember_date"/>
+			<association property="member" javaType="org.jobcho.domain.MemberVO">
+				<id property="member_num" column="member_num"/>
+				<result property="profile_name" column="profile_name"/>
+				<result property="user_num" column="user_num"/>
+				<association property="user" javaType="org.jobcho.domain.UsersVO">
+					<id property="user_num" column="user_num"/>
+					<result property="user_name" column="user_name"/>
+				</association>
+			</association>
 		</association>
 	</resultMap>
 	
@@ -99,9 +109,12 @@
 		select
 		/*+ index_AES(chat chat_num)*/
 		chat_num, chat.chatmember_num, chat.CHAT_CONTENTS, chat.islive, chat.CHAT_DATE, chat.upload_name,
-		chatmember.chatmember_num, chatmember.chatroom_num, chatmember.member_num, chatmember.islive, chatmember.chatmember_date   
-		from chat, chatmember
+		chatmember.chatmember_num, chatmember.chatroom_num, chatmember.member_num, chatmember.islive, chatmember.chatmember_date, 
+    member.PROFILE_NAME, users.USER_NAME
+		from chat, chatmember, member, users
 		where chat.chatmember_num = chatmember.chatmember_num
+    and chatmember.MEMBER_NUM = member.MEMBER_NUM
+    and member.USER_NUM = users.USER_NUM
 		and chatmember.chatRoom_num=#{chatRoom_num}
 		and chat.islive=1
 	</select>
@@ -109,7 +122,7 @@
 	<update id = "deleteChat" parameterType = "int">
 		update chat set islive=0 where chat_num = #{chat_num}
 	</update>
-	
+
 	<select id="getListWithOutChatMember" parameterType="HashMap">
 		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,member.islive,team.user_num as t_user_num
 		from member, users, team

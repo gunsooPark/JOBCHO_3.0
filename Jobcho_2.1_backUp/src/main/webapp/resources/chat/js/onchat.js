@@ -23,6 +23,10 @@ $(document).ready(function(){
 	var chatMember_numMap={};
 	var chatRoomList = null;
 	var thisChatRoom_num2=0;
+	var ChatMemberMap={};
+
+
+	
 	// 채팅방 초대를 위한 팀 멤버리스트 호출
 	function getInviteChatMemberList(){
 		// 멤버리스트 호출
@@ -50,11 +54,17 @@ $(document).ready(function(){
 	            <hr>`
 		result.forEach(function(item){
 			var regex = new RegExp("(.*?)\.(PNG|png|JPG|JPEG|jpg|jpeg|jpe|JPE|BMP|bmp|GIF|gif|)$");
+			console.log("dododododod")
+			console.log(item)
+
 			if(item.chatMember.member_num == member_num){
-				
+				var chatTime = new Date(+item.chat_date + 3240 * 10000).toISOString().split("T")[0];
+				str += `<div class='send-thumnail-profile' style="background-image: url('/display?filename=`+item.chatMember.member.profile_name+`');"></div>`
+				str +="<div class='send-nameDate'>"+item.chatMember.member.user.user_name+chatTime+"</div>";
 				if(item.upload_name!=null){
 					
 					if(regex.test(item.upload_name)){
+						
 						str +="<p id="+item.chat_num+" class='send'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
 						"<a href='/team/0/chatroom/download?fileName="+item.upload_name+"'><ion-icon name='download'></ion-icon></a><ion-icon class='chatdelete' name='close-outline' class='chat-off'></ion-icon></p>"
 					}else{
@@ -64,6 +74,9 @@ $(document).ready(function(){
 					str +=`<p id=`+item.chat_num+` class="send">`+item.chat_contents+`<ion-icon class="chatdelete" name="close-outline" class="chat-off"></ion-icon></h3></p>`
 				}
 			}else{
+				var chatTime = new Date(+item.chat_date + 3240 * 10000).toISOString().split("T")[0];
+				str += `<div class='receive-thumnail-profile' style="background-image: url('/display?filename=`+item.chatMember.member.profile_name+`');"></div>`
+				str +="<div class='receive-nameDate'>"+item.chatMember.member.user.user_name+chatTime+"</div>";
 				if(item.upload_name){
 					if(regex.test(item.upload_name)){
 						str +="<p id="+item.chat_num+" class='receive'><img class='chat-thumnail' src='/display?filename="+item.upload_name+"'>" +
@@ -337,11 +350,12 @@ $(document).ready(function(){
 		if(!$(this).parent().find("input[name='uploadFile']")[0].files.length){
 			console.log($(this).parent().children('.job-chat'))
 			var message = $(this).parent().parent().find(".commentParentText").val()
-
+			var thisChatRoom_num = $(this).parent().parent().attr('id').substr(4)
+			
 			str =`<p class="send">`+message+`</p>`
 			$(this).parent().children('.job-chat').append(str);
 			$(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat')[0].scrollHeight);
-			var thisChatRoom_num = $(this).parent().parent().attr('id').substr(4)
+			
 			
 			$.ajax({
 		        url:'/team/'+team_num+'/chatroom/'+chatRoom_num+'/chat/new',
@@ -611,7 +625,6 @@ $(document).ready(function(){
 	    	});
 		})
 	})
-	
-	
+
 	
 });

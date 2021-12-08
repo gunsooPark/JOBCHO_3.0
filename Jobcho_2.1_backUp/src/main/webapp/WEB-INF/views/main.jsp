@@ -67,6 +67,8 @@
 		</div>
 
 	</header>
+    
+    
 
 	<!--왼쪽 사이드바-->
 	<!--왼쪽 사이드바-->
@@ -418,10 +420,10 @@
 
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
-	<!-- <div class="body-content" id="body-pd-left">
+	<div class="body-content" id="body-pd-left">
 
 		<div class="job-team-body"></div>
-	</div> -->
+	</div>
 	<!-- 컨텐츠 끝-->
 	<!-- 컨텐츠 끝-->
 
@@ -463,6 +465,12 @@
 					<div class="modal-header">
 						직책수정
 						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+					<div id="profile_img">
+						<input type="file" name='uploadFile' id="profile_img_upload">
+						<button id="profile_img_upload_action">프로필 업로드</button>
+						<img src="">
 					</div>
 					<div class="modal-body">
 						<input type="text" class="form-control updatePosition"
@@ -763,7 +771,7 @@
 	<script src="/resources/chat/js/dragable.js"></script>
 	<script src="/resources/board/board.js?version=20211206"></script>
 	<script src="/resources/members/js/vote.js"></script>
-	
+	<script src="/resources/members/js/memberProfile.js"></script>
 	<!-- 외부js에 변수 전달 -->
 	<input type="hidden" id="userName"
 		value="<sec:authentication property="principal.users.user_name"/>">
@@ -819,6 +827,8 @@
         	
         	//로그인한 유저 넘버
         	var user_num=$("#userNum").val();
+        	user_num=2;
+        	
         	
         	//컨텐츠바디에 현재팀의 멤버리스트 출력
         	function showMemberList(result){
@@ -831,8 +841,8 @@
         			result.forEach(function(item){
 	                    if(item.user.user_num==user_num){
 	                    	str =`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -845,8 +855,8 @@
                             </div>`+str;
 	                    }else{
 	                    	str +=`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -866,8 +876,8 @@
         			result.forEach(function(item){
         				if(item.user.user_num==user_num){
 	                    	str =`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -879,8 +889,8 @@
                             </div>`+str;
 	                    }else{
 	                    	str +=`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -973,6 +983,7 @@
             $("#updateMemberAction").on("click", function(e){
             	console.log({"member_position":$(".updatePosition").val()})
             	var position = $(".updatePosition").val()
+
             	$.ajax({
                     url:'/team/'+team_num+'/member/'+updataMemberNum,
                     type:'put',
@@ -989,6 +1000,30 @@
                 });
             	
             	
+            });
+            
+            $("#updateMemberAction").on("click", function(e){
+            	var file = $(this).parent().parent().find("input[name='uploadFile']")[0].files;
+            	console.log($(this).parent().parent().find("input[name='uploadFile']")[0].files)
+    			$(this).parent().find("input[name='uploadFile']").clone();
+    			
+    			  console.log( file)
+    			  var formData = new FormData();
+    			  for(var i = 0; i<file.length; i++){
+    				  formData.append("uploadFile", file[i])
+    			  }
+            	$.ajax({
+			        url:'/team/'+team_num+'/member/'+updataMemberNum+'/uploadprofile',
+			        type:'Post',
+			        processData:false,
+			        contentType:false,
+			        data:formData,
+			        success:function(result){
+			        	console.log(result)
+			        	console.log("upload succss");
+			        	
+			        }
+		  		});// $.ajax
             });
             
             //초대할 유저검색 모달 호출
