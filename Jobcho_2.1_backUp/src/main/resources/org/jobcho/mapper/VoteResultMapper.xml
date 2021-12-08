@@ -27,48 +27,43 @@ count(decode(vote_result5,5,1)) vote_result5
 </insert>
 
 <select id = "getContent1ResultMember" parameterType = "org.jobcho.domain.VoteResultVO" resultType = "org.jobcho.domain.VoteResultVO">
-	select u.user_name from users u, member m, vote v, vote_result r
-	where u.user_num = m.user_num
-	and m.member_num = v.MEMBER_NUM
-	and v.vote_num = r.vote_num
-	and r.vote_result1 = 1
-	and v.vote_num = #{vote_num}
-</select>
+	select u.user_name from users u, member m, vote_result r
+	where r.member_num = m.member_num
+  and m.user_num = u.user_num
+  and r.vote_result1 = 1
+  and r.vote_num = #{vote_num}
+  </select>
 
 <select id = "getContent2ResultMember" parameterType = "org.jobcho.domain.VoteResultVO" resultType = "org.jobcho.domain.VoteResultVO">
-	select u.user_name from users u, member m, vote v, vote_result r
-	where u.user_num = m.user_num
-	and m.member_num = v.MEMBER_NUM
-	and v.vote_num = r.vote_num
-	and r.vote_result2 = 2
-	and v.vote_num = #{vote_num}
+  select u.user_name from users u, member m, vote_result r
+  where r.member_num = m.member_num
+  and m.user_num = u.user_num
+  and r.vote_result2 = 2
+  and r.vote_num = #{vote_num}
 </select>
 
 <select id = "getContent3ResultMember" parameterType = "org.jobcho.domain.VoteResultVO" resultType = "org.jobcho.domain.VoteResultVO">
-	select u.user_name from users u, member m, vote v, vote_result r
-	where u.user_num = m.user_num
-	and m.member_num = v.MEMBER_NUM
-	and v.vote_num = r.vote_num
-	and r.vote_result3 = 3
-	and v.vote_num = #{vote_num}
+	select u.user_name from users u, member m, vote_result r
+	where r.member_num = m.member_num
+  and m.user_num = u.user_num
+  and r.vote_result3 = 3
+  and r.vote_num = #{vote_num}
 </select>
 
 <select id = "getContent4ResultMember" parameterType = "org.jobcho.domain.VoteResultVO" resultType = "org.jobcho.domain.VoteResultVO">
-	select u.user_name from users u, member m, vote v, vote_result r
-	where u.user_num = m.user_num
-	and m.member_num = v.MEMBER_NUM
-	and v.vote_num = r.vote_num
-	and r.vote_result4 = 4
-	and v.vote_num = #{vote_num}
+		select u.user_name from users u, member m, vote_result r
+	where r.member_num = m.member_num
+  and m.user_num = u.user_num
+  and r.vote_result4 = 4
+  and r.vote_num = #{vote_num}
 </select>
 
 <select id = "getContent5ResultMember" parameterType = "org.jobcho.domain.VoteResultVO" resultType = "org.jobcho.domain.VoteResultVO">
-	select u.user_name from users u, member m, vote v, vote_result r
-	where u.user_num = m.user_num
-	and m.member_num = v.MEMBER_NUM
-	and v.vote_num = r.vote_num
-	and r.vote_result5 = 5
-	and v.vote_num = #{vote_num}
+		select u.user_name from users u, member m, vote_result r
+	where r.member_num = m.member_num
+  and m.user_num = u.user_num
+  and r.vote_result5 = 5
+  and r.vote_num = #{vote_num}
 </select>
 
 </mapper>

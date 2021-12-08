@@ -10,4 +10,5 @@ public interface VoteService {
 	public List<VoteVO> listVote(int team_num);
 	public int endVote(int vote_num);
 	public VoteVO getVote(int vote_num);
+	public List<VoteVO> listEndVote(int team_num);
 }
