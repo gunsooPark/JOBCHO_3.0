@@ -12,13 +12,7 @@
 <script src="https://kit.fontawesome.com/1628dac045.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
 
-*{
-	font-family: 'Gowun Dodum', sans-serif;
-}
-</style>
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
@@ -1157,7 +1151,7 @@ $(document).ready(function(){
 			
 			for(var i = 0; i < board.length; i++){
                 str +="<a href='"+board[i].board_num+"' class='nav__link-left'>"; //board_num 전달
-                str +="<i class='fas fa-bars'></i>";
+                str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
 				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>"; //게시판이름 출력
 				str +="</a>"; 
 				
