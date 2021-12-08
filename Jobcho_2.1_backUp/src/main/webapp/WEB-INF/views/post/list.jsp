@@ -180,6 +180,7 @@
 										<input type='hidden' name='board_num' value='${board_num}'>
 										<input type='hidden' name='team_num' value='${team_num}'>
 										<input type='hidden' name='member_num' value='${member_num }'>
+										<input type='hidden' name='user_name' value='<sec:authentication property="principal.users.user_name"/>'>
 										
 								</form>
 			
@@ -190,7 +191,7 @@
 </div>
 <!-- /.row -->
 
-<input type='hidden' id='user_name' value='<sec:authentication property="principal.users.user_name"/>'>
+
 
 <script type="text/javascript">
 
