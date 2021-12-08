@@ -155,3 +155,7 @@ body{
     font-family:'Nanum Gothic';
     font-weight: bold;
 }
+
+.team-profile-info{
+	width: 120px;
+}

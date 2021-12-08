@@ -70,4 +70,12 @@ public class MembersServiceImpl implements MembersService {
 		return mapper.getListWithOutChatMember(map);
 	}
 
+	@Override
+	public int updateMemberProfile(MemberVO member) {
+		// TODO Auto-generated method stub
+		return mapper.updateMemberProfile(member);
+	}
+	
+	
+
 }

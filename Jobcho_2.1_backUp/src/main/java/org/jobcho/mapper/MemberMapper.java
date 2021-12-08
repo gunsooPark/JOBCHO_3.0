@@ -19,4 +19,6 @@ public interface MemberMapper {
 	List<UsersVO> getUsersWithoutMembersList(int team_num);
 	int insertMember2(MemberVO member);
 	List<MemberVO> getListWithOutChatMember(Map<String, Integer> map);
+	int updateMemberProfile(MemberVO member);
+	
 }
