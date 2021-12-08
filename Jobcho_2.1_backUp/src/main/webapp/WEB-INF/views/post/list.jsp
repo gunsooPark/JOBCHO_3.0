@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
+<script src="https://kit.fontawesome.com/1628dac045.js" crossorigin="anonymous"></script>
 
 
 
@@ -12,7 +13,9 @@
 		<h1 class="page-header">
 			${board.board_name }
 		</h1>
+		
 	</div>
+	
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
@@ -71,15 +74,7 @@
 									<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
 								<option value="W"
 									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-								<%-- <option value="TC"
-									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목
-									+ 내용</option>
-								<option value="TW"
-									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목
-									+ 작성자</option>
-								<option value="TWC"
-									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목
-									+ 내용 + 작성자</option> --%>
+								
 							</select> 
 									<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' /> 
 									<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
@@ -144,6 +139,40 @@
 			</div>
 			<!--/.modal-->
 			
+			
+		<!--======게시판 생성 모달창===== -->
+      <div class="modal" id="settingBoard" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">게시판 수정</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+               		<label>게시판 이름</label> 
+                	<input class="form-control" name='board_name' value=''>
+              </div>      
+              <div class="form-group">
+                	<label>게시판 정보</label> 
+                	<input class="form-control" name='board_info' value=''>
+              </div>
+            </div>
+            
+			<div class="modal-footer">
+        		<button id='modalBoardModBtn' type="button" class="btn btn-info">수정</button>
+        		<button id='modalBoardDeleteBtn' type="button" class="btn btn-danger">삭제</button>
+        		<button id='modalBoardCloseBtn' type="button" class="btn btn-default">취소</button>
+       		</div>
+		</div>
+  	</div>
+</div>
+<!--  게시판 생성모달 끝-->
+			
+			
+			
 								<!---------------form을 이용한 데이터 유지-------------->
 								<form id='listForm' action="/post/list" method='get'>
 										<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
@@ -161,8 +190,6 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
-
-			
 
 <script type="text/javascript">
 
@@ -248,7 +275,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 
 //=======검색 버튼 이벤트 처리======
-var searchForm = $("#searchForm");
+/* var searchForm = $("#searchForm");
 
 $("#searchForm button").on("click", function(e){
 	
@@ -274,6 +301,76 @@ $("#searchForm button").on("click", function(e){
 	
 	searchForm.submit();	
 });
+ */
+	
+ 
+ 
+ 
+ 
+ 
+//==========게시판 Modal 설정==========
+	
+	var team_num = ${team_num};
+	var board_num = ${board_num};
+	
+	//모달창에 입력한 데이터 값 저장
+	var settingBoard = $("#settingBoard");
+	var modalInputBoardName = settingBoard.find("input[name='board_name']");
+	var modalInputBoardInfo = settingBoard.find("input[name='board_info']");
+	/* var modalInputReplyDate = boardModal.find("input[name='member_name']"); */
+
+	var modalBoardDeleteBtn = $("#modalBoardDeleteBtn"); //등록버튼
+	var modalBoardModBtn = $("#modalBoardModBtn");//수정버튼
+
+	
+
+
+	  
+
+ 
+		//=========게시판 수정============
+		/* modalBoardRegisterBtn.on("click", function(e){
+		
+			var board = {
+				board_name: modalInputBoardName.val(),
+				board_info: modalInputBoardInfo.val(),
+				member_num: member_num //체크
+			};
+			console.log("게시판 생성!: "+team_num );
+		
+			listBoard.insertBoard(board,{team_num:team_num},  function(result){
+				alert("게시판이 수정되었습니다.");
+
+				settingBoard.modal("hide");
+			
+				showList();
+			});
+		}); */
+	
+		
+ 	//게시판 삭제 
+   /* 	modalBoardDeleteBtn.on("click", function (e){
+   		console.log("게시판 삭제할 번호: " + board_num);
+   		
+   		if(!confirm("게시판의 모든 정보가 삭제됩니다. 정말로 삭제하시겠습니까?")){
+   			alert("취소되었습니다.")
+   			settingBoard.modal("hide");
+   		}
+   	  
+   		listBoard.deleteBoard({team_num: team_num, board_num: board_num}, function(result){//reply.js 호출
+   		
+
+   	    alert("게시판이 삭제되었습니다.");
+   		 settingBoard.modal("hide");
+   	   	
+   	 	showList(); //게시판 삭제 후 댓글목록 갱신
+   	 	console.log("게시판 삭제~");
+   	  });
+ }); */
+	
+	
+	
+	
 
 }); //end d.ready
 

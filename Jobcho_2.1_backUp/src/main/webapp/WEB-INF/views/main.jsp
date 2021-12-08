@@ -9,7 +9,15 @@
 <meta charset='utf-8'>
 <title>Page Title</title>
 
+<script src="https://kit.fontawesome.com/1628dac045.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<style>
+	body{
+		font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
@@ -33,7 +41,6 @@
 	href="/resources/chat/css/chat.css">
 <link rel="stylesheet" type="text/css"
 	href="/resources/chat/css/dragableChat.css">
-
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
@@ -67,6 +74,8 @@
 		</div>
 
 	</header>
+    
+    
 
 	<!--왼쪽 사이드바-->
 	<!--왼쪽 사이드바-->
@@ -102,7 +111,8 @@
 					</h3>
 					<!-- 게시판 -->
 					<div class="nav__list-left nav__scroll-left" id="board">
-				
+						
+						
 						
 					</div>	
 					<!-- =====게시판 끝===== -->
@@ -316,6 +326,7 @@
 			<div class="nav-search-title">할일</div>
 			<div class="nav-search-content">
 				<div id="createToDo" style="cursor:pointer">➕할일생성</div>
+				<div id="selectTodoDeleteList" style="cursor:pointer">완료된 할일보기</div>
 				<ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
@@ -463,6 +474,12 @@
 					<div class="modal-header">
 						직책수정
 						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+					<div id="profile_img">
+						<input type="file" name='uploadFile' id="profile_img_upload">
+						<button id="profile_img_upload_action">프로필 업로드</button>
+						<img src="">
 					</div>
 					<div class="modal-body">
 						<input type="text" class="form-control updatePosition"
@@ -728,13 +745,32 @@
 					<div class="modal-body">
 					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
 						
+						<div class="jo"></div>
 						
 					</div>
 				</div>
 			</div>
-	</div>	
+		</div>	
 	</div>
-	<!-- 투표결과 멤버확인 모달 끝 -->
+	
+	<!--삭제된 오늘의 할일 모달 -->
+	<div class = "modal" id ="selectTodoDeleteListModal" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						완료된 오늘의 할일
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
+						<div class="job-todoDeletelist-wrap" style="cursor:pointer">
+							
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<!--삭제된 오늘의 할일 모달 끝 -->
 	
 		
 		<!-- 게시판 board_num 계속 유지시키기 -->
@@ -763,7 +799,7 @@
 	<script src="/resources/chat/js/dragable.js"></script>
 	<script src="/resources/board/board.js?version=20211206"></script>
 	<script src="/resources/members/js/vote.js"></script>
-	
+	<script src="/resources/members/js/memberProfile.js"></script>
 	<!-- 외부js에 변수 전달 -->
 	<input type="hidden" id="userName"
 		value="<sec:authentication property="principal.users.user_name"/>">
@@ -797,6 +833,7 @@
 		updataMemberNum = this.value
 	});
 	
+	
 	//로그아웃 클릭시 로그아웃 되도록  
 	$(document).on("click","#LogOutAction" ,function(e){
 		e.preventDefault();
@@ -820,6 +857,8 @@
         	//로그인한 유저 넘버
         	var user_num=$("#userNum").val();
         	
+        	
+        	
         	//컨텐츠바디에 현재팀의 멤버리스트 출력
         	function showMemberList(result){
         		str=""
@@ -831,8 +870,8 @@
         			result.forEach(function(item){
 	                    if(item.user.user_num==user_num){
 	                    	str =`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -845,8 +884,8 @@
                             </div>`+str;
 	                    }else{
 	                    	str +=`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -866,8 +905,8 @@
         			result.forEach(function(item){
         				if(item.user.user_num==user_num){
 	                    	str =`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -879,8 +918,8 @@
                             </div>`+str;
 	                    }else{
 	                    	str +=`<div class="job-container">
-                                <div class="team-profile-image" style="background-image: url('/resources/members/css/99D279435B3D788602.jfif');"></div>
-                                <div>
+                                <div class="team-profile-image" style="background-image: url('/display?filename=`+item.profile_name+`');"></div>
+                                <div class="team-profile-info">
                                     <p class="team-profile-name">`+item.user.user_name+`</p>
                                     <p class="team-profile-email">`+item.user.user_email+`</p>
                                     <p class="team-profile-email">`+item.user.user_phoneNum+`</p>
@@ -973,6 +1012,7 @@
             $("#updateMemberAction").on("click", function(e){
             	console.log({"member_position":$(".updatePosition").val()})
             	var position = $(".updatePosition").val()
+
             	$.ajax({
                     url:'/team/'+team_num+'/member/'+updataMemberNum,
                     type:'put',
@@ -989,6 +1029,30 @@
                 });
             	
             	
+            });
+            
+            $("#updateMemberAction").on("click", function(e){
+            	var file = $(this).parent().parent().find("input[name='uploadFile']")[0].files;
+            	console.log($(this).parent().parent().find("input[name='uploadFile']")[0].files)
+    			$(this).parent().find("input[name='uploadFile']").clone();
+    			
+    			  console.log( file)
+    			  var formData = new FormData();
+    			  for(var i = 0; i<file.length; i++){
+    				  formData.append("uploadFile", file[i])
+    			  }
+            	$.ajax({
+			        url:'/team/'+team_num+'/member/'+updataMemberNum+'/uploadprofile',
+			        type:'Post',
+			        processData:false,
+			        contentType:false,
+			        data:formData,
+			        success:function(result){
+			        	console.log(result)
+			        	console.log("upload succss");
+			        	
+			        }
+		  		});// $.ajax
             });
             
             //초대할 유저검색 모달 호출
@@ -1082,8 +1146,6 @@ $(document).ready(function(){
 	//========게시판 목록 호출=======
 	showList(); 
 	
-	
-	
 	function showList(){
 		
 		listBoard.getListBoard({team_num:team_num}, function(board){ //board.js 메서드 호출
@@ -1093,9 +1155,10 @@ $(document).ready(function(){
 			
 			for(var i = 0; i < board.length; i++){
                 str +="<a href='"+board[i].board_num+"' class='nav__link-left'>"; //board_num 전달
-                str +="<ion-icon name='home-outline' class='nav__icon-left'></ion-icon>";
+                str +="<i class='fas fa-bars'></i>";
 				str +="<span class='nav__name-left'>"+board[i].board_name+"</span>"; //게시판이름 출력
 				str +="</a>"; 
+				
 				
 			}
 			boardUL.html(str); //html 추가
@@ -1104,7 +1167,6 @@ $(document).ready(function(){
 
 
 //==========Modal==========
-
 	//모달창에 입력한 데이터 값 저장
     var boardModal = $("#boardModal");
     var modalInputBoardName = boardModal.find("input[name='board_name']");
@@ -1157,7 +1219,6 @@ $(document).ready(function(){
 			});
 		});
 	
-	
 		//======게시판 이름 클릭시 게시글로 이동======
 		var actionForm = $("#actionForm");
 		
@@ -1169,10 +1230,23 @@ $(document).ready(function(){
 			actionForm.find("input[name='board_num']").val($(this).attr("href"));
 			actionForm.submit();
 		});
+		
+		
+		
+		
+		
+		
+		
+		
 }); //end document.ready1
 </script>
     
-
+<style>
+#selectTodoDeleteListModal .modal-body{
+height: 400px;
+overflow-y : scroll;
+}
+</style>
 
 
 </body>

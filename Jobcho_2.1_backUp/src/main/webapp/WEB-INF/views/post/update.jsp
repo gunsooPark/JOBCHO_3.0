@@ -123,6 +123,12 @@ $(document).ready(function() {
 		}
 	
 		else if(operation === 'modify'){
+			
+			if(!confirm("정말로 수정하시겠습니까?")){
+	   			alert("수정되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
+			
 			alert("게시글이 수정되었습니다.");
 		}
 		formObj.submit();

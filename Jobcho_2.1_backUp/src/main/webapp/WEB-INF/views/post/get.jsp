@@ -253,6 +253,7 @@ $("#addReplyBtn").on("click", function(e){
 	
 	modalInputReplyDate.closest("div").hide();
 	replyModal.find("button[id !='replyCloseBtn']").hide();
+	replyModal.find("input[name !='reply_writer']").val(""); //입력항목 비우고 
 	
 	replyRegisterBtn.show();
 	
@@ -311,6 +312,11 @@ replyRegisterBtn.on("click", function(e){
 		console.log("댓글 수정내용: "+modalInputReply.val());
 		
 		replyService.updateReply(reply, function(result){//reply.js 호출
+			
+			if(!confirm("정말로 수정하시겠습니까?")){
+	   			alert("댓글이 수정되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
 		 	
 			alert("댓글이 수정되었습니다.");
 			replyModal.modal("hide");
@@ -341,8 +347,6 @@ replyRegisterBtn.on("click", function(e){
    	  });
    	getListReply(); 
  });
-   	
-
 
 
 });//end d.ready

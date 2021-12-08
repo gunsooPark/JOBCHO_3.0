@@ -48,7 +48,7 @@ public class TodoController {
 		return new ResponseEntity<TodoVO>(todo, HttpStatus.OK);
 	}
 
-	//팀번호와 해당하는 member에 맞는 리스트반환 -> postMan확인완료 -> json으로 반환함
+	// 팀번호와 해당하는 member에 맞는 리스트반환 -> postMan확인완료 -> json으로 반환함
 	// team_num, member_num 필요
 	@GetMapping(value = "/list/{member_num}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<TodoVO>> selectTodoList2(@PathVariable("team_num") int team_num,
@@ -97,6 +97,24 @@ public class TodoController {
 
 		return new ResponseEntity<Integer>(re, HttpStatus.OK);
 
+	}
+
+	// 팀번호와 해당하는 member에 맞는 삭제된 리스트반환 -> postMan확인완료 -> json으로 반환함
+	// team_num, member_num 필요
+	@GetMapping(value = "/deletelist/{member_num}", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<List<TodoVO>> selectTodoDeleteList(@PathVariable("team_num") int team_num,
+			@PathVariable("member_num") int member_num) {
+		System.out.println("팀넘버 : " + team_num);
+		System.out.println("멤버넘 : " + member_num);
+		// List<TodoVO> list = service.selectTodoList();
+
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("team_num", team_num);
+		map.put("member_num", member_num);
+
+		List<TodoVO> list = service.selectTodoDeleteList(map);
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 }
