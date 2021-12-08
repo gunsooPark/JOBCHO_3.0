@@ -803,7 +803,7 @@
 						완료된 오늘의 할일
 						<button class="close" data-dismiss="modal">&times;</button>
 					</div>
-					<div class="modal-body">
+					<div class="vote-modal-body">
 					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
 						<div class="job-todoDeletelist-wrap" style="cursor:pointer">
 							
@@ -1288,6 +1288,12 @@ $(document).ready(function(){
 height: 400px;
 overflow-y : scroll;
 }
+
+.vote-modal-body{
+height : 400px;
+overflow-y : scroll;
+}
+
 </style>
 
 
