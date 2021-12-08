@@ -37,4 +37,10 @@ public class VoteServiceImpl implements VoteService {
 		return mapper.getVote(vote_num);
 	}
 
+	@Override
+	public List<VoteVO> listEndVote(int team_num) {
+		
+		return mapper.listEndVote(team_num);
+	}
+
 }

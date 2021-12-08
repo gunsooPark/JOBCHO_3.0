@@ -47,7 +47,7 @@ public class VoteResultServiceImpl implements VoteResultService {
 
 	@Override
 	public List<VoteResultVO> getContent3ResultMember(VoteResultVO voteResult) {
-		
+		System.out.println("service voteResult :" + voteResult);
 		return mapper.getContent3ResultMember(voteResult);
 	}
 
