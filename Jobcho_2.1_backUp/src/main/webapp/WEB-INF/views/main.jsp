@@ -381,6 +381,7 @@
 			<div class="nav-search-title">투표</div>
 			<div class="nav-search-content">
 				<div id="createVote">➕투표생성</div>
+				<div id="end-vote-list">▶이전투표</div>
 				<ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
@@ -678,7 +679,7 @@
 						투표 생성
 						<button class="close" data-dismiss="modal">&times;</button>
 					</div>
-					<div class="modal-body">
+					<div class="vote-modal-body">
 						
 						투표 제목<input id="vote_name" type="text" class="form-control"> 
 						투표 내용1<input id="vote_content1" type="text" class="form-control">
@@ -704,7 +705,7 @@
 						투표 확인
 						<button class="close" data-dismiss="modal">&times;</button>
 					</div>
-					<div class="modal-body">
+					<div class="vote-modal-body">
 					<div class="job-vote-result-wrap" style="cursor:pointer">	
 						
 						
@@ -723,7 +724,7 @@
 						투표 결과
 						<button class="close" data-dismiss="modal">&times;</button>
 					</div>
-					<div class="modal-body">
+					<div class="vote-modal-body">
 					<div class="job-vote-result-view-wrap" style="cursor:pointer">	
 						
 						
@@ -734,6 +735,47 @@
 	</div>
 	<!-- 투표결과 확인 모달 끝 -->
 	
+	
+	<!-- 투표결과 멤버확인 모달 끝 -->
+	
+		<!-- 투표 완료확인 모달 -->
+	<div class = "modal" id ="end-list-vote-modal" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 결과
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="vote-modal-body">
+					<div class="job-vote-end-view-wrap" style="cursor:pointer">	
+						
+						
+					</div>
+				</div>
+			</div>
+	</div>	
+	</div>
+	<!-- 투표결과 완료확인 모달 끝 -->
+	
+			<!-- 완료된 투표 확인 모달 -->
+	<div class = "modal" id ="end-list-vote-result-modal" tabindex = "-1">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						투표 결과
+						<button class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="vote-modal-body">
+					<div class="job-vote-end-result-view-wrap" style="cursor:pointer">	
+						
+						
+					</div>
+				</div>
+			</div>
+	</div>	
+	</div>
+	<!-- 완료된 투표 확인 모달 끝 -->
+	
 		<!-- 투표결과 멤버확인 모달 -->
 	<div class = "modal" id ="voteResultMember" tabindex = "-1">
 		<div class="modal-dialog">
@@ -742,7 +784,7 @@
 						투표 결과
 						<button class="close" data-dismiss="modal">&times;</button>
 					</div>
-					<div class="modal-body">
+					<div class="vote-modal-body">
 					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
 						
 						<div class="jo"></div>
@@ -761,7 +803,7 @@
 						완료된 오늘의 할일
 						<button class="close" data-dismiss="modal">&times;</button>
 					</div>
-					<div class="modal-body">
+					<div class="vote-modal-body">
 					<div class="job-vote-result-member-view-wrap" style="cursor:pointer">	
 						<div class="job-todoDeletelist-wrap" style="cursor:pointer">
 							
@@ -1246,6 +1288,12 @@ $(document).ready(function(){
 height: 400px;
 overflow-y : scroll;
 }
+
+.vote-modal-body{
+height : 400px;
+overflow-y : scroll;
+}
+
 </style>
 
 

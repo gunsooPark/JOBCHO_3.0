@@ -63,6 +63,11 @@ public class VoteController {
 		return new ResponseEntity<List<VoteVO>>(service.listVote(team_num), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/endlist", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<VoteVO>> listEndVote(@PathVariable("team_num") int team_num){
+		return new ResponseEntity<List<VoteVO>>(service.listEndVote(team_num), HttpStatus.OK);
+	}
+	
 	//Ư�� ��ǥ ��������
 	@GetMapping(value = "/{vote_num}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<VoteVO> getVote(@PathVariable("vote_num") int vote_num){
@@ -132,11 +137,14 @@ public class VoteController {
 		@GetMapping(value = "/{vote_num}/result/3", produces={MediaType.APPLICATION_JSON_UTF8_VALUE})
 		public ResponseEntity<List<VoteResultVO>> getContent3ResultMember(@PathVariable("vote_num") int vote_num){
 			VoteResultVO voteResult = new VoteResultVO();
-			
-			
+			System.out.println(vote_num);//14
 			voteResult.setVote_num(vote_num);
+			System.out.println("보트객체 : " +  voteResult);
+			List<VoteResultVO> list = voteResultService.getContent3ResultMember(voteResult);
+			System.out.println("리스트 확인중 : " + list);
 			
-			return new ResponseEntity<List<VoteResultVO>>(voteResultService.getContent3ResultMember(voteResult), HttpStatus.OK);
+			
+			return new ResponseEntity<List<VoteResultVO>>(list, HttpStatus.OK);
 		}
 		
 		//4번 투표 결과 보기(멤버)
