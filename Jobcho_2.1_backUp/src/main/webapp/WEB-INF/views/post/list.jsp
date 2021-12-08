@@ -6,6 +6,13 @@
 <%@include file="/WEB-INF/views/main.jsp"%>
 <script src="https://kit.fontawesome.com/1628dac045.js" crossorigin="anonymous"></script>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+*{
+	font-family: 'Gowun Dodum', sans-serif;
+}
+</style>
 
 
 <div class="row" style="margin-top: 80px">
@@ -20,6 +27,7 @@
 </div>
 <!-- /.row -->
 
+
 <div class="row" >
 	<div class="col-sm-7" style="margin-left: 450px">
 		<div class="panel panel-default">
@@ -30,6 +38,7 @@
 			</div>
 
 			<!-- /.panel-heading -->
+			
 			<div class="panel-body">
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
@@ -190,7 +199,6 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
-
 
 
 <script type="text/javascript">

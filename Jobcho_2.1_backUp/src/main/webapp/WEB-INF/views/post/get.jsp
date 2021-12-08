@@ -5,6 +5,17 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
+<head>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
+
+</head>
+
 
 
 <div class="row" style="margin-top: 80px">
@@ -128,7 +139,7 @@
                 <input class="form-control" type="text"  name='reply_writer' value=<sec:authentication property="principal.users.user_name"/> readonly="readonly">
               </div>
               <div class="form-group">
-                <label>Reply Date</label> 
+                <label>작성 시간</label> 
                 <input class="form-control" name='replyDate' value='2018-01-01 13:13'>
               </div>
             </div>

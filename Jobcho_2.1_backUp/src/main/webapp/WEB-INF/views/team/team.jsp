@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="/resources/team/team.css">
     <link rel="stylesheet" href="/resources/team/sidebar-team-left.css">
     <link rel="stylesheet" href="/resources/team/sidebar-team-right.css">
+    <style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
     
 </head>
 <body>

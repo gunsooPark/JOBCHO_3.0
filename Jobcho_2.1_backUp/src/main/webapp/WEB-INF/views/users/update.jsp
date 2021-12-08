@@ -9,6 +9,13 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<meta name="_csrf" content="${_csrf.token}"/>
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+	</style>
 	<script type="text/javascript">
 	
 	//security ajax를 사용하면 403에러가 발생하기 때문에 아래와 같은 코드를 작성해야됨 

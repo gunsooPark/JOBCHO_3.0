@@ -13,9 +13,11 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <style>
-	body{
-		font-family: 'Gowun Dodum', sans-serif;
-	}
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+*{
+	font-family: 'Gowun Dodum', sans-serif;
+}
 </style>
 
 <!-- 합쳐지고 최소화된 최신 CSS -->
