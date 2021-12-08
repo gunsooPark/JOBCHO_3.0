@@ -55,7 +55,16 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteBoard(int board_num) {
 		
 		log.info("서비스 삭제 테스트!!"+ board_num );
+		System.out.println("서비스 삭제 테스트!!"+ board_num);
 		mapper.deleteBoard(board_num);
+	}
+
+
+	@Override
+	public BoardVO getBoard(int board_num) {
+		log.info("board 서비스!!"+ board_num );
+		
+		return mapper.getBoard(board_num);
 	}
 
 }

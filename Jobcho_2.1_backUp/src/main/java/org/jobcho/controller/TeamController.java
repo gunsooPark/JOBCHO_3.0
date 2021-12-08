@@ -37,7 +37,6 @@ public class TeamController {
 	//팀생성
 	@PostMapping("/{user_num}")
 	public ResponseEntity<TeamVO> insertTeam(@RequestBody TeamVO teamVO, @PathVariable("user_num") int user_num){
-		//성연님 작업중 버그가 생겨 아래와 같이 코드를 작성하였습니다.
 		
 		//팀생성 실행 
 		int insertCount = service.insertTeam(teamVO);

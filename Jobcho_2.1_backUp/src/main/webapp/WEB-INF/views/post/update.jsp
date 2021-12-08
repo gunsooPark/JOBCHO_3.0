@@ -2,12 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
 
 <div class="row" style="margin-top: 80px">
 	<div class="col-sm-7" style="margin-left: 450px">
-		<h2 class="page-header">게시글 수정</h2>
+		<h2 class="page-header">${board.board_name }</h2>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -42,7 +43,7 @@
 
 					<div class="form-group">
 						<label>작성자</label> <input class="form-control" name='writer'
-							value='<c:out value="${post.board_num}"/>' readonly="readonly">
+							value=<sec:authentication property="principal.users.user_name"/>  readonly="readonly">
 					</div>
 
 					<div class="form-group">
@@ -92,6 +93,12 @@ $(document).ready(function() {
 		
 		 //삭제버튼 클릭 시
 		if(operation === 'remove'){
+			
+			if(!confirm("정말로 삭제하시겠습니까?")){
+	   			alert("취소되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
+			
 			alert("게시글이 삭제되었습니다.");
 			formObj.attr("action", "/post/delete");
 		}
@@ -116,6 +123,12 @@ $(document).ready(function() {
 		}
 	
 		else if(operation === 'modify'){
+			
+			if(!confirm("정말로 수정하시겠습니까?")){
+	   			alert("수정되었습니다.")
+	   			replyModal.modal("hide");
+	   		}
+			
 			alert("게시글이 수정되었습니다.");
 		}
 		formObj.submit();

@@ -2,16 +2,25 @@
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@include file="/WEB-INF/views/main.jsp"%>
 
 
 <div class="row" style="margin-top: 100px">
   <div class="col-sm-7" style="margin-left: 450px">
-    <h2 class="page-header">게시판 이름</h2>
+    <h2 class="page-header">${board.board_name }</h2>
   </div>
   <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+
+<div class="row" >
+  <div class="col-sm-7" style="margin-left: 450px">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">${board.board_info }</div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
 
 <style>
 .uploadResult {
@@ -57,14 +66,6 @@
 }
 </style>
 
-<div class="row" style="margin-top: 40px">
-  <div class="col-sm-7" style="margin-left: 450px">
-    <div class="panel panel-default">
-
-      <div class="panel-heading">게시글 등록</div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
-
 
         <form role="form" action="/post/register" method="post">
         			
@@ -82,7 +83,7 @@
           </div>
 
           <div class="form-group">
-            <label>작성자</label> <input class="form-control" name='writer'>
+            <label>작성자</label> <input class="form-control" type="text" name='writer' value=<sec:authentication property="principal.users.user_name"/> readonly="readonly">
           </div>
           <button type="submit" class="btn btn-primary">등록</button>
           <button id='reset' type="reset" class="btn btn-default">취소</button>
@@ -142,6 +143,8 @@ $(document).ready(function(){
 		formObj.empty(); 
 		formObj.attr("action", "/post/list").attr("method", "get");
 		formObj.append("<input type='hidden' name='board_num' value='"+${board_num}+"'>");
+		formObj.append("<input type='hidden' name='team_num' value='"+${team_num}+"'>");
+		formObj.append("<input type='hidden' name='member_num' value='"+${member_num}+"'>");
 		formObj.submit();
 	});
 

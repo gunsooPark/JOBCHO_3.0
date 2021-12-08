@@ -15,4 +15,5 @@ public class ReplyVO implements Serializable {
 	private int post_num;
 	private int islive;
 	private Date reply_date;
+	private String reply_writer; //댓글 작성자
 }

@@ -64,6 +64,18 @@ public class MembersServiceImpl implements MembersService {
 		return re;
 	}
 
+	@Override
+	public List<MemberVO> getListWithOutChatMember(Map<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return mapper.getListWithOutChatMember(map);
+	}
+
+	@Override
+	public int updateMemberProfile(MemberVO member) {
+		// TODO Auto-generated method stub
+		return mapper.updateMemberProfile(member);
+	}
+	
 	
 
 }

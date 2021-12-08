@@ -56,4 +56,18 @@ public class TodoServiceImpl implements TodoService {
 		return todoList;
 	}
 
+	//삭제된 할일 리스트 반환
+	@Override
+	public List<TodoVO> selectTodoDeleteList(Map<String, Integer> map) {
+		List<TodoVO> todoDeleteList = mapper.selectTodoDeleteList(map);
+		return todoDeleteList;
+	}
+
+	//오늘의 할일 복구하기
+	@Override
+	public int restoreTodoList(int todo_num) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
