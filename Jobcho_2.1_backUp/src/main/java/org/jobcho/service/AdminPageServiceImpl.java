@@ -28,12 +28,23 @@ public class AdminPageServiceImpl implements AdminPageService{
 	
 	@Override
 	public JsonArray getAdminPageDau(int team_num) {
-		List<AccessLogVO> list = mapper.getAdminPageDau(team_num);
+		List<AccessLogVO> list = null;
+		try{
+			list = mapper.getAdminPageDau(team_num);
+		}catch(Exception e){
+			System.out.println("에러뜸");
+		}
+		
 		Gson gson = new Gson();
 		String jsonListStr = gson.toJson(list);
 		JsonParser parser = new JsonParser();
 		JsonArray jsonList = (JsonArray)parser.parse(jsonListStr);
-		int count = mapper.getAdminPageDauCount(team_num);		
+		int count = 0;
+		try{
+			count = mapper.getAdminPageDauCount(team_num);		
+		}catch(Exception e){
+			System.out.println("에러뜸2");
+		}
 		JsonObject dauCount = new JsonObject();
 		dauCount.addProperty("dauCount", count);
 		JsonArray jsonarray = new JsonArray();
@@ -44,12 +55,24 @@ public class AdminPageServiceImpl implements AdminPageService{
 
 	@Override
 	public JsonArray getAdminPageMau(int team_num) {
-		List<AccessLogVO> list = mapper.getAdminPageMau(team_num);		
+		List<AccessLogVO> list = null;
+		try{
+			list = mapper.getAdminPageMau(team_num);
+		}catch(Exception e){
+			System.out.println("에러뜸");
+		}
+				
 		Gson gson = new Gson();
 		String jsonListStr = gson.toJson(list);
 		JsonParser parser = new JsonParser();
-		JsonArray jsonList = (JsonArray)parser.parse(jsonListStr);	
-		int count = mapper.getAdminPageMauCount(team_num);	
+		JsonArray jsonList = (JsonArray)parser.parse(jsonListStr);
+		int count = 0;
+		try{
+			count = mapper.getAdminPageMauCount(team_num);	
+		}catch(Exception e){
+			System.out.println("에러뜸2");
+		}
+			
 		JsonObject mauCount = new JsonObject();
 		mauCount.addProperty("mauCount", count);
 		JsonArray jsonarray = new JsonArray();
