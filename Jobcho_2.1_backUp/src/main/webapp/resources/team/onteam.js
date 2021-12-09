@@ -52,7 +52,7 @@ $(document).ready(function(){
 					
 				}
 			console.log("실행3");
-	}
+		}//end showProfile
 	
 	function getMemberNum(team_num){
 		console.log(team_num);

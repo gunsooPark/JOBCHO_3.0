@@ -88,7 +88,7 @@
 				<!--프로필-->
 				<div>
 					<div class="nav-profile-image-left"
-						style="background-image: url('/resources/css/99D279435B3D788602.jfif');"></div>
+						></div>
 					<div class="nav-profile-content-left">
 						<p>${team.team_name }</p>
 						<p><sec:authentication property="principal.users.user_email"/></p>
@@ -1178,8 +1178,10 @@ $(document).ready(function(){
 	var member_num = ${param.member_num };
 	var team_num =$("#teamNum").val();
 	var boardUL = $("#board"); //게시판 리스트 들어가는 부분
+	var user_num = $("#userNum").val();
 	
-	console.log(team_num);
+	console.log("유저넘 : " + user_num);
+	
 	
 	//========게시판 목록 호출=======
 	showList(); 
@@ -1270,9 +1272,27 @@ $(document).ready(function(){
 		});
 		
 		
+		//사용자 이미지 관련
+		$.ajax({
+				url:"/team/"+team_num+"/member/"+user_num,
+		        type:'Get',
+		        dataType:'json',
+		        success:function(result){
+		        	console.log("result결과입니다 : "+ result);
+		        	showProfile(result);
+		        }
+			})
 		
-		
-		
+			//사용자 이미지 관련
+			function showProfile(result){
+				console.log("실행");
+					if(result.profile_name!=null){
+						console.log("실행2");
+						$('.nav-profile-image-left').css('background-image', "url('/display?filename="+result.profile_name+"')"); 
+						
+					}
+				console.log("실행3");
+			}//end showProfile
 		
 		
 		
