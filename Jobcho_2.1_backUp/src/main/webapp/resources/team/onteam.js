@@ -11,7 +11,7 @@ $(document).ready(function(){
 			str+=`<div class="job-container">
             <!--프로필-->
             
-            <div class="team-profile-image" style="background-image: url('/resources/team/99D279435B3D788602.jfif');"></div>
+            <div class="team-profile-image" style="background-image: url('/resources/team/default.png');"></div>
             
             <div class="team-profile-info">
                 <p class="team-profile-name">`+item.team_name+`</p>
@@ -31,6 +31,28 @@ $(document).ready(function(){
 		team_num = $(this).val();
 		getMemberNum(team_num);
 	})
+	
+	//사용자 이미지 관련
+	$.ajax({
+			url:"/team/1/member/"+user_num,
+	        type:'Get',
+	        dataType:'json',
+	        success:function(result){
+	        	console.log(result);
+	        	showProfile(result);
+	        }
+		})
+	
+		//사용자 이미지 관련
+		function showProfile(result){
+			console.log("실행");
+				if(result.profile_name!=null){
+					console.log("실행2");
+					$('.nav-profile-image-left').css('background-image', "url('/display?filename="+result.profile_name+"')"); 
+					
+				}
+			console.log("실행3");
+	}
 	
 	function getMemberNum(team_num){
 		console.log(team_num);

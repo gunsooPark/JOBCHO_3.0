@@ -164,7 +164,7 @@
 							name="calendar-outline" class="nav__icon-right"></ion-icon> <span
 						class="nav__name-right">ToDoList</span>
 					</a> <a href="#" id="toggle-key3" class="nav__link-right"> <ion-icon
-							name="document-outline" class="nav__icon-right"></ion-icon> <span
+							name="football-outline" class="nav__icon-right"></ion-icon> <span
 						class="nav__name-right">Files</span>
 					</a> <a href="#" id="toggle-key-member" class="nav__link-right"> <ion-icon
 							name="people-outline" class="nav__icon-right"></ion-icon> <span

@@ -41,7 +41,6 @@
 			dataType : "json",
 			data : {"user_email" : $("#user_email").val()},
 			success : function(data){ // 성공할때 
-					alert("success");
 					console.log("성공");
 					window.location.href = "/users/findPw_2"; //성공하면 왼쪽페이지로 이동한다.
 			},
