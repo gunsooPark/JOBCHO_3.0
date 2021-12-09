@@ -1388,7 +1388,7 @@ $(document).ready(function(){
     				},//select end
     				events:[ 
     					{
-    						title : "이벤트 들어가라",
+    						title : "채팅기능 개발일정",
     						start : "2021-12-03",
     						end 	: "2021-12-06"
     					},
@@ -1398,22 +1398,22 @@ $(document).ready(function(){
     						end 	: "2021-12-08"
     					},
     					{
-    						title : "잘들어가지는데 ㅠ",
+    						title : "ToDo 리스트 개발",
     						start : "2021-12-17",
     						end 	: "2021-12-25"
     					},
     					{
-    						title : "제에발",
+    						title : "댓글 추가기능 개발",
     						start : "2021-12-04",
     						end 	: "2021-12-11"
     					},
     					{
-    						title : "일정 추가",
+    						title : "JSP 비동기화 작업",
     						start : "2021-12-03",
     						end 	: "2021-12-09				"
     					},
     					{
-    						title : "정말 현명한 선택이군요",
+    						title : "MVC2 작업중",
     						start : "2021-12-03",
     						end 	: "2021-12-10"
     					}
