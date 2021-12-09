@@ -9,6 +9,7 @@ $(document).ready(function(){
 	var member_num = $("#memberNum").val();
 	console.log("사용자 멤버 번호 : " + member_num);
 	
+	//초기 투표 리스트 불러오기
 	function getVoteList(){
 		console.log("getVoteList 실행");
 		$.ajax({
@@ -21,9 +22,28 @@ $(document).ready(function(){
 		});//end ajax
 	}//end getVoteList
 	
+	//완료된 투표 ajax 호출
+	function getEndVoteList(){
+		$.ajax({
+			url:'/team/'+team_num+'/vote/endlist',
+			type:'Get',
+			dataType:'json',
+			success:function(result){
+				showEndVoteList(result);
+			}
+		});//end ajax
+	}//end getEndVoteList
+	
+	
 	//초기화면 출력
 	getVoteList();
 	
+	
+	//완료된 투표 목록 출력
+	getEndVoteList();
+	
+	
+	//ajax 호출한 진행중 투표 리스트 화면 출력
 	function showVoteList(result){
 		str = "";
 		result.forEach(function(item){
@@ -41,6 +61,23 @@ $(document).ready(function(){
 		$(".job-vote-wrap").html(str);
 	}//end showVoteList
 	
+	//ajax 호출한 완료된 투표 리스트 화면 출력
+	function showEndVoteList(result){
+		str = "";
+		result.forEach(function(item){
+			str += `<div class="nav-search-result active-right endVoteModalShow" data-air="`+item.vote_num+`">
+            <div class="result-container">
+                <div class="result-image" style="background-image: url('99D279435B3D788602.jfif');"></div>
+                <div>
+                     <p  class="team-profile-email">투표번호 : `+item.vote_num+`</p>
+                     <p class="team-profile-email">투표제목 : `+item.vote_name+`</p>
+                </div>
+            </div>
+        </div>
+        <hr>`
+		})//end result.forEach
+		$(".job-vote-end-view-wrap").html(str);
+	}//end showEndVoteList
 	
 	//투표 내용 보여주기
 	function voting(result){
@@ -84,6 +121,40 @@ $(document).ready(function(){
 			}
 		});
 	};//end showVoting
+	
+	function showEndVoteResult(item, vote_num){
+		str = "";
+		
+		str+= '<div class ="end-vote-result-view-container">'
+			str+= '<input type ="hidden" id="vote_result_vote_num" value="'+ vote_num+'">'
+			str+= '<input type = "button" id="content1_member" value="'+item.vote_content1+'">'+item.vote_result1+'<br>'
+			str+= '<input type = "button" id="content2_member" value="'+item.vote_content2+'">'+item.vote_result2+'<br>'
+			if(item.vote_content3 != null){
+				str+= '<input type = "button" id="content3_member" value="'+item.vote_content3+'">'+item.vote_result3+'<br>'
+				if(item.vote_content4 != null){
+					str+= '<input type = "button" id="content4_member" value="'+item.vote_content4+'">'+item.vote_result4+'<br>'
+					if(item.vote_content5 != null){
+						str+= '<input type = "button" id="content5_member" value="'+item.vote_content5+'">'+item.vote_result5+'<br>'
+					}
+				}
+			}
+			str+= '</div>'
+				
+				$(".job-vote-end-result-view-wrap").html(str)
+		
+	}
+	
+	//완료된 투표 내용 불러오기
+	function showEndVoting(vote_num){
+		$.ajax({
+			url:'/team/'+team_num+'/vote/'+vote_num+'/result',
+			type:'Get',
+			dataType:'json',
+			success:function(result){
+				showEndVoteResult(result, vote_num);
+			}
+		})
+	}//end showEndVoting(vote_num)
 	
 	
 	
@@ -134,7 +205,7 @@ $(document).ready(function(){
 		var vote_result = $('input[name="vote_result"]:checked').val();
 		console.log("insertVoteResultAction : " +vote_result);
 		
-		getVoteResultMemberAjax();
+		
 		
 		//DB에서 이미 투표한 멤버번호 불러오기
 		
@@ -148,8 +219,9 @@ $(document).ready(function(){
 					doubleVoteCheck(result);
 				}
 			})// end ajax
-		}
+		}//end getVoteResultMemberAajx
 		
+		getVoteResultMemberAjax();
 		
 		
 		//중복 투표 체크
@@ -159,20 +231,38 @@ $(document).ready(function(){
 			console.log("result:"+result);
 			console.log("member_num:" +member_num);
 			
-			var arr = new Array();
+			forcheck();
 			
-			
-			
-			console.log(result.includes(member_num));
-			
-			if(result.indexOf(member_num)<0){
-				doubleCheckVote();
-				console.log("insertVoteResultAction false: " +elementExistCheck)
-			}else{
-				console.log("insertVoteResultAction true: " +elementExistCheck)
-				console.log("if else")
-				alert("중복투표는 불가능합니다.")
+			function forcheck(){
+				for(var i = 0; i<result.length; i++){
+					if(result[i] == member_num){
+						alert("중복투표는 불가능합니다.");
+						elementExistCheck = false;
+						console.log("elementExistCheck:"+elementExistCheck)
+						break;
+						
+					}
+					
+				}
+				ifcheck(elementExistCheck);
 			}
+			
+			
+			
+			
+		function ifcheck(item){
+			console.log("ifcheck:"+item);
+			if(item == true){
+				console.log("if else false")
+				doubleCheckVote();
+				console.log("insertVoteResultAction true: " +elementExistCheck)
+			}else if(item == false){
+				console.log("insertVoteResultAction false: " +elementExistCheck)
+				console.log("if else false")
+				//alert("중복투표는 불가능합니다.")
+			}
+		}	
+			
 			
 			
 		}//end 중복 투표 체크
@@ -212,15 +302,8 @@ $(document).ready(function(){
 			getVoteList();
 			
 			
-			/*if(elementExistCheck == false){
-				console.log("if false")
-				
-			}else{
-				console.log("if else")
-				alert("중복투표는 불가능합니다.")
-			}//end if
-*/			
-		}
+			
+		}//end doubleCheckVote
 		
 		
 		
@@ -266,10 +349,11 @@ $(document).ready(function(){
 	
 	//투표 결과 멤버 표시하기
 	function showVoteResultMember(result){
+		console.log(result);
 		str = "";
 		result.forEach(function(item){
 			str+= '<div class ="vote-result-member-view-container">'
-			str+='<div id ="voteContent1Member">'+item.user_name+'</div>'
+			str+='<div class ="voteContentMember">'+item.user_name+'</div>'
 			str+='</div><hr>'
 		})
 		$(".job-vote-result-member-view-wrap").html(str);
@@ -300,10 +384,12 @@ $(document).ready(function(){
 			type:'delete',
 			dataType:'json',
 			success:function(result){
-				console.log(result);
+				console.log("endVoteSubmit:"+result);
+				
 				
 			}
 		});//end ajax
+		alert("투표가 마감되었습니다.")
 		$("#voting").modal("hide");
 		getVoteList();
 	}
@@ -316,6 +402,12 @@ $(document).ready(function(){
 		updataMemberNum = this.value
 	});
 	
+	//투표완료리스트 출력 모달 이벤트
+	$(document).on("click", "#end-vote-list", function(){
+		getEndVoteList();
+		$("#end-list-vote-modal").modal("show");
+	});
+	
 	//투표생성 실행시키는 함수 
 	$("#insertVoteAction").on("click", function(){
 		console.log("투표생성 버튼눌리는중");
@@ -326,6 +418,12 @@ $(document).ready(function(){
 	$(document).on("click", ".voteModalShow", function(){
 		$("#voting").modal("show");
 		showVoting($(this).data('air'));
+	})
+	
+	//완료된 투표 모달 띄우기
+	$(document).on("click", ".endVoteModalShow", function(){
+		$("#end-list-vote-result-modal").modal("show");
+		showEndVoting($(this).data('air'));
 	})
 	
 	//투표 결과 제출
@@ -361,7 +459,7 @@ $(document).ready(function(){
 	$(document).on("click", "#content2_member", function(){
 		$("#voteResultMember").modal("show");
 		console.log("vote_num: " + $("#vote_result_vote_num").val());
-		console.log("content1 value :" + $("#content1_member").val());
+		console.log("content2 value :" + $("#content2_member").val());
 		getVoteResultMember($("#vote_result_vote_num").val(), '2')
 	})
 	
@@ -369,7 +467,7 @@ $(document).ready(function(){
 	$(document).on("click", "#content3_member", function(){
 		$("#voteResultMember").modal("show");
 		console.log("vote_num: " + $("#vote_result_vote_num").val());
-		console.log("content1 value :" + $("#content1_member").val());
+		console.log("content3 value :" + $("#content3_member").val());
 		getVoteResultMember($("#vote_result_vote_num").val(), '3')
 	})
 	
@@ -377,7 +475,7 @@ $(document).ready(function(){
 	$(document).on("click", "#content4_member", function(){
 		$("#voteResultMember").modal("show");
 		console.log("vote_num: " + $("#vote_result_vote_num").val());
-		console.log("content1 value :" + $("#content1_member").val());
+		console.log("content4 value :" + $("#content4_member").val());
 		getVoteResultMember($("#vote_result_vote_num").val(), '4')
 	})
 	
@@ -385,7 +483,7 @@ $(document).ready(function(){
 	$(document).on("click", "#content5_member", function(){
 		$("#voteResultMember").modal("show");
 		console.log("vote_num: " + $("#vote_result_vote_num").val());
-		console.log("content1 value :" + $("#content1_member").val());
+		console.log("content5 value :" + $("#content5_member").val());
 		getVoteResultMember($("#vote_result_vote_num").val(), '5')
 	})
 	
