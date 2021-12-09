@@ -40,6 +40,14 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+	<style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+*{
+	font-family: 'Gowun Dodum', sans-serif;
+}
+</style>
 </head>
 <body>
 	<header>
@@ -335,7 +343,7 @@
 					<div class="modal-body">
 						<input id="updataPosition" type="text" class="form-control"
 							placeholder="직책 입력"> <input id="updateMemberAction"
-							type="button" class="btn btn-success" value="수정">
+							type="button" class="btn btn-info" value="수정">
 						<div class="modal-scroll">
 							<ul class="list-group">
 
@@ -378,7 +386,7 @@
 					<div class="modal-body">
 						<input id="updataPosition" type="text" class="form-control"
 							placeholder="직책 입력"> <input id="updateMemberAction"
-							type="button" class="btn btn-success" value="수정">
+							type="button" class="btn btn-info" value="수정">
 						<div class="modal-scroll">
 							<ul class="list-group">
 

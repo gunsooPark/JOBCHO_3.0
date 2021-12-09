@@ -46,8 +46,12 @@ public class PostController {
 	public void getListPost(Criteria cri, Model model, @RequestParam("board_num") int board_num,
 											@RequestParam("team_num") int team_num, 
 											@RequestParam("member_num") int member_num){	
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("board_num", board_num);
+		map.put("cri", cri);
 	
-		int total = service.getTotalCount(board_num);//게시글 수 구하기
+		int total = service.getTotalCount(map);//게시글 수 구하기
 		BoardVO board = boardService.getBoard(board_num);//게시판 이름,정보 가져오기
 		
 		log.info("게시글 리스트");
@@ -56,18 +60,12 @@ public class PostController {
 		log.info("검색내용: " + cri.getKeyword());
 		
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("board_num", board_num);
-		map.put("cri", cri);
-		
 		model.addAttribute("postList", service.getListPost(map));
 		model.addAttribute("pageMaker", new PageInfo(cri, total));
 		model.addAttribute("board_num", board_num);
 		model.addAttribute("team_num", team_num);
 		model.addAttribute("member_num", member_num);
 		model.addAttribute("board", board);
-		
-	
 	}
 	
 	

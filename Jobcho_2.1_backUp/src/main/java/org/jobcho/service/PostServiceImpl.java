@@ -63,10 +63,10 @@ public class PostServiceImpl implements PostService {
 
 
 	@Override
-	public int getTotalCount(int board_num) {
+	public int getTotalCount(HashMap<String, Object> map) {
 		log.info("전체 글 수 불러오기");
 		
-		return mapper.getTotalCount(board_num);
+		return mapper.getTotalCount(map);
 	}
 
 	

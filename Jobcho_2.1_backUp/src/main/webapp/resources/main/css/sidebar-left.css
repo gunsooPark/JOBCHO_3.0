@@ -1,14 +1,17 @@
 /*===== GOOGLE FONTS =====*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
 
 /*===== VARIABLES CSS =====*/
+
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
 
 
 
 /*===== BASE =====*/
 *,::before,::after{
   box-sizing: border-box;
-	
+  font-family: 'Gowun Dodum', sans-serif;
 	
 }
 

@@ -15,6 +15,6 @@ public interface PostService {
 	public int updateBoard(PostVO post); //게시글 수정
 	public void deletePost(int post_num); //게시글 삭제
 	
-	public int getTotalCount(int board_num);// 전체 글 수
+	public int getTotalCount(HashMap<String, Object> map);// 전체 글 수
 	
 }
