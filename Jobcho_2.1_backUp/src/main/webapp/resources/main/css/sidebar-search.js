@@ -1,68 +1,98 @@
 /*===== EXPANDER MENU  =====*/ 
 $(document).ready(function(){
 	function setHome(){
-    	var str=`<style>table.type07 {
-  		  border-collapse: collapse;
-  		  text-align: left;
-  		  line-height: 1.5;
-  		  border: 1px solid #ccc;
-  		  margin: 20px 10px;
-  		}
-  		table.type07 thead {
-  		  border-right: 1px solid #ccc;
-  		  border-left: 1px solid #ccc;
-  		  background: #e7708d;
-  		}
-  		table.type07 thead th {
-  		  padding: 10px;
-  		  font-weight: bold;
-  		  vertical-align: top;
-  		  color: #fff;
-  		}
-  		table.type07 tbody th {
-  		  width: 150px;
-  		  padding: 10px;
-  		  font-weight: bold;
-  		  vertical-align: top;
-  		  border-bottom: 1px solid #ccc;
-  		  background: #fcf1f4;
-  		}
-  		table.type07 td {
-  		  width: 350px;
-  		  padding: 10px;
-  		  vertical-align: top;
-  		  border-bottom: 1px solid #ccc;
-  		}</style>
-  	<table class="type07">
-  		  <thead>
-  		  <tr>
-  		    <th scope="cols">타이틀</th>
-  		    <th scope="cols">내용</th>
-  		  </tr>
-  		  </thead>
-  		  <tbody>
-  		  <tr>
-  		    <th scope="row">항목명</th>
-  		    <td>내용이 들어갑니다.</td>
-  		  </tr>
-  		  <tr>
-  		    <th scope="row">항목명</th>
-  		    <td>내용이 들어갑니다.</td>
-  		  </tr>
-  		  <tr>
-  		    <th scope="row">항목명</th>
-  		    <td>내용이 들어갑니다.</td>
-  		  </tr>
-  		  </tbody>
-  		</table>`
-  	$(".job-team-body").html(str);
+			var str = `<div id="calendar"></div>`;
+			
+			$(".job-team-body").html(str);
+			var calendarEl = document.getElementById("calendar");
+			console.log(calendarEl);
+			
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				headerToolbar : {
+					left : "",
+					center : "title",
+					right : "dayGridMonth,timeGridWeek,timeGridDay",
+				},
+				locale : "ko",
+				timeZone : "local",
+				navLinks : true, 
+				selectable : true,
+				selectMirror : true,
+				select : function() {
+					// Display the modal.
+					// You could fill in the start and end fields based on the parameters
+					$('#CalModal').modal('show');
+					
+					
+						var title = prompt('Event Title:');
+						var start = prompt('Event startDate:');
+						var end = prompt('Event endDate:');
+						var allDay = prompt('Event allDay:');
+						if (title) {
+							calendar.addEvent({
+								title: title,
+								start: start,
+								end: end,
+								allDay: allDay
+							})
+						}
+							calendar.unselect()
+							console.log("화면 이벤트 출력 성공");
+						
+
+				},//select end
+				events:[ 
+					{
+						title : "이벤트 들어가라",
+						start : "2021-12-03",
+						end 	: "2021-12-06"
+					},
+					{
+						title : "이벤트 추가",
+						start : "2021-12-03",
+						end 	: "2021-12-08"
+					},
+					{
+						title : "잘들어가지는데 ㅠ",
+						start : "2021-12-17",
+						end 	: "2021-12-25"
+					},
+					{
+						title : "제에발",
+						start : "2021-12-04",
+						end 	: "2021-12-11"
+					},
+					{
+						title : "일정 추가",
+						start : "2021-12-03",
+						end 	: "2021-12-09				"
+					},
+					{
+						title : "정말 현명한 선택이군요",
+						start : "2021-12-03",
+						end 	: "2021-12-10"
+					}
+					
+				],
+				eventClick : function(arg) {
+					console.log("일정등록 이벤트 삭제");
+					console.log(arg.events);
+					if (confirm("일정을 삭제하시겠습니까?")) {
+						arg.event.remove();
+					}
+				},
+				editable : true,
+				dayMaxEvents : true,
+			});
+			calendar.render();
+			
     }
     
     //홈버튼 클릭했을때 홈으로 돌아옴
     $("#toggle-key-home").on("click", function(){setHome()})
     
     //초기 홈화면 세팅
-//    setHome()
+    //setHome()
 	
   $("#toggle-key-home").on("click",function(){
     console.log("집으로")

@@ -9,6 +9,14 @@
 </head>
 <meta charset="UTF-8">
 <title>Users</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+*{
+	font-family: 'Gowun Dodum', sans-serif;
+}
+</style>
 </head>
 <body>
 

@@ -1,5 +1,5 @@
 
-/*검색창*/
+/*寃��깋李�*/
 .search-navbar-right{
     position: fixed;
     top: 50px;
@@ -11,7 +11,7 @@
     
     padding-bottom: 50px;
     transition: .5s;
-    z-index: 1;
+    z-index: 99;
   }
 
   .nav-search{
@@ -117,7 +117,7 @@
   overflow-y: auto;
 }
 
-/*할일생성*/
+/*�븷�씪�깮�꽦*/
 #createToDo{
   width: 95%;
   border-radius: 5px;
@@ -128,7 +128,7 @@
   padding: 8px;
 }
 
-/*완료된할일생성버튼*/
+/*�셿猷뚮맂�븷�씪�깮�꽦踰꾪듉*/
 #selectTodoDeleteList{
   width: 95%;
   border-radius: 5px;
@@ -140,7 +140,7 @@
 }
 
 
-/*완료된 투표창*/
+/*�셿猷뚮맂 �닾�몴李�*/
 #end-vote-list{
   width: 95%;
   border-radius: 5px;

@@ -1,6 +1,7 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 body{
     background-color: #f6f6f9;
+    font-family: 'Gowun Dodum', sans-serif;
 }
 
 
@@ -10,6 +11,9 @@ body{
     top: 0;
     left: 0;
     right: 0;
+    background-color: #12192c;
+    border-color:#12192c;
+    border-radius: 0em;
 }
 
 .team-header .container-fluid{
@@ -20,7 +24,7 @@ body{
 .team-header .navbar-brand{
     font-size: 20px;
     font-weight: bold;
-    color: #1e9736;
+    color: #12192c;
     
 }
 
@@ -35,7 +39,7 @@ body{
 
 .job-team-body h1{
     font-weight: bold;
-    color: #1e9736
+    color: #12192c;
 }
 
 .job-team-body .job-container{
@@ -119,8 +123,8 @@ body{
 .team-btn button {
     width: 100px;
     height: 48px; 
-    background-color: #2bc54a;
-    border: 1px solid #22ad3d;
+    background-color: #183b57;
+    border: 1px solid #183b57;
     border-radius: 2px;
     font-size: 15px;
     color: #fff;
@@ -154,4 +158,9 @@ body{
     font-size: 15px;
     font-family:'Nanum Gothic';
     font-weight: bold;
+}
+
+.team-profile-info{
+	width: 120px;
+	margin-left: 30px;
 }
