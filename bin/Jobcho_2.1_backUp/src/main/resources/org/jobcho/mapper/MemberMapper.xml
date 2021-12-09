@@ -10,6 +10,7 @@
 		<result property="team_num" column="team_num"/>
 		<result property="user_num" column="user_num"/>
 		<result property="isLive" column="islive"/>
+		<result property="profile_name" column="profile_name"/>
 		<association property="user" javaType="org.jobcho.domain.UsersVO">
 			<id property="user_num" column="user_num"/>
 			<result property="user_name" column="user_name"/>
@@ -27,10 +28,10 @@
 
 	<insert id="insertMembers" parameterType="org.jobcho.domain.MemberVO">
 		insert into member(
-			member_num, member_position, team_num, user_num,islive,member_date
+			member_num, member_position, team_num, user_num,islive,member_date, profile_name
 		)
 		values(
-			member_num.nextval, #{member_position,jdbcType=VARCHAR}, #{team_num}, #{user_num},default,default
+			member_num.nextval, #{member_position,jdbcType=VARCHAR}, #{team_num}, #{user_num},default,default, default
 		)
 	</insert>
 	
@@ -39,16 +40,16 @@
 		insert into member (member_num, team_num, user_num)
          values(member_num.nextval, #{team_num}, #{user_num})
 	</insert>
-
 	
 	<select id="listTeamMembers" parameterType="int" resultMap="MemberUser">
-		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,team.user_num as t_user_num
+		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,member.islive, profile_name,team.user_num as t_user_num
 		from member, users, team
 		where member.user_num=users.user_num 
 		and member.team_num=team.team_num
 		and member.team_num=#{team_num}
 		and member.islive=1
 	</select>
+	
 	
 	<update id="updateMemberInfo" parameterType="org.jobcho.domain.MemberVO">
 		update member set member_position=#{member_position} ,
@@ -79,7 +80,7 @@
 		select * from member where user_num = #{user_num} and team_num = #{team_num}
 	</select>
 	
-	<select id = "getMember" resultType = "org.jobcho.domain.MemberVO">
+	<select id = "getMember" parameterType = "int" resultType = "org.jobcho.domain.MemberVO">
 		select * from member where member_num= #{member_num}
 	</select>
 	
@@ -87,5 +88,18 @@
 		select * from USERS where not user_num in (select user_num from member where team_num=#{team_num} and islive=1)
 	</select>
 	
+	<select id="getListWithOutChatMember" parameterType="HashMap" resultMap="MemberUser">
+		select member_num, users.user_num,user_name, user_email, user_phonenum, member_position,member.islive,profile_name,team.user_num as t_user_num
+		from member, users, team
+		where member.user_num=users.user_num 
+		and member.team_num=team.team_num
+    	and member.member_num not in (select member_num from chatmember where chatroom_num=#{chatroom_num})
+		and member.team_num=#{team_num}
+		and member.islive=1
+	</select>
+	
+	<update id="updateMemberProfile" parameterType="org.jobcho.domain.MemberVO">
+		update member set profile_name=#{profile_name} where member_num=#{member_num}
+	</update>
 
 </mapper>
