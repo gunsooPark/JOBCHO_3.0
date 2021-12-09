@@ -76,8 +76,6 @@ $(document).ready(function(){
                              <p class="team-profile-email">마감날짜 : `+item.todo_endDate+`</p>
                             <p class="team-profile-email">제목 : `+item.todo_title+`</p>
                             <p class="team-profile-email">설명 : `+item.todo_description+`</p>
-                            <button class="" id="">복구</button>
-                            
                         </div>
                     </div>
                 </div>
