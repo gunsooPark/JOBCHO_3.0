@@ -31,7 +31,7 @@ public class VoteController {
 	@Autowired
 	private VoteResultService voteResultService;
 	
-	//��ǥ ����
+	//투표생성하기
 	@PostMapping("/new")
 	public ResponseEntity<VoteVO> insertVote(@RequestBody VoteVO vote, @PathVariable("team_num") int team_num){
 		vote.setTeam_num(team_num);
@@ -44,7 +44,7 @@ public class VoteController {
 		
 	}
 	
-	//��ǥ�ϱ�
+	//투표하기 
 	@PostMapping("/{vote_num}/insert")
 	public ResponseEntity<VoteResultVO> insertVoteResult(@RequestBody VoteResultVO voteResult, @PathVariable("vote_num") int vote_num){
 		voteResult.setVote_num(vote_num);
@@ -57,24 +57,25 @@ public class VoteController {
 		
 	}
 	
-	//��ǥ ��Ϻ���
+	//투표 내용 리스트 보기 
 	@GetMapping(value = "/list", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<VoteVO>> listVote(@PathVariable("team_num") int team_num){
 		return new ResponseEntity<List<VoteVO>>(service.listVote(team_num), HttpStatus.OK);
 	}
 	
+	//완료된 투표 리스트 보기 
 	@GetMapping(value = "/endlist", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<VoteVO>> listEndVote(@PathVariable("team_num") int team_num){
 		return new ResponseEntity<List<VoteVO>>(service.listEndVote(team_num), HttpStatus.OK);
 	}
 	
-	//Ư�� ��ǥ ��������
+	//투표 한개 반환하기 
 	@GetMapping(value = "/{vote_num}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<VoteVO> getVote(@PathVariable("vote_num") int vote_num){
 		return new ResponseEntity<VoteVO>(service.getVote(vote_num), HttpStatus.OK);
 	}
 	
-	//Ư�� ��ǥ ��� ����
+	//투표보기 
 	@GetMapping(value = "/{vote_num}/result", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<VoteResultVO> getVoteResult(@PathVariable("vote_num") int vote_num){
 				
@@ -93,13 +94,13 @@ public class VoteController {
 		return new ResponseEntity<VoteResultVO>(voteResult, HttpStatus.OK);
 	}
 	
-	//Ư�� ��ǥ�� ��� Ȯ��
+	//투표결과 참가자 조회 
 	@GetMapping(value = "/{vote_num}/result/member", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<Integer>> getVoteResultMember(@PathVariable("vote_num") int vote_num){
 		return new ResponseEntity<List<Integer>>(voteResultService.getVoteResultMember(vote_num), HttpStatus.OK);
 	}
 
-	//��ǥ ����
+	//투표종료하기
 	@DeleteMapping(value = "/{vote_num}/end", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<VoteVO> endVote(@PathVariable("vote_num") int vote_num){
 		

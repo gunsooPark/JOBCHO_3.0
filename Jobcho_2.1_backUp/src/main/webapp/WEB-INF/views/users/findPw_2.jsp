@@ -40,8 +40,7 @@
 			success : function(data){
 				console.log(data);
 				
-				if(data==1){
-					console.log("성공");					
+				if(data==1){			
 					alert("성공")
 					window.location.href = "/users/findPw_3";
 				}else if(data == 0){

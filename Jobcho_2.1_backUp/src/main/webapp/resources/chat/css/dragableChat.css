@@ -7,6 +7,9 @@
   border: 1px solid #d3d3d3;
   text-align: center;
   resize:both;
+  
+  width:400px;
+  min-width: 300px;
 }
 
 .dragablediv:hover{
