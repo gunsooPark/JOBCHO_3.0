@@ -62,7 +62,7 @@ $(document).ready(function(){
     $("#toggle-key-home").on("click", function(){setHome()})
     
     //초기 홈화면 세팅
-    setHome()
+//    setHome()
 	
   $("#toggle-key-home").on("click",function(){
     console.log("집으로")

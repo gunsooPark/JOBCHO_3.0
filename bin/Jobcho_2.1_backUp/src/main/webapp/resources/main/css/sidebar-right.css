@@ -1,5 +1,6 @@
 /*===== GOOGLE FONTS =====*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
 
 /*===== VARIABLES CSS =====*/
 :root{
@@ -8,12 +9,12 @@
   /*===== Colores =====*/
   --first-color: #0C5DF4;
   --bg-color2: hsl(133, 45%, 75%);
-  --bg-color: #12192C;
+  --bg-color: #12192c;
   --sub-color: #B6CEFC;
   --white-color: #FFF;
   
   /*===== Fuente y tipografia =====*/
-  --body-font: 'Poppins', sans-serif;
+  --body-font: 'Gowun Dodum', sans-serif;
   --normal-font-size: 2rem;
   --small-font-size: 1.8rem;
   --icon-font-size:3rem;
@@ -26,6 +27,7 @@
 /*===== BASE =====*/
 *,::before,::after{
   box-sizing: border-box;
+  font-family: 'Gowun Dodum', sans-serif;
 }
 
 
