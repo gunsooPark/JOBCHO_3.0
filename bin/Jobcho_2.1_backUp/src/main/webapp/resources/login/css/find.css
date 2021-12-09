@@ -12,7 +12,7 @@ body{
 
 .job-login h1{
     font-weight: bold;
-    color: #1e9736
+    color: #12192c;
 }
 
 .job-login .job-container{
@@ -62,8 +62,8 @@ body{
 .login-btn button {
     width: 100%;
     height: 48px; 
-    background-color: #2bc54a;
-    border: 1px solid #22ad3d;
+    background-color: #183b57;
+    border: 1px solid #12192c;
     border-radius: 2px;
     font-size: 15px;
     color: #fff;

@@ -58,7 +58,7 @@
 		<c:if test="${post.writer eq user_name }">
 			<button data-oper='modify' class="btn btn-info">수정</button>
 		</c:if>
-	
+
 	<button data-oper='list' class="btn btn-default">목록</button>
 
 <br><br>
@@ -207,7 +207,7 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	$("#calendar").remove();
 var user_name = $("#user_name").val(); //현재 로그인한 user_name
 
 //==========댓글 Modal==========

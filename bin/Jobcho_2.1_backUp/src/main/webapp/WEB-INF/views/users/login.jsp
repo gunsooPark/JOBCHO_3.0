@@ -10,6 +10,14 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="/resources/login/css/login.css">
+    
+ <style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
 
 </head>
 <body>
@@ -30,7 +38,7 @@
 				</div>
 	
 			<div class="login-btn">
-				<button type="submit">JOBCHO로그인</button>
+				<button type="submit">로그인</button>
 			</div>
 		</form>
 		<br>

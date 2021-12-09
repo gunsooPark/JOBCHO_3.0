@@ -80,7 +80,7 @@ public class PostController {
 		BoardVO board = boardService.getBoard(board_num);
 		model.addAttribute("post", service.getPost(post_num));
 		model.addAttribute("team_num", team_num);
-		model.addAttribute("member_num", team_num);		
+		model.addAttribute("member_num", member_num);		
 		model.addAttribute("board", board);	
 		model.addAttribute("user_name", user_name);	
 	}

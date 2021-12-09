@@ -13,7 +13,7 @@ $(document).ready(function(){
             
             <div class="team-profile-image" style="background-image: url('/resources/team/99D279435B3D788602.jfif');"></div>
             
-            <div>
+            <div class="team-profile-info">
                 <p class="team-profile-name">`+item.team_name+`</p>
                 <p class="team-profile-email">`+item.team_info+`</p>
             </div>

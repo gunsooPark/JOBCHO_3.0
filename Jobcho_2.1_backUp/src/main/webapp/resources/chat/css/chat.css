@@ -81,3 +81,8 @@
 	width:150px;
 	
 }
+
+.job-team-body2{
+	position:fixed;
+	z-index:101;
+}

@@ -206,6 +206,8 @@
 
 $(document).ready(function(){
 	
+	$("#calendar").remove();
+	
 	//변경사항 피드백
 	var result = '<c:out value="${result}"/>'; 	
 	

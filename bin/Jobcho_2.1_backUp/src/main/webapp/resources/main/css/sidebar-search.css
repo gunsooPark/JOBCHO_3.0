@@ -117,8 +117,41 @@
   overflow-y: auto;
 }
 
-/*할일창*/
+/*할일생성*/
 #createToDo{
+  width: 95%;
+  border-radius: 5px;
+  background-color: #0c5df4;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  padding: 8px;
+}
+
+/*완료된할일생성버튼*/
+#selectTodoDeleteList{
+  width: 95%;
+  border-radius: 5px;
+  background-color: #0c5df4;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  padding: 8px;
+}
+
+
+/*완료된 투표창*/
+#end-vote-list{
+  width: 95%;
+  border-radius: 5px;
+  background-color: #0c5df4;
+  text-align: center;
+  margin: 10px;
+  font-size: 16px;
+  padding: 8px;
+}
+
+#createVote{
   width: 95%;
   border-radius: 5px;
   background-color: #0c5df4;
