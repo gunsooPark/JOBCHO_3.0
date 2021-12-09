@@ -120,8 +120,8 @@ body{
 .team-btn button {
     width: 100px;
     height: 48px; 
-    background-color: #2bc54a;
-    border: 1px solid #22ad3d;
+    background-color: #183b57;
+    border: 1px solid #183b57;
     border-radius: 2px;
     font-size: 15px;
     color: #fff;
@@ -155,4 +155,9 @@ body{
     font-size: 15px;
     font-family:'Nanum Gothic';
     font-weight: bold;
+}
+
+.team-profile-info{
+	padding-left:50px;
+	width: 250px;
 }

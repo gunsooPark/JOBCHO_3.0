@@ -7,9 +7,9 @@
 	<!-- 게시글 생성 -->
 	<insert id="insertPost" parameterType="org.jobcho.domain.PostVO">
 			insert into post(
-				post_num, post_title, post_contents, board_num, member_num, post_date, islive
+				post_num, post_title, post_contents, board_num, member_num, post_date, islive, writer
 			)
-			values(post_num.nextval, #{post_title}, #{post_contents}, #{board_num}, #{member_num}, default, default)
+			values(post_num.nextval, #{post_title}, #{post_contents}, #{board_num}, #{member_num}, default, default, #{writer})
 	</insert>
 	
 	
@@ -19,28 +19,28 @@
 				select *
 				from(
 					select /*+INDEX_DESC(post SYS_C007525) */
-						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive, replycnt
+						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive, replycnt,writer
 					from post
 					where
 		]]>	
-				<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-					<foreach item='type' collection="#{cri.typeArr}">
-					<trim prefix="OR">
+			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="cri.typeArr">
+				<trim prefix="OR">
 					<choose>
-						<when test="type == #{cri.type}">
+						<when test="type == 'T'.toString()">
 							post_title like '%'||#{cri.keyword}||'%'
 						</when>
 						<when test="type == 'C'.toString()">
 							post_contents like '%'||#{cri.keyword}||'%'
 						</when>
-						 <when test="type == 'W'.toString()">
-							post_contents like '%'||#{cri.keyword}||'%'
+						<when test="type == 'W'.toString()">
+							writer like '%'||#{cri.keyword}||'%'
 						</when>
 					</choose>
-					</trim>
-					</foreach>
 				</trim>
-				
+			</foreach>
+		</trim>
+			
 		<![CDATA[
 				rownum <= #{cri.pageNum} * #{cri.amount}
 				and board_num = #{board_num}
@@ -49,11 +49,8 @@
 				where rn > (#{cri.pageNum} -1) * #{cri.amount}
 				and board_num = #{board_num}
 				and islive = 1
-				
-				
 		]]>	
 	</select>
-	
 	
 	<!-- 게시글 상세조회 -->
 	<select id="getPost" parameterType="int" resultType="org.jobcho.domain.PostVO">
@@ -79,10 +76,33 @@
 	
 	
 	<!-- 전체 글 수 -->
-	<select id="getTotalCount" parameterType="int" resultType="int">
+	<select id="getTotalCount" parameterType="hashMap" resultType="int">
+	<![CDATA[ 
 		select count(*) from post 
-		where board_num = #{board_num}
+		where 
+	]]>
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="cri.typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							post_title like '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							post_contents like '%'||#{cri.keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%'||#{cri.keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+			
+	<![CDATA[
+		board_num = #{board_num}
 		and islive = 1
+	]]>
 	</select>
 	
 	

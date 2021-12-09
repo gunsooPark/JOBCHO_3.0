@@ -12,6 +12,15 @@
 	<!-- <link rel="stylesheet" href="register.css"> -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<meta name="_csrf" content="${_csrf.token}"/>
+	<style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+*{
+	font-family: 'Gowun Dodum', sans-serif;
+}
+</style>
+	
+	
 	<script type="text/javascript">
 	
 	//security ajax를 사용하면 403에러가 발생하기 때문에 아래와 같은 코드를 작성해야됨 
@@ -216,7 +225,7 @@
 		</div>
 	
 		<div class="login-btn">
-			<button type="button" onclick="checkValue();">JobCho 회원가입</button>
+			<button type="button" onclick="checkValue();">회원가입</button>
 		</div>
 		
 	</div>
