@@ -6,9 +6,16 @@
 <%@include file="/WEB-INF/views/main.jsp"%>
 <script src="https://kit.fontawesome.com/1628dac045.js" crossorigin="anonymous"></script>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+*{
+	font-family: 'Gowun Dodum', sans-serif;
+}
+</style>
 
 
-<div class="row" style="margin-top: 80px">
+<div class="row">
 	<div class="col-sm-7" style="margin-left: 450px">
 		<h1 class="page-header">
 			${board.board_name }
@@ -20,6 +27,7 @@
 </div>
 <!-- /.row -->
 
+
 <div class="row" >
 	<div class="col-sm-7" style="margin-left: 450px">
 		<div class="panel panel-default">
@@ -30,6 +38,7 @@
 			</div>
 
 			<!-- /.panel-heading -->
+			
 			<div class="panel-body">
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
@@ -175,13 +184,14 @@
 			
 								<!---------------form을 이용한 데이터 유지-------------->
 								<form id='listForm' action="/post/list" method='get'>
+										<input type='hidden' name='keyword' value='${pageMaker.cri.keyword}'>
+										<input type='hidden' name='type' value='${pageMaker.cri.type}'>  
 										<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 										<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
 										<input type='hidden' name='board_num' value='${board_num}'>
 										<input type='hidden' name='team_num' value='${team_num}'>
 										<input type='hidden' name='member_num' value='${member_num }'>
 										<input type='hidden' name='user_name' value='<sec:authentication property="principal.users.user_name"/>'>
-										
 								</form>
 			
 		</div>
@@ -190,7 +200,6 @@
 	<!-- end panel -->
 </div>
 <!-- /.row -->
-
 
 
 <script type="text/javascript">
@@ -277,7 +286,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 
 //=======검색 버튼 이벤트 처리======
-/* var searchForm = $("#searchForm");
+var searchForm = $("#searchForm");
 
 $("#searchForm button").on("click", function(e){
 	
@@ -302,8 +311,8 @@ $("#searchForm button").on("click", function(e){
 	e.preventDefault();
 	
 	searchForm.submit();	
-});
- */
+}); 
+
 	
  
  
@@ -312,7 +321,7 @@ $("#searchForm button").on("click", function(e){
  
 //==========게시판 Modal 설정==========
 	
-	var team_num = ${team_num};
+	/* var team_num = ${team_num};
 	var board_num = ${board_num};
 	
 	//모달창에 입력한 데이터 값 저장
@@ -321,8 +330,8 @@ $("#searchForm button").on("click", function(e){
 	var modalInputBoardInfo = settingBoard.find("input[name='board_info']");
 	/* var modalInputReplyDate = boardModal.find("input[name='member_name']"); */
 
-	var modalBoardDeleteBtn = $("#modalBoardDeleteBtn"); //등록버튼
-	var modalBoardModBtn = $("#modalBoardModBtn");//수정버튼
+	//var modalBoardDeleteBtn = $("#modalBoardDeleteBtn"); //등록버튼
+	//var modalBoardModBtn = $("#modalBoardModBtn");//수정버튼 
 
 	
 

@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="/resources/team/team.css">
     <link rel="stylesheet" href="/resources/team/sidebar-team-left.css">
     <link rel="stylesheet" href="/resources/team/sidebar-team-right.css">
+    <style>
+	@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+	
+	*{
+	font-family: 'Gowun Dodum', sans-serif;
+	}
+</style>
     
 </head>
 <body>
@@ -59,7 +66,7 @@
         </div>
 
         <div class="job-container-new">
-            <div><a href="#" id="createNewTeam" >팀생성하기</a></div>
+            <div><a href="#" id="createNewTeam" >팀 생성하기</a></div>
         </div>
 	</div>
 <!--왼쪽 사이드바 시작-->
@@ -113,7 +120,7 @@
 						전화번호<input type="text" class="form-control" id="user_phoneNum" name="user_phoneNum" value="<sec:authentication property="principal.users.user_phoneNum"/>">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<br>
-						<input type="button" class="btn btn-success" onclick="checkValue();"  value="수정">
+						<input type="button" class="btn btn-info" onclick="checkValue();"  value="수정">
 						<div class="modal-scroll">
 							<ul class="list-group">
 
@@ -135,11 +142,11 @@
 					</div>
 					<div class="modal-body">
 						
-						<input id="updateTeamNum" type="text" >
+						<input id="updateTeamNum" type="hidden" >
 						팀이름<input id="updateTeamName" type="text" class="form-control"> 
 						팀내용<input id="updateTeamInfo" type="text" class="form-control">
-						<input id="updateTeamAction" type="button" class="btn btn-success" onclick="updateTeamAction();" value="수정">
-						<input id="deleteTeamAction" type="button" class="btn btn-success" onclick="deleteTeamAction();" value="삭제">
+						<input id="updateTeamAction" type="button" class="btn btn-info" onclick="updateTeamAction();" value="수정">
+						<input id="deleteTeamAction" type="button" class="btn btn-danger" onclick="deleteTeamAction();" value="삭제">
 					</div>
 				</div>
 			</div>
@@ -159,7 +166,7 @@
 						팀이름<input id="insertTeamName" type="text" class="form-control"> 
 						팀정보<input id="insertTeamInfo" type="text" class="form-control">
 						<input id="insertUser_num" type="hidden" class="form-control" value="<sec:authentication property="principal.users.user_num"/>">
-						<input id="insertTeamAction" type="button" class="btn btn-success" onclick="insertTeamAction()" value="팀생성">
+						<input id="insertTeamAction" type="button" class="btn btn-primary" onclick="insertTeamAction()" value="팀 생성">
 						
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 body{
     background-color: #f6f6f9;
+    font-family: 'Gowun Dodum', sans-serif;
 }
 
 
@@ -23,7 +24,7 @@ body{
 .team-header .navbar-brand{
     font-size: 20px;
     font-weight: bold;
-    color: #1e9736;
+    color: #12192c;
     
 }
 
@@ -38,7 +39,7 @@ body{
 
 .job-team-body h1{
     font-weight: bold;
-    color: #1e9736
+    color: #12192c;
 }
 
 .job-team-body .job-container{
