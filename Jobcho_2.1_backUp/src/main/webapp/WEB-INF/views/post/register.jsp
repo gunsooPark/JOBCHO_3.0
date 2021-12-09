@@ -145,7 +145,7 @@
 
 $(document).ready(function(){
 
-	
+	$("#calendar").remove();
 	var formObj = $("form");
 	
 	//취소 버튼 클릭 시 board_num만 가지고 리스트로
