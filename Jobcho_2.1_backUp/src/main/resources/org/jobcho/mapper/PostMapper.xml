@@ -18,7 +18,7 @@
 		<![CDATA[ 
 				select *
 				from(
-					select /*+INDEX_DESC(post SYS_C007525) */
+					select /*+INDEX_asc(post SYS_C007525) */
 						 rownum rn, post_num, post_title, post_contents, board_num, member_num, post_date, islive, replycnt,writer
 					from post
 					where
