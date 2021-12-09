@@ -427,8 +427,9 @@
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
 	<div class="body-content" id="body-pd-left">
-
+		<div class="job-team-body2"></div>
 		<div class="job-team-body"></div>
+		
 	</div>
 	<!-- 컨텐츠 끝-->
 	<!-- 컨텐츠 끝-->
@@ -1180,7 +1181,7 @@ $(document).ready(function(){
 	var boardUL = $("#board"); //게시판 리스트 들어가는 부분
 	var user_num = $("#userNum").val();
 	
-	console.log("유저넘 : " + user_num);
+	console.log("유저넘 : " + user_num)
 	
 	
 	//========게시판 목록 호출=======
