@@ -9,8 +9,8 @@
 
 .job-chat p {
   max-width: 500px;
-  width:255px;
-  min-width: 255px;
+  width:200px;
+  min-width: 200px;
   
   margin-bottom: 12px;
   line-height: 24px;
@@ -31,7 +31,7 @@
 }
 
 .job-chat .send{
-	margin-left: 30%;
+	margin-left: 46%;
 }
 
 .send {
