@@ -205,7 +205,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	var calendarEl = document.getElementById("calendar");
+	
 	$("#calendar").remove();
 	
 	//변경사항 피드백
