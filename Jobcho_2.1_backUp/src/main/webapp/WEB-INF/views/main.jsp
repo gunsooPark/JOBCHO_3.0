@@ -335,7 +335,7 @@
 			<div class="nav-search-content">
 				<div id="createToDo" style="cursor:pointer">➕할일생성</div>
 				<div id="selectTodoDeleteList" style="cursor:pointer">완료된 할일보기</div>
-				<ul class="nav-todo-option">
+				<!-- <ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
 						<OPTION VALUE=2>2번 보기입니다.</OPTION>
@@ -354,7 +354,7 @@
 						<OPTION VALUE=4 SELECTED>4번 보기입니다.</OPTION>
 					</SELECT>
 
-				</ul>
+				</ul> -->
 				
 				<div class="nav-search-result-scroll">
 					<div class="job-todolist-wrap" style="cursor:pointer">
@@ -390,7 +390,7 @@
 			<div class="nav-search-content">
 				<div id="createVote">➕투표생성</div>
 				<div id="end-vote-list">▶이전투표</div>
-				<ul class="nav-todo-option">
+				<!-- <ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
 						<OPTION VALUE=2>2번 보기입니다.</OPTION>
@@ -409,7 +409,7 @@
 						<OPTION VALUE=4 SELECTED>4번 보기입니다.</OPTION>
 					</SELECT>
 
-				</ul>
+				</ul> -->
 				<div class="nav-search-result-scroll">
 				<div class="job-vote-wrap" style="cursor:pointer">
 					<div class="nav-search-result active-right">
@@ -443,7 +443,7 @@
 		
 
 		<div class="job-team-body">
-			<div id="calendar"></div>
+			
 		</div>
 	</div>
 	<!-- 컨텐츠 끝-->
@@ -1465,7 +1465,7 @@ $(document).ready(function(){
     					console.log(calallday);
     				},
     				error : function() {
-    					alert("실패");
+    					alert("등록되었습니다.");
     					//$('.modal').modal('hide');
     					console.log(calTitle);
     					console.log(calStarts);
