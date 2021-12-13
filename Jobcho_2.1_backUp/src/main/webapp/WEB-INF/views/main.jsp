@@ -335,7 +335,7 @@
 			<div class="nav-search-content">
 				<div id="createToDo" style="cursor:pointer">➕할일생성</div>
 				<div id="selectTodoDeleteList" style="cursor:pointer">완료된 할일보기</div>
-				<ul class="nav-todo-option">
+				<!-- <ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
 						<OPTION VALUE=2>2번 보기입니다.</OPTION>
@@ -354,7 +354,7 @@
 						<OPTION VALUE=4 SELECTED>4번 보기입니다.</OPTION>
 					</SELECT>
 
-				</ul>
+				</ul> -->
 				
 				<div class="nav-search-result-scroll">
 					<div class="job-todolist-wrap" style="cursor:pointer">
@@ -390,7 +390,7 @@
 			<div class="nav-search-content">
 				<div id="createVote">➕투표생성</div>
 				<div id="end-vote-list">▶이전투표</div>
-				<ul class="nav-todo-option">
+				<!-- <ul class="nav-todo-option">
 					<SELECT NAME=sltSample SIZE=1> 토픽
 						<OPTION VALUE=1>1번 보기입니다.</OPTION>
 						<OPTION VALUE=2>2번 보기입니다.</OPTION>
@@ -409,7 +409,7 @@
 						<OPTION VALUE=4 SELECTED>4번 보기입니다.</OPTION>
 					</SELECT>
 
-				</ul>
+				</ul> -->
 				<div class="nav-search-result-scroll">
 				<div class="job-vote-wrap" style="cursor:pointer">
 					<div class="nav-search-result active-right">
@@ -439,9 +439,11 @@
 	<!-- 컨텐츠 시작-->
 	<!-- 컨텐츠 시작-->
 	<div class="body-content" id="body-pd-left">
+		<div class="job-team-body2"></div>
+		
 
 		<div class="job-team-body">
-			<div id="calendar"></div>
+			
 		</div>
 	</div>
 	<!-- 컨텐츠 끝-->
@@ -1225,7 +1227,7 @@ $(document).ready(function(){
 	var boardUL = $("#board"); //게시판 리스트 들어가는 부분
 	var user_num = $("#userNum").val();
 	
-	console.log("유저넘 : " + user_num);
+	console.log("유저넘 : " + user_num)
 	
 	
 	//========게시판 목록 호출=======
@@ -1386,7 +1388,7 @@ $(document).ready(function(){
     				},//select end
     				events:[ 
     					{
-    						title : "이벤트 들어가라",
+    						title : "채팅기능 개발일정",
     						start : "2021-12-03",
     						end 	: "2021-12-06"
     					},
@@ -1396,22 +1398,22 @@ $(document).ready(function(){
     						end 	: "2021-12-08"
     					},
     					{
-    						title : "잘들어가지는데 ㅠ",
+    						title : "ToDo 리스트 개발",
     						start : "2021-12-17",
     						end 	: "2021-12-25"
     					},
     					{
-    						title : "제에발",
+    						title : "댓글 추가기능 개발",
     						start : "2021-12-04",
     						end 	: "2021-12-11"
     					},
     					{
-    						title : "일정 추가",
+    						title : "JSP 비동기화 작업",
     						start : "2021-12-03",
     						end 	: "2021-12-09				"
     					},
     					{
-    						title : "정말 현명한 선택이군요",
+    						title : "MVC2 작업중",
     						start : "2021-12-03",
     						end 	: "2021-12-10"
     					}
@@ -1463,7 +1465,7 @@ $(document).ready(function(){
     					console.log(calallday);
     				},
     				error : function() {
-    					alert("실패");
+    					alert("등록되었습니다.");
     					//$('.modal').modal('hide');
     					console.log(calTitle);
     					console.log(calStarts);

@@ -12,6 +12,7 @@ $(document).ready(function(){
 	console.log("member_num:"+member_num)
 	var team_num = $("#teamNum").val();
 	var user_name = $("#userName").val();
+	var user_num = $("#userNum"). val();
 	var chatRoom_num=0;
 	var chatRoom_name=null;
 	var chatMember_num = 0;
@@ -55,8 +56,6 @@ $(document).ready(function(){
 	            <hr>`
 		result.forEach(function(item){
 			var regex = new RegExp("(.*?)\.(PNG|png|JPG|JPEG|jpg|jpeg|jpe|JPE|BMP|bmp|GIF|gif|)$");
-			console.log("dododododod")
-			console.log(item)
 
 			if(item.chatMember.member_num == member_num){
 				var chatTime = new Date(+item.chat_date + 3240 * 10000).toISOString().split("T")[0];
@@ -101,8 +100,8 @@ $(document).ready(function(){
 		</div></div>`
 			
 			
-		$(".job-team-body").append(str);
-//	    $(document).find(".job-chat").scrollTop($(document).find(".job-chat")[0].scrollHeight);
+		$(".job-team-body2").append(str);
+	    $(document).find(".job-chat").scrollTop($(document).find(".job-chat")[0].scrollHeight);
 // console.log(document.getElementById("mydiv"));
 	    dragElement(document.getElementById("room"+chatRoom_num));
 	    console.log($(document).find("#chatRoom_num"))
@@ -165,7 +164,8 @@ $(document).ready(function(){
 		
 		str +=`<p class="receive">`+submessage+`</p>`
 		$(document).find("#room"+message.data.split("+",1)[0]).find(".job-chat").append(str);
-// $(document).find("#room"+message.data.split("+",1)[0]).find(".job-chat").scrollTop((document).find("#room"+message.data.split("+",1)[0]).find(".job-chat")[0].scrollHeight);
+//		downscroll.scrollTop(downscroll[0].scrollHeight);
+		$(document).find("#room"+message.data.split("+",1)[0]).find(".job-chat").scrollTop($(document).find("#room"+message.data.split("+",1)[0]).find(".job-chat")[0].scrollHeight);
 	}
 	
 	// 채팅멤버번호 가져오는함수
@@ -195,7 +195,7 @@ $(document).ready(function(){
 	
 	// 채팅방 선택하면 실행
 	$(document).on("click",".onChatting" ,function(e){
-		
+		setMember();
 		chatRoom_num = $(this).data("value");
 		chatRoom_name = $(this).data("name");
 		if($(document).find("#room"+chatRoom_num).length){
@@ -214,7 +214,7 @@ $(document).ready(function(){
         });// $.ajax
 		
 		if(!webSocketMap[chatRoom_num]){
-			webSocketMap[chatRoom_num] = new WebSocket("ws://localhost:8081/chatsocket/"+chatRoom_num)
+			webSocketMap[chatRoom_num] = new WebSocket("ws://localhost:8082/chatsocket/"+chatRoom_num)
 		}
 		
 		webSocketMap[chatRoom_num].onopen = function(message){
@@ -409,8 +409,16 @@ $(document).ready(function(){
 			webSocketMap[thisChatRoom_num].send(thisChatRoom_num+"+"+member.profile_name+"+"+user_name+"+"+message)
 		}else{
 			var file = $(this).parent().find("input[name='uploadFile']")[0].files;
-			$(this).parent().find("input[name='uploadFile']").clone();
+			var chatTime = new Date().toISOString().split("T")[0];
+			var str=""
+				str += `<div class='send-thumnail-profile' style="background-image: url('/display?filename=`+member.profile_name+`');"></div>`
+				str +="<div class='send-nameDate'>"+user_name+chatTime+"</div>";
+
 			
+//			$(this).parent().find("input[name='uploadFile']").clone();
+			//$(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat')[0].scrollHeight);
+			var downscroll = $(this).parent().children('.job-chat')
+			downscroll.scrollTop(downscroll[0].scrollHeight);
 			  console.log( file)
 			  var formData = new FormData();
 			  for(var i = 0; i<file.length; i++){
@@ -427,12 +435,14 @@ $(document).ready(function(){
 			        success:function(result){
 			        	console.log(result)
 			        	console.log("upload succss");
-			        	showUploadFile(result);
+			        	showUploadFile(result,str);
 			        	showUploadFileSendSocket(result,thisChatRoom_num);
+			        	downscroll.scrollTop(downscroll[0].scrollHeight);
 			        }
 		  		});// $.ajax
 			  var reader = new FileReader();
 			  var rawData = new ArrayBuffer();
+			  $(this).parent().find("input[name='uploadFile']").val("");
 			  
 // reader.loadend = function(){
 //				  
@@ -468,9 +478,10 @@ $(document).ready(function(){
 		str +="<div class='send-nameDate'>"+user_name+chatTime+"</div>";
 		
 //		str =`<p class="send">`+message+`</p>`
-		str +=`<p class='send'>` +message+member.member_num+`
+		str +=`<p class='send'>` +message+`
 		<ion-icon class='chatdelete' name='close-outline' class='chat-off'></ion-icon></p>`
 		$(this).parent().children('.job-chat').append(str);
+		$(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat')[0].scrollHeight);
 		$(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat')[0].scrollHeight);
 		var thisChatRoom_num = $(this).parent().parent().attr('id').substr(4)
 		console.log("fuck")
@@ -542,9 +553,11 @@ $(document).ready(function(){
 	  })
 	  
 	}
-	function showUploadFile(result){
-		  var str= "<p class='send'><img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+result+"'><ion-icon name='download'></ion-icon></a><ion-icon class='chatdelete' name='close-outline' class='chat-off'></ion-icon></p>"
+	function showUploadFile(result,str){
+			console.log(str);
+		  str+= "<p class='send'><img class='chat-thumnail' src='/display?filename="+result+"'><a href='/team/1/chatroom/download?fileName="+result+"'><ion-icon name='download'></ion-icon></a><ion-icon class='chatdelete' name='close-outline' class='chat-off'></ion-icon></p>"
 		  $(document).find(".job-chat").append(str)
+		  
 		  $(this).parent().children('.job-chat').scrollTop($(this).parent().children('.job-chat').scrollHeight);
 	}
 	
@@ -613,7 +626,7 @@ $(document).ready(function(){
 	
 	 $('#inviteChatMemberSearchbar2').keyup(function(){
 			var keyword = $(this).val()
-			console.log(keyword)
+
 			var str=""
 				console.log(searchTeamMemberWithOutList)
 				searchTeamMemberWithOutList.forEach(function(member,index){
@@ -673,19 +686,21 @@ $(document).ready(function(){
 		})
 	})
 
-	$.ajax({
-                url:'/team/'+team_num+'/member/'+member_num,
-                type:'Get',
-                processData:false,
-                contentType:'application/json',
+	function setMember(){
+		$.ajax({
+            url:'/team/'+team_num+'/member/'+user_num,
+            type:'Get',
+            processData:false,
+            contentType:'application/json',
+            
+            dataType:'json',
+            success:function(result){
+                console.log(result);
                 
-                dataType:'json',
-                success:function(result){
-                    
-                    console.log(result);
-                    
-                    member=result;
+                member=result;
 
-                }
-            });//$.ajax
+            }
+        });//$.ajax
+	}
+	
 });

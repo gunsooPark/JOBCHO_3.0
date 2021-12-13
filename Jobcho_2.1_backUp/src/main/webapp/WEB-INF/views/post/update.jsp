@@ -90,7 +90,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
+	$("#calendar").remove();
 	var formObj = $("form");
 	
 	$('button').on("click", function(e){
