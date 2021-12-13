@@ -27,17 +27,12 @@ public class CalendarController {
 	@Autowired
 	private CalendarService service;
 	
-	// /team/{team_num}/board/{board_num}/post/{post_num}/reply/new
-	// Post Man OK
+	//ÀÌº¥Æ® »ı¼º
 	@RequestMapping(value="/new", method = {RequestMethod.POST})
 	
 	public ResponseEntity<CalendarVO> insertCalendar(@RequestBody CalendarVO calendar,
-												//@PathVariable("member_num") int member_num,
 												@PathVariable("team_num") int team_num
 																				){
-		
-		
-		//calendar.setMember_num(member_num);
 		log.info("insertCalendar ==================" + calendar);
 		int insertCount = service.insertCalendar(calendar);
 		
@@ -46,14 +41,13 @@ public class CalendarController {
 				:  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	//ï¿½ë£·ï¿½ë’ªï¿½ë“ƒï§ï¿½ o 
+	//ÀÌº¥Æ® ºÒ·¯¿À±â
 	@GetMapping(value = "/getListCalendar",
 			produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<CalendarVO>> getListCalendar(CalendarVO cal_num,
 															@PathVariable("team_num") int team_num){
 		log.info("getListCalendar ================== " + cal_num);
 		return new ResponseEntity<>(service.getListCalendar(cal_num), HttpStatus.OK);
-		
 	}
 	
 	//ï¿½ë£·ï¿½ë’ªï¿½ë“ƒï§ï¿½ o
